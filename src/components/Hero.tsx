@@ -532,19 +532,20 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                   description: 'Quarterly average',
                   growth: '+23%'
                 }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className={`group relative p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br ${stat.bgColor} border transition-all duration-[3000ms] hover:${stat.shadowColor} hover:shadow-2xl ${
-                    theme === 'light' 
-                      ? 'border-white/60 hover:border-white/80' 
-                      : 'border-white/20 hover:border-white/40'
-                  }`}
-                >
+                ].map((stat, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    className={`group relative p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br ${stat.bgColor} border transition-all duration-[3000ms] hover:${stat.shadowColor} hover:shadow-2xl ${
+                      theme === 'light'
+                        ? 'border-white/60 hover:border-white/80'
+                        : 'border-white/20 hover:border-white/40'
+                    }`}
+                  >
                   {/* Background Glow */}
                   <motion.div 
                     className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-2xl`}

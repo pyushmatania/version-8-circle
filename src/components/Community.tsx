@@ -42,6 +42,7 @@ import {
   ArrowLeft,
   Plus,
   CheckCircle,
+  ShoppingBag,
   Globe,
   Verified,
   UserCheck,
@@ -54,10 +55,11 @@ import {
   Ticket
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import Merchandise from './Merchandise';
 
 const Community: React.FC = () => {
   const [selectedCircle, setSelectedCircle] = useState<string>('pathaan-circle');
-  const [activeTab, setActiveTab] = useState<'feed' | 'channels' | 'friends' | 'media' | 'perks'>('feed');
+  const [activeTab, setActiveTab] = useState<'feed' | 'channels' | 'friends' | 'media' | 'perks' | 'merch'>('feed');
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
   const [newPost, setNewPost] = useState('');
   const [showComments, setShowComments] = useState<string | null>(null);
@@ -319,18 +321,21 @@ const Community: React.FC = () => {
     { id: 'channels', label: 'Channels', icon: Hash },
     { id: 'friends', label: 'Friends', icon: Users },
     { id: 'media', label: 'Media', icon: Image },
-    { id: 'perks', label: 'Perks', icon: Gift }
+    { id: 'perks', label: 'Perks', icon: Gift },
+    { id: 'merch', label: 'Merch', icon: ShoppingBag }
   ];
 
   return (
-    <div className={`min-h-screen pt-16 ${
-      theme === 'light' 
-        ? 'bg-gradient-to-br from-gray-50 via-white to-purple-50' 
-        : 'bg-gradient-to-br from-black via-gray-900 to-purple-900'
-    }`}>
+    <div
+      className={`relative min-h-screen pt-16 ${
+        theme === 'light'
+          ? 'bg-gradient-to-br from-gray-50 via-white to-purple-50'
+          : 'bg-gradient-to-br from-black via-gray-900 to-purple-900'
+      }`}
+    >
       {/* Light theme background orbs */}
       {theme === 'light' && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           <div className="light-gradient-orb-1 top-1/4 left-1/4" />
           <div className="light-gradient-orb-2 bottom-1/3 right-1/4" />
           <div className="light-gradient-orb-3 top-2/3 left-1/2" />
@@ -1091,6 +1096,19 @@ const Community: React.FC = () => {
                   </div>
                 </motion.div>
               ))}
+            </motion.div>
+          )}
+
+          {/* Merch Tab */}
+          {activeTab === 'merch' && (
+            <motion.div
+              key="merch"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Merchandise />
             </motion.div>
           )}
         </AnimatePresence>
