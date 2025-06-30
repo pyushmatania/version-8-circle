@@ -16,11 +16,13 @@ import {
   Play,
   Download,
   ExternalLink,
-  BarChart3
+  BarChart3,
+  BarChart
 } from 'lucide-react';
+import PortfolioAnalytics from './PortfolioAnalytics';
 
 const Dashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'investments' | 'perks' | 'circles'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'investments' | 'perks' | 'circles' | 'portfolio'>('overview');
 
   const userStats = {
     totalInvested: 125000,
@@ -181,7 +183,8 @@ const Dashboard: React.FC = () => {
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'investments', label: 'My Investments', icon: TrendingUp },
     { id: 'perks', label: 'Perks & Rewards', icon: Gift },
-    { id: 'circles', label: 'My Circles', icon: Users }
+    { id: 'circles', label: 'My Circles', icon: Users },
+    { id: 'portfolio', label: 'Portfolio', icon: BarChart }
   ];
 
   return (
@@ -514,6 +517,17 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
             ))}
+          </motion.div>
+        )}
+
+        {/* Portfolio Tab */}
+        {activeTab === 'portfolio' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <PortfolioAnalytics />
           </motion.div>
         )}
 
