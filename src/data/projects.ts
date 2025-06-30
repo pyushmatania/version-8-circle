@@ -18,6 +18,8 @@ export const mockProjects: Project[] = [
     category: 'Bollywood',
     language: 'Hindi',
     rating: 4.9
+    ,
+    trailer: 'https://www.youtube.com/watch?v=bK6ldnjE3Y0'
   },
   {
     id: '2',
@@ -36,6 +38,8 @@ export const mockProjects: Project[] = [
     category: 'Bollywood',
     language: 'Hindi',
     rating: 4.9
+    ,
+    trailer: 'https://www.youtube.com/watch?v=pBk4NYhWNMM'
   },
   {
     id: '3',
@@ -54,6 +58,8 @@ export const mockProjects: Project[] = [
     category: 'Regional',
     language: 'Telugu',
     rating: 4.9
+    ,
+    trailer: 'https://www.youtube.com/watch?v=d9MyW72ELq0'
   }
 ];
 

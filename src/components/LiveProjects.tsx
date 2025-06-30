@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Film, Music, Clock, Users, TrendingUp, ArrowRight } from 'lucide-react';
+import AnimatedNumber from './AnimatedNumber';
 import { mockProjects } from '../data/projects';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
@@ -214,19 +215,27 @@ const LiveProjects: React.FC = () => {
           }`}
         >
           <div className="text-center">
-            <div className={`text-3xl font-bold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>₹47L+</div>
+            <div className={`text-4xl font-extrabold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
+              <AnimatedNumber value={47} format={(v)=>`₹${v}L+`} />
+            </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Total Raised</div>
           </div>
           <div className="text-center">
-            <div className={`text-3xl font-bold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>12</div>
+            <div className={`text-4xl font-extrabold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}> 
+              <AnimatedNumber value={12} />
+            </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Active Projects</div>
           </div>
           <div className="text-center">
-            <div className={`text-3xl font-bold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>1,200+</div>
+            <div className={`text-4xl font-extrabold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}> 
+              <AnimatedNumber value={1200} format={(v)=>`${v.toLocaleString()}+`} />
+            </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Investors</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-green-400 mb-2">15%</div>
+            <div className="text-4xl font-extrabold text-green-400 mb-2">
+              <AnimatedNumber value={15} format={(v)=>`${v}%`} />
+            </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Avg. Returns</div>
           </div>
         </motion.div>

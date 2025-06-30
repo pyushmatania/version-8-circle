@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Play, ArrowRight, Film, Music, TrendingUp, Users, DollarSign, Target, Award, Star, Zap, Crown, Gift, Sparkles, CheckCircle, Globe, Calendar, BarChart3, Coins } from 'lucide-react';
+import Typewriter from './Typewriter';
+import AnimatedNumber from './AnimatedNumber';
 import { useTheme } from './ThemeProvider';
 
 interface HeroProps {
@@ -50,8 +52,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-30 transition-all duration-[3000ms] ${
-            theme === 'light' 
+          className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-40 transition-all duration-[3000ms] ${
+            theme === 'light'
               ? currentGradient === 0 ? 'bg-gradient-to-br from-green-300 to-blue-300' :
                 currentGradient === 1 ? 'bg-gradient-to-br from-orange-300 to-pink-300' :
                 currentGradient === 2 ? 'bg-gradient-to-br from-cyan-300 to-blue-300' :
@@ -73,8 +75,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             ease: "easeInOut",
             delay: 5
           }}
-          className={`absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl opacity-25 transition-all duration-[3000ms] ${
-            theme === 'light' 
+          className={`absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl opacity-35 transition-all duration-[3000ms] ${
+            theme === 'light'
               ? currentGradient === 0 ? 'bg-gradient-to-br from-blue-300 to-purple-300' :
                 currentGradient === 1 ? 'bg-gradient-to-br from-red-300 to-orange-300' :
                 currentGradient === 2 ? 'bg-gradient-to-br from-blue-300 to-indigo-300' :
@@ -96,8 +98,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             ease: "easeInOut",
             delay: 10
           }}
-          className={`absolute top-1/2 right-1/3 w-64 h-64 rounded-full blur-3xl opacity-20 transition-all duration-[3000ms] ${
-            theme === 'light' 
+          className={`absolute top-1/2 right-1/3 w-64 h-64 rounded-full blur-3xl opacity-30 transition-all duration-[3000ms] ${
+            theme === 'light'
               ? currentGradient === 0 ? 'bg-gradient-to-br from-emerald-300 to-cyan-300' :
                 currentGradient === 1 ? 'bg-gradient-to-br from-yellow-300 to-red-300' :
                 currentGradient === 2 ? 'bg-gradient-to-br from-sky-300 to-blue-300' :
@@ -120,14 +122,25 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             ease: "easeInOut",
             delay: 15
           }}
-          className={`absolute top-3/4 left-1/2 w-72 h-72 rounded-full blur-3xl opacity-15 transition-all duration-[3000ms] ${
-            theme === 'light' 
+          className={`absolute top-3/4 left-1/2 w-72 h-72 rounded-full blur-3xl opacity-25 transition-all duration-[3000ms] ${
+            theme === 'light'
               ? currentGradient === 0 ? 'bg-gradient-to-br from-teal-300 to-green-300' :
                 currentGradient === 1 ? 'bg-gradient-to-br from-pink-300 to-rose-300' :
                 currentGradient === 2 ? 'bg-gradient-to-br from-indigo-300 to-purple-300' :
                 currentGradient === 3 ? 'bg-gradient-to-br from-emerald-300 to-lime-300' :
                 'bg-gradient-to-br from-fuchsia-300 to-purple-300'
               : 'bg-gradient-to-br from-emerald-500 to-teal-500'
+          }`}
+        />
+
+        {/* New orb behind heading */}
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], rotate: [0, 15, -15, 0] }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
+          className={`absolute top-1/2 left-1/2 w-[32rem] h-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl opacity-40 ${
+            theme === 'light'
+              ? 'bg-gradient-to-br from-purple-300 to-pink-300'
+              : 'bg-gradient-to-br from-purple-600 to-pink-600'
           }`}
         />
       </div>
@@ -205,58 +218,14 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
           <h1 className={`text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight ${
             theme === 'light' ? 'text-gray-900' : 'text-white'
           }`}>
-            <motion.span 
-              className={`bg-gradient-to-r bg-clip-text text-transparent transition-all duration-[3000ms] ${
+            <Typewriter
+              text="Own the stories you love"
+              className={`bg-gradient-to-r bg-clip-text text-transparent ${
                 theme === 'light'
-                  ? currentGradient === 0 ? 'from-green-600 via-emerald-500 to-teal-600' :
-                    currentGradient === 1 ? 'from-orange-600 via-red-500 to-pink-600' :
-                    currentGradient === 2 ? 'from-blue-600 via-cyan-500 to-indigo-600' :
-                    currentGradient === 3 ? 'from-emerald-600 via-green-500 to-lime-600' :
-                    'from-purple-600 via-violet-500 to-fuchsia-600'
-                  : 'from-purple-600 via-pink-500 to-blue-600'
+                  ? 'from-purple-600 via-pink-500 to-blue-600'
+                  : 'from-purple-400 via-pink-500 to-cyan-500'
               }`}
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              style={{
-                backgroundSize: '200% 200%'
-              }}
-            >
-              Own
-            </motion.span>{' '}
-            the stories
-            <br />
-            you{' '}
-            <motion.span 
-              className={`bg-gradient-to-r bg-clip-text text-transparent transition-all duration-[3000ms] ${
-                theme === 'light'
-                  ? currentGradient === 0 ? 'from-cyan-500 via-blue-500 to-purple-500' :
-                    currentGradient === 1 ? 'from-yellow-500 via-orange-500 to-red-500' :
-                    currentGradient === 2 ? 'from-sky-500 via-blue-500 to-indigo-500' :
-                    currentGradient === 3 ? 'from-lime-500 via-green-500 to-emerald-500' :
-                    'from-fuchsia-500 via-purple-500 to-violet-500'
-                  : 'from-yellow-500 via-orange-500 to-red-500'
-              }`}
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1
-              }}
-              style={{
-                backgroundSize: '200% 200%'
-              }}
-            >
-              love
-            </motion.span>
+            />
           </h1>
           
           <motion.p 
@@ -456,11 +425,11 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             {/* Main Stats Grid with Enhanced Gradient Awareness */}
             <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {[
-                { 
-                  icon: Target, 
-                  value: '20', 
-                  label: 'Active Projects', 
-                  color: theme === 'light' 
+                {
+                  icon: Target,
+                  value: 20,
+                  label: 'Active Projects',
+                  color: theme === 'light'
                     ? currentGradient === 0 ? 'from-green-500 to-emerald-500' :
                       currentGradient === 1 ? 'from-orange-500 to-red-500' :
                       currentGradient === 2 ? 'from-blue-500 to-cyan-500' :
@@ -484,20 +453,23 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                   description: 'Films, Music & Series',
                   growth: '+45%'
                 },
-                { 
-                  icon: DollarSign, 
-                  value: '₹30Cr+', 
-                  label: 'Total Raised', 
+                {
+                  icon: DollarSign,
+                  value: 30,
+                  unit: 'Cr+',
+                  prefix: '₹',
+                  label: 'Total Raised',
                   color: 'from-green-500 to-emerald-500',
                   bgColor: theme === 'light' ? 'from-green-100/80 to-emerald-100/80' : 'from-green-500/20 to-emerald-500/20',
                   shadowColor: 'shadow-green-500/25',
                   description: 'Across all projects',
                   growth: '+127%'
                 },
-                { 
-                  icon: Users, 
-                  value: '40K+', 
-                  label: 'Total Investors', 
+                {
+                  icon: Users,
+                  value: 40000,
+                  unit: '+',
+                  label: 'Total Investors',
                   color: theme === 'light' 
                     ? currentGradient === 0 ? 'from-cyan-500 to-blue-500' :
                       currentGradient === 1 ? 'from-pink-500 to-rose-500' :
@@ -522,10 +494,11 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                   description: 'Active community',
                   growth: '+89%'
                 },
-                { 
-                  icon: TrendingUp, 
-                  value: '230%', 
-                  label: 'Avg Returns', 
+                {
+                  icon: TrendingUp,
+                  value: 230,
+                  unit: '%',
+                  label: 'Avg Returns',
                   color: 'from-yellow-500 to-orange-500',
                   bgColor: theme === 'light' ? 'from-yellow-100/80 to-orange-100/80' : 'from-yellow-500/20 to-orange-500/20',
                   shadowColor: 'shadow-yellow-500/25',
@@ -601,18 +574,18 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                     {/* Value with Growth Indicator */}
                     <div className="mb-2">
                       <motion.div
-                        className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}
-                        animate={{ 
+                        className={`text-5xl font-extrabold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}
+                        animate={{
                           scale: [1, 1.05, 1],
                         }}
-                        transition={{ 
-                          duration: 3, 
-                          repeat: Infinity, 
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
                           ease: "easeInOut",
                           delay: index * 0.2
                         }}
                       >
-                        {stat.value}
+                        <AnimatedNumber value={stat.value} format={(v) => `${stat.prefix || ''}${v.toLocaleString()}${stat.unit || ''}`}/>
                       </motion.div>
                       
                       {/* Growth Badge */}
@@ -638,8 +611,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                     </div>
                     
                     {/* Label and Description */}
-                    <motion.div 
-                      className={`text-sm font-medium mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
+                    <motion.div
+                      className={`text-lg font-semibold mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
                       animate={{
                         opacity: [0.7, 1, 0.7]
                       }}
