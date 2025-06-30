@@ -2,15 +2,24 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Film, Music, Clock, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
-import { mockProjects } from '../data/projects';
+import { updatedExtendedProjects } from '../data/updatedExtendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
 import { useTheme } from './ThemeProvider';
 
-const LiveProjects: React.FC = () => {
+interface LiveProjectsProps {
+  onViewAll?: () => void;
+}
+
+const LiveProjects: React.FC<LiveProjectsProps> = ({ onViewAll }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { theme } = useTheme();
+
+  const trendingProjects = updatedExtendedProjects
+    .filter(p => p.fundedPercentage > 70)
+    .sort((a, b) => b.fundedPercentage - a.fundedPercentage)
+    .slice(0, 6);
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -51,7 +60,7 @@ const LiveProjects: React.FC = () => {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {mockProjects.map((project, index) => (
+          {trendingProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}
@@ -248,11 +257,14 @@ const LiveProjects: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <button className={`group relative px-8 py-4 border rounded-full font-semibold text-lg backdrop-blur-md transition-all duration-300 hover:scale-105 ${
-            theme === 'light'
-              ? 'border-gray-300 text-gray-700 bg-white/60 hover:bg-white/80'
-              : 'border-white/20 text-white bg-white/5 hover:bg-white/10'
-          }`}>
+          <button
+            onClick={() => onViewAll?.()}
+            className={`group relative px-8 py-4 border rounded-full font-semibold text-lg backdrop-blur-md transition-all duration-300 hover:scale-105 ${
+              theme === 'light'
+                ? 'border-gray-300 text-gray-700 bg-white/60 hover:bg-white/80'
+                : 'border-white/20 text-white bg-white/5 hover:bg-white/10'
+            }`}
+          >
             <span className="flex items-center gap-2">
               View All Projects
               <TrendingUp className="w-5 h-5 group-hover:scale-110 transition-transform" />

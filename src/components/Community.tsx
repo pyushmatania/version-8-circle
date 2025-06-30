@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
@@ -62,11 +62,21 @@ const Community: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'feed' | 'channels' | 'friends' | 'media' | 'perks' | 'merch'>('feed');
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
   const [newPost, setNewPost] = useState('');
+  const [postImage, setPostImage] = useState<File | null>(null);
+  const [postVideo, setPostVideo] = useState<File | null>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const [showComments, setShowComments] = useState<string | null>(null);
   const [newComment, setNewComment] = useState('');
   const [showPostModal, setShowPostModal] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState<string>('announcements');
   const [newMessage, setNewMessage] = useState('');
+  const [messages, setMessages] = useState<Record<string, {user:string; message:string; time:string}[]>>({
+    announcements: [
+      { user: 'Priya Sharma', message: 'Just saw the latest behind-the-scenes footage! 🔥', time: '2:30 PM', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50' },
+      { user: 'Dev Malhotra', message: 'The action sequences look incredible!', time: '2:32 PM', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50' }
+    ]
+  });
   const { theme } = useTheme();
 
   // Mock circles data with key people and detailed info
@@ -604,22 +614,42 @@ const Community: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <button className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
-                      theme === 'light'
-                        ? 'text-gray-600 hover:bg-white/50'
-                        : 'text-gray-400 hover:bg-white/10 hover:text-white'
-                    }`}>
+                    <button
+                      onClick={() => photoInputRef.current?.click()}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
+                        theme === 'light'
+                          ? 'text-gray-600 hover:bg-white/50'
+                          : 'text-gray-400 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
                       <Image className="w-5 h-5" />
                       Photo
                     </button>
-                    <button className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
-                      theme === 'light'
-                        ? 'text-gray-600 hover:bg-white/50'
-                        : 'text-gray-400 hover:bg-white/10 hover:text-white'
-                    }`}>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={photoInputRef}
+                      onChange={(e) => setPostImage(e.target.files?.[0] || null)}
+                      className="hidden"
+                    />
+                    <button
+                      onClick={() => videoInputRef.current?.click()}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
+                        theme === 'light'
+                          ? 'text-gray-600 hover:bg-white/50'
+                          : 'text-gray-400 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
                       <Video className="w-5 h-5" />
                       Video
                     </button>
+                    <input
+                      type="file"
+                      accept="video/*"
+                      ref={videoInputRef}
+                      onChange={(e) => setPostVideo(e.target.files?.[0] || null)}
+                      className="hidden"
+                    />
                     <button className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
                       theme === 'light'
                         ? 'text-gray-600 hover:bg-white/50'
@@ -628,8 +658,14 @@ const Community: React.FC = () => {
                       <BarChart3 className="w-5 h-5" />
                       Poll
                     </button>
+                  {postImage && (
+                    <img src={URL.createObjectURL(postImage)} alt="preview" className="w-24 h-24 object-cover rounded" />
+                  )}
+                  {postVideo && (
+                    <video src={URL.createObjectURL(postVideo)} className="w-24 h-24 rounded" controls />
+                  )}
                   </div>
-                  <button 
+                  <button
                     disabled={!newPost.trim()}
                     className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -852,13 +888,9 @@ const Community: React.FC = () => {
 
                 {/* Chat Messages */}
                 <div className="space-y-4 mb-6 h-96 overflow-y-auto">
-                  {[
-                    { user: 'Priya Sharma', message: 'Just saw the latest behind-the-scenes footage! 🔥', time: '2:30 PM', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50' },
-                    { user: 'Dev Malhotra', message: 'The action sequences look incredible!', time: '2:32 PM', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50' },
-                    { user: 'Rahul Krishnan', message: 'Worth every rupee invested 💰', time: '2:35 PM', avatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=50' }
-                  ].map((msg, index) => (
+                  {(messages[selectedChannel] || []).map((msg, index) => (
                     <div key={index} className="flex gap-3">
-                      <img 
+                      <img
                         src={msg.avatar}
                         alt={msg.user}
                         className="w-10 h-10 rounded-full object-cover"
@@ -893,7 +925,22 @@ const Community: React.FC = () => {
                         : 'bg-white/10 border-white/20 text-white placeholder-gray-400'
                     }`}
                   />
-                  <button 
+                  <button
+                    onClick={() => {
+                      const msg = { user: 'You', message: newMessage, time: 'now', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50' };
+                      setMessages(prev => ({
+                        ...prev,
+                        [selectedChannel]: [...(prev[selectedChannel] || []), msg]
+                      }));
+                      setNewMessage('');
+                      setTimeout(() => {
+                        const reply = { user: 'Friend', message: 'Got it!', time: 'just now', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50' };
+                        setMessages(prev => ({
+                          ...prev,
+                          [selectedChannel]: [...(prev[selectedChannel] || []), reply]
+                        }));
+                      }, 3000);
+                    }}
                     disabled={!newMessage.trim()}
                     className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >

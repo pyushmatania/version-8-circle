@@ -201,6 +201,55 @@ const Merchandise: React.FC = () => {
       isLimited: true,
       isTrending: true,
       isNew: true
+    },
+    {
+      id: '9',
+      title: 'John Wick 5 Coffee Mug',
+      category: 'collectibles',
+      price: 799,
+      priceType: 'fixed',
+      image: 'https://images.pexels.com/photos/585750/pexels-photo-585750.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Ceramic mug featuring artwork from John Wick 5',
+      availability: 'in-stock',
+      rating: 4.5,
+      reviews: 58,
+      tags: ['Action', 'Keanu Reeves', 'Mug'],
+      releaseDate: '2024-03-05',
+      popularity: 65,
+      project: 'John Wick 5'
+    },
+    {
+      id: '10',
+      title: 'Avatar Voyager Backpack',
+      category: 'accessories',
+      price: 3599,
+      priceType: 'fixed',
+      image: 'https://images.pexels.com/photos/1078983/pexels-photo-1078983.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Durable backpack inspired by Avatar sequel',
+      availability: 'pre-order',
+      rating: 4.7,
+      reviews: 34,
+      tags: ['Avatar', 'Adventure', 'Bag'],
+      releaseDate: '2024-04-01',
+      popularity: 80,
+      project: 'Avatar: The Seed Bearer',
+      isNew: true
+    },
+    {
+      id: '11',
+      title: 'Mirzapur 4 Keychain',
+      category: 'collectibles',
+      price: 299,
+      priceType: 'fixed',
+      image: 'https://images.pexels.com/photos/275783/pexels-photo-275783.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Metal keychain with Mirzapur logo',
+      availability: 'in-stock',
+      rating: 4.3,
+      reviews: 77,
+      tags: ['Mirzapur', 'Keychain'],
+      releaseDate: '2024-02-25',
+      popularity: 60,
+      project: 'Mirzapur 4'
     }
   ];
 

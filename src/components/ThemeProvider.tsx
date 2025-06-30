@@ -36,11 +36,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     document.documentElement.classList.toggle('light', theme === 'light');
   }, [theme]);
 
-  // Auto-cycle through gradient themes every 2.2 seconds
+  // Auto-cycle through gradient themes every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentGradient((prev) => (prev + 1) % 4); // 4 total gradients (0-3)
-    }, 2200);
+      setCurrentGradient((prev) => (prev + 1) % 5); // 5 total gradients (0-4)
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
