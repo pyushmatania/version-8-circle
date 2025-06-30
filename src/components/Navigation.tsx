@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, UserPlus, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal } from 'lucide-react';
+import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useAuth } from './auth/AuthProvider';
 import SearchBar from './SearchBar';
@@ -304,15 +304,6 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                       >
                         <LogIn className="w-4 h-4 drop-shadow-lg" />
                         <span className="font-medium drop-shadow-lg">Sign In</span>
-                      </motion.button>
-                      <motion.button 
-                        onClick={() => handleAuthClick('register')}
-                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-500 hover:to-blue-500 transition-all duration-300"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <UserPlus className="w-4 h-4" />
-                        Sign Up
                       </motion.button>
                     </div>
                   )}
