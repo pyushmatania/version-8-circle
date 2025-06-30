@@ -78,41 +78,43 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSelectProject, onViewAllResults
     const value = e.target.value;
     setSearchTerm(value);
     setIsOpen(true);
-    
-    if (value.length >= 2) {
-      performSearch(value);
-    } else {
-      setSearchResults([]);
-    }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchTerm.length >= 2) {
+        performSearch(searchTerm);
+      } else {
+        setSearchResults([]);
+      }
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   // Perform search
   const performSearch = (term: string) => {
     setIsLoading(true);
-    
-    // Simulate network delay
-    setTimeout(() => {
-      let results = extendedProjects.filter(project => {
-        return project.title.toLowerCase().includes(term.toLowerCase()) ||
-          project.description.toLowerCase().includes(term.toLowerCase()) ||
-          project.tags.some(tag => tag.toLowerCase().includes(term.toLowerCase())) ||
-          (project.director && project.director.toLowerCase().includes(term.toLowerCase())) ||
-          (project.artist && project.artist.toLowerCase().includes(term.toLowerCase()));
-      });
-      
-      // Sort by relevance (title match first)
-      results = results.sort((a, b) => {
-        const aInTitle = a.title.toLowerCase().includes(term.toLowerCase());
-        const bInTitle = b.title.toLowerCase().includes(term.toLowerCase());
-        
-        if (aInTitle && !bInTitle) return -1;
-        if (!aInTitle && bInTitle) return 1;
-        return 0;
-      });
-      
-      setSearchResults(results.slice(0, 5)); // Limit to 5 results
-      setIsLoading(false);
-    }, 300);
+
+    let results = extendedProjects.filter(project => {
+      return project.title.toLowerCase().includes(term.toLowerCase()) ||
+        project.description.toLowerCase().includes(term.toLowerCase()) ||
+        project.tags.some(tag => tag.toLowerCase().includes(term.toLowerCase())) ||
+        (project.director && project.director.toLowerCase().includes(term.toLowerCase())) ||
+        (project.artist && project.artist.toLowerCase().includes(term.toLowerCase()));
+    });
+
+    // Sort by relevance (title match first)
+    results = results.sort((a, b) => {
+      const aInTitle = a.title.toLowerCase().includes(term.toLowerCase());
+      const bInTitle = b.title.toLowerCase().includes(term.toLowerCase());
+
+      if (aInTitle && !bInTitle) return -1;
+      if (!aInTitle && bInTitle) return 1;
+      return 0;
+    });
+
+    setSearchResults(results.slice(0, 5)); // Limit to 5 results
+    setIsLoading(false);
   };
 
   // Handle search submission
@@ -218,14 +220,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSelectProject, onViewAllResults
   // Highlight matching text
   const highlightMatch = (text: string, query: string) => {
     if (!query.trim()) return text;
-    
-    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${safeQuery})`, 'gi');
     const parts = text.split(regex);
-    
+
     return (
       <>
-        {parts.map((part, i) => 
-          regex.test(part) ? (
+        {parts.map((part, i) => {
+          regex.lastIndex = 0; // reset for each new string
+          return regex.test(part) ? (
             <span key={i} className={`font-bold ${
               theme === 'light' ? 'text-purple-700' : 'text-purple-400'
             }`}>
@@ -233,8 +237,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSelectProject, onViewAllResults
             </span>
           ) : (
             <span key={i}>{part}</span>
-          )
-        )}
+          );
+        })}
       </>
     );
   };

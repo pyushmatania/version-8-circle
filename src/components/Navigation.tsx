@@ -223,11 +223,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     />
                   </div>
                   
-                  {isAuthenticated && (
-                    <NotificationDropdown
-                      onViewAll={() => setCurrentView('notifications')}
-                    />
-                  )}
+                  <NotificationDropdown
+                    onViewAll={() => setCurrentView('notifications')}
+                  />
 
                   {/* Theme Toggle Button */}
                   <motion.button
@@ -518,17 +516,16 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 </div>
 
                 {/* Notification Button */}
-                {isAuthenticated && (
-                  <motion.button
+                <motion.button
                     onClick={() => setCurrentView('notifications')}
                     className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
                       currentView === 'notifications'
-                        ? `${theme === 'light' 
-                            ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25' 
+                        ? `${theme === 'light'
+                            ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25'
                             : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
                           }`
-                        : `${theme === 'light' 
-                            ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
+                        : `${theme === 'light'
+                            ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
                             : 'text-gray-400 hover:text-white hover:bg-white/10'
                           }`
                     }`}
@@ -555,7 +552,6 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                       />
                     )}
                   </motion.button>
-                )}
 
                 {/* Profile Button */}
                 {isAuthenticated && (
