@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal } from 'lucide-react';
+import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal, Sun, Moon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useAuth } from './auth/AuthProvider';
 import SearchBar from './SearchBar';
@@ -17,7 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
 
   const mainNavItems = [
@@ -224,10 +224,24 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                   </div>
                   
                   {isAuthenticated && (
-                    <NotificationDropdown 
+                    <NotificationDropdown
                       onViewAll={() => setCurrentView('notifications')}
                     />
                   )}
+
+                  {/* Theme Toggle Button */}
+                  <motion.button
+                    onClick={toggleTheme}
+                    className={`p-2 rounded-lg transition-all duration-[3000ms] ${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-300 hover:text-white'}`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    {theme === 'light' ? (
+                      <Moon className="w-5 h-5 drop-shadow-lg" />
+                    ) : (
+                      <Sun className="w-5 h-5 drop-shadow-lg" />
+                    )}
+                  </motion.button>
 
                   {/* Admin Button */}
                   <motion.button 
