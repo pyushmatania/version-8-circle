@@ -1,5 +1,6 @@
 // Comprehensive Image Validation and Replacement System
 // Checks each poster URL 10 times and finds alternatives from multiple sources
+import type { Project } from '../types';
 
 interface ImageValidationResult {
   url: string;
@@ -16,6 +17,14 @@ interface ProjectImageUpdate {
   newUrl: string;
   isValid: boolean;
   source: string;
+}
+
+interface ValidationStats {
+  totalValidated: number;
+  validOriginals: number;
+  foundAlternatives: number;
+  usingFallbacks: number;
+  cacheSize: number;
 }
 
 // Multiple high-quality image sources for different types of content
@@ -139,7 +148,7 @@ class ImageValidator {
       try {
         console.log(`Attempt ${attempts}/${maxAttempts} - Checking: ${url}`);
         
-        const response = await fetch(url, { 
+        await fetch(url, {
           method: 'HEAD',
           mode: 'no-cors' // Handle CORS issues
         });
@@ -216,7 +225,7 @@ class ImageValidator {
   }
 
   // Validate and update a single project
-  async validateProject(project: any): Promise<ProjectImageUpdate> {
+  async validateProject(project: Project): Promise<ProjectImageUpdate> {
     console.log(`\n🔍 Validating project: ${project.title}`);
     console.log(`Original URL: ${project.poster}`);
 
@@ -262,7 +271,7 @@ class ImageValidator {
   }
 
   // Validate all projects
-  async validateAllProjects(projects: any[]): Promise<ProjectImageUpdate[]> {
+  async validateAllProjects(projects: Project[]): Promise<ProjectImageUpdate[]> {
     console.log(`\n🚀 Starting validation of ${projects.length} projects...`);
     console.log('=' * 60);
 
@@ -328,7 +337,7 @@ class ImageValidator {
   }
 
   // Generate updated projects array
-  generateUpdatedProjects(originalProjects: any[], validationResults: ProjectImageUpdate[]): any[] {
+  generateUpdatedProjects(originalProjects: Project[], validationResults: ProjectImageUpdate[]): Project[] {
     return originalProjects.map(project => {
       const result = validationResults.find(r => r.id === project.id);
       if (result && result.newUrl !== project.poster) {
@@ -352,7 +361,7 @@ class ImageValidator {
   }
 
   // Get validation statistics
-  getValidationStats(): any {
+  getValidationStats(): ValidationStats {
     return {
       totalValidated: this.validationResults.length,
       validOriginals: this.validationResults.filter(r => r.isValid).length,
