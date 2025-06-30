@@ -1,23 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Bell, 
-  Calendar, 
-  Check, 
-  CheckCircle, 
-  ChevronDown, 
-  Clock, 
-  DollarSign, 
-  Film, 
-  Gift, 
-  Info, 
-  MessageCircle, 
-  Music, 
-  Settings, 
-  Tv, 
-  TrendingUp, 
-  User, 
-  X 
+import {
+  Bell,
+  Calendar,
+  Check,
+  CheckCircle,
+  ChevronDown,
+  Clock,
+  DollarSign,
+  Film,
+  Gift,
+  Info,
+  MessageCircle,
+  Music,
+  Settings,
+  Tv,
+  TrendingUp,
+  User,
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
@@ -84,7 +86,7 @@ interface NotificationDropdownProps {
 }
 
 const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll }) => {
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(mockNotifications);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -208,14 +210,26 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll }
                 <h3 className={`font-semibold ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                   Notifications
                 </h3>
-                {unreadCount > 0 && (
-                  <button 
-                    onClick={markAllAsRead}
-                    className={`text-xs ${theme === 'light' ? 'text-purple-600 hover:text-purple-800' : 'text-purple-400 hover:text-purple-300'}`}
+                <div className="flex items-center gap-2">
+                  {unreadCount > 0 && (
+                    <button
+                      onClick={markAllAsRead}
+                      className={`text-xs ${theme === 'light' ? 'text-purple-600 hover:text-purple-800' : 'text-purple-400 hover:text-purple-300'}`}
+                    >
+                      Mark all as read
+                    </button>
+                  )}
+                  <button
+                    onClick={toggleTheme}
+                    className={`p-1 rounded-full ${theme === 'light' ? 'text-gray-600 hover:bg-gray-100' : 'text-gray-300 hover:bg-gray-800'}`}
                   >
-                    Mark all as read
+                    {theme === 'light' ? (
+                      <Moon className="w-4 h-4" />
+                    ) : (
+                      <Sun className="w-4 h-4" />
+                    )}
                   </button>
-                )}
+                </div>
               </div>
             </div>
 
