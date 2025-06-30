@@ -15,10 +15,11 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
   // Gradient theme names for the indicator
   const gradientNames = [
     'Aurora Borealis',
-    'Sunset Dreams', 
+    'Sunset Dreams',
     'Ocean Depths',
     'Mystic Forest',
-    'Royal Purple'
+    'Royal Purple',
+    'Solar Flare'
   ];
 
   return (
@@ -130,6 +131,22 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                 currentGradient === 3 ? 'bg-gradient-to-br from-emerald-300 to-lime-300' :
                 'bg-gradient-to-br from-fuchsia-300 to-purple-300'
               : 'bg-gradient-to-br from-emerald-500 to-teal-500'
+          }`}
+        />
+
+        {/* Extra orbs */}
+        <motion.div
+          animate={{ x: [0, 90, -40, 0], y: [0, -40, 60, 0], scale: [1, 1.3, 0.7, 1] }}
+          transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
+          className={`absolute top-1/4 right-1/2 w-56 h-56 rounded-full blur-3xl opacity-30 ${
+            theme === 'light' ? 'bg-gradient-to-br from-purple-300 to-blue-300' : 'bg-gradient-to-br from-purple-600 to-blue-600'
+          }`}
+        />
+        <motion.div
+          animate={{ x: [0, -60, 80, 0], y: [0, 70, -50, 0], scale: [1, 0.9, 1.1, 1] }}
+          transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut', delay: 12 }}
+          className={`absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full blur-3xl opacity-30 ${
+            theme === 'light' ? 'bg-gradient-to-br from-yellow-300 to-pink-300' : 'bg-gradient-to-br from-yellow-600 to-pink-600'
           }`}
         />
 

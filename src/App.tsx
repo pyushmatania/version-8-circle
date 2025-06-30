@@ -87,7 +87,7 @@ function AppContent() {
             <Hero setCurrentView={handleViewChange} />
             <ProblemSolution />
             <HowItWorks />
-            <LiveProjects />
+            <LiveProjects onViewAll={() => handleViewChange('projects')} />
             <WhyThisMatters />
             <TechTrust />
             <Rewards />
