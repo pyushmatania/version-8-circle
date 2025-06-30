@@ -1,5 +1,6 @@
 // Script to run image validation on all projects
 import { extendedProjects } from '../data/extendedProjects';
+import type { Project } from '../types';
 import ImageValidator from './imageValidator';
 
 // Run the validation process
@@ -43,7 +44,7 @@ async function runImageValidation() {
 }
 
 // Generate updated project file content
-function generateUpdatedProjectFile(projects: any[]): string {
+function generateUpdatedProjectFile(projects: Project[]): string {
   return `import { Project } from '../types';
 
 // Updated with validated official posters and alternative sources
