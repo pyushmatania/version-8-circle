@@ -6,7 +6,7 @@ interface TypewriterProps {
   className?: string;
 }
 
-const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 120, className }) => {
+const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 200, className }) => {
   const [displayed, setDisplayed] = useState('');
 
   useEffect(() => {

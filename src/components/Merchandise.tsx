@@ -250,6 +250,56 @@ const Merchandise: React.FC = () => {
       releaseDate: '2024-02-25',
       popularity: 60,
       project: 'Mirzapur 4'
+    },
+    {
+      id: '12',
+      title: 'Kantara Forest Hat',
+      category: 'apparel',
+      price: 899,
+      priceType: 'fixed',
+      image: 'https://images.pexels.com/photos/404168/pexels-photo-404168.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Adventure hat themed after Kantara locations',
+      availability: 'in-stock',
+      rating: 4.2,
+      reviews: 54,
+      tags: ['Kantara', 'Adventure'],
+      releaseDate: '2024-03-18',
+      popularity: 55,
+      isNew: true
+    },
+    {
+      id: '13',
+      title: 'Marvel Multiverse Poster Pack',
+      category: 'collectibles',
+      price: 1299,
+      priceType: 'fixed',
+      image: 'https://images.pexels.com/photos/1307348/pexels-photo-1307348.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Set of high quality posters from upcoming Marvel saga',
+      availability: 'pre-order',
+      rating: 4.9,
+      reviews: 201,
+      tags: ['Marvel', 'Poster', 'Limited'],
+      releaseDate: '2024-04-15',
+      popularity: 99,
+      isLimited: true,
+      isTrending: true
+    },
+    {
+      id: '14',
+      title: 'Game of Thrones Chess Set',
+      category: 'limited-editions',
+      price: 5999,
+      priceType: 'auction',
+      image: 'https://images.pexels.com/photos/277092/pexels-photo-277092.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Collector chess set featuring iconic GoT characters',
+      availability: 'limited',
+      rating: 4.8,
+      reviews: 68,
+      tags: ['Chess', 'GoT', 'Collector'],
+      releaseDate: '2024-05-01',
+      popularity: 85,
+      project: 'Game of Thrones',
+      isLimited: true
     }
   ];
 
@@ -767,11 +817,13 @@ const Merchandise: React.FC = () => {
 
         {/* Merchandise Grid/List */}
         {filteredItems.length > 0 ? (
-          <div className={`${
-            viewMode === 'grid' 
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' 
-              : 'space-y-6'
-          }`}>
+          <div
+            className={`${
+              viewMode === 'grid'
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                : 'space-y-6'
+            } overflow-y-auto max-h-[70vh]`}
+          >
             {filteredItems.map((item, index) => (
               <motion.div
                 key={item.id}

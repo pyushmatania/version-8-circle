@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Film, Music, Clock, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import AnimatedNumber from './AnimatedNumber';
-import { updatedExtendedProjects } from '../data/updatedExtendedProjects';
+import { extendedProjects } from '../data/extendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
 import { useTheme } from './ThemeProvider';
@@ -16,10 +16,8 @@ const LiveProjects: React.FC<LiveProjectsProps> = ({ onViewAll }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { theme } = useTheme();
 
-  const trendingProjects = updatedExtendedProjects
-    .filter(p => p.fundedPercentage > 70)
-    .sort((a, b) => b.fundedPercentage - a.fundedPercentage)
-    .slice(0, 6);
+  const sorted = [...extendedProjects].sort((a, b) => b.raisedAmount - a.raisedAmount);
+  const trendingProjects = sorted.slice(0, Math.min(Math.max(3, sorted.length), 6));
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -258,7 +256,13 @@ const LiveProjects: React.FC<LiveProjectsProps> = ({ onViewAll }) => {
           className="text-center mt-12"
         >
           <button
-            onClick={() => onViewAll?.()}
+            onClick={() => {
+              if (onViewAll) {
+                onViewAll();
+              } else {
+                window.location.href = '/projects';
+              }
+            }}
             className={`group relative px-8 py-4 border rounded-full font-semibold text-lg backdrop-blur-md transition-all duration-300 hover:scale-105 ${
               theme === 'light'
                 ? 'border-gray-300 text-gray-700 bg-white/60 hover:bg-white/80'

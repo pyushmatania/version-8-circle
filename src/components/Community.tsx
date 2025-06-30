@@ -77,6 +77,22 @@ const Community: React.FC = () => {
       { user: 'Dev Malhotra', message: 'The action sequences look incredible!', time: '2:32 PM', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50' }
     ]
   });
+  const friendsList = [
+    { id: 'priya', name: 'Priya Sharma', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=100', online: true },
+    { id: 'dev', name: 'Dev Malhotra', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100', online: true },
+    { id: 'rahul', name: 'Rahul Krishnan', avatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=100', online: false },
+    { id: 'kavya', name: 'Kavya Nair', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=100', online: true },
+    { id: 'arjun', name: 'Arjun Reddy', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100', online: false },
+    { id: 'meera', name: 'Meera Patel', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=100', online: true }
+  ];
+  const [selectedFriend, setSelectedFriend] = useState<string>(friendsList[0].id);
+  const [friendChats, setFriendChats] = useState<Record<string, {user:string; message:string; time:string; avatar:string}[]>>({
+    [friendsList[0].id]: [
+      { user: friendsList[0].name, message: 'Hey! Excited for the project?', time: '2:45 PM', avatar: friendsList[0].avatar }
+    ]
+  });
+  const [friendInput, setFriendInput] = useState('');
+  const [friendTyping, setFriendTyping] = useState(false);
   const { theme } = useTheme();
 
   // Mock circles data with key people and detailed info
@@ -258,7 +274,7 @@ const Community: React.FC = () => {
     { id: 'behind-scenes', name: 'behind-the-scenes', icon: '🎭', unread: 5 }
   ];
 
-  const feedPosts = [
+  const [feedPosts, setFeedPosts] = useState<any[]>([
     {
       id: '1',
       user: {
@@ -666,6 +682,33 @@ const Community: React.FC = () => {
                   )}
                   </div>
                   <button
+                    onClick={() => {
+                      const media = postImage
+                        ? { type: 'image', url: URL.createObjectURL(postImage) }
+                        : postVideo
+                        ? { type: 'video', url: URL.createObjectURL(postVideo) }
+                        : undefined;
+                      const newEntry = {
+                        id: Date.now().toString(),
+                        user: {
+                          name: 'You',
+                          avatar:
+                            'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100',
+                          verified: false,
+                          role: 'Member'
+                        },
+                        timestamp: 'just now',
+                        content: newPost,
+                        media,
+                        reactions: [],
+                        comments: 0,
+                        shares: 0
+                      };
+                      setFeedPosts([newEntry, ...feedPosts]);
+                      setNewPost('');
+                      setPostImage(null);
+                      setPostVideo(null);
+                    }}
                     disabled={!newPost.trim()}
                     className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -927,14 +970,24 @@ const Community: React.FC = () => {
                   />
                   <button
                     onClick={() => {
-                      const msg = { user: 'You', message: newMessage, time: 'now', avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50' };
+                      const msg = {
+                        user: 'You',
+                        message: newMessage,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50'
+                      };
                       setMessages(prev => ({
                         ...prev,
                         [selectedChannel]: [...(prev[selectedChannel] || []), msg]
                       }));
                       setNewMessage('');
                       setTimeout(() => {
-                        const reply = { user: 'Friend', message: 'Got it!', time: 'just now', avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50' };
+                        const reply = {
+                          user: 'Friend',
+                          message: 'Got it!',
+                          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                          avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50'
+                        };
                         setMessages(prev => ({
                           ...prev,
                           [selectedChannel]: [...(prev[selectedChannel] || []), reply]
@@ -959,67 +1012,113 @@ const Community: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid lg:grid-cols-4 gap-6"
             >
-              {[
-                { name: 'Priya Sharma', level: 'Producer', mutual: 12, online: true, avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=100' },
-                { name: 'Dev Malhotra', level: 'Executive', mutual: 8, online: true, avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100' },
-                { name: 'Rahul Krishnan', level: 'Backer', mutual: 15, online: false, avatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=100' },
-                { name: 'Kavya Nair', level: 'Producer', mutual: 6, online: true, avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=100' },
-                { name: 'Arjun Reddy', level: 'Supporter', mutual: 9, online: false, avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100' },
-                { name: 'Meera Patel', level: 'VIP', mutual: 11, online: true, avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=100' }
-              ].map((friend, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className={`p-6 rounded-2xl backdrop-blur-xl border ${
-                    theme === 'light'
-                      ? 'light-glass-header hover:shadow-lg hover:shadow-purple-200/50'
-                      : 'bg-white/10 border-white/20 hover:border-white/30'
-                  } transition-all duration-300`}
-                >
-                  <div className="text-center">
-                    <div className="relative inline-block mb-4">
-                      <img 
-                        src={friend.avatar}
-                        alt={friend.name}
-                        className="w-16 h-16 rounded-full object-cover mx-auto"
-                      />
-                      {friend.online && (
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-current"></div>
-                      )}
+              <div
+                className={`lg:col-span-1 p-6 rounded-2xl backdrop-blur-xl border ${
+                  theme === 'light' ? 'light-glass-header' : 'bg-white/10 border-white/20'
+                }`}
+              >
+                <h3 className={`font-bold text-lg mb-4 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Friends</h3>
+                <div className="space-y-2">
+                  {friendsList.map(friend => (
+                    <button
+                      key={friend.id}
+                      onClick={() => setSelectedFriend(friend.id)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 ${
+                        selectedFriend === friend.id
+                          ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white'
+                          : theme === 'light'
+                          ? 'text-gray-700 hover:bg-white/50'
+                          : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      <img src={friend.avatar} alt={friend.name} className="w-8 h-8 rounded-full object-cover" />
+                      <span className="font-medium">{friend.name}</span>
+                      {friend.online && <span className="ml-auto w-3 h-3 bg-green-400 rounded-full" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div
+                className={`lg:col-span-3 p-6 rounded-2xl backdrop-blur-xl border ${
+                  theme === 'light' ? 'light-glass-header' : 'bg-white/10 border-white/20'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className={`font-bold text-xl ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Chat with {friendsList.find(f => f.id === selectedFriend)?.name}</h3>
+                </div>
+                <div className="space-y-4 mb-6 h-96 overflow-y-auto">
+                  {(friendChats[selectedFriend] || []).map((msg, index) => (
+                    <div key={index} className="flex gap-3">
+                      <img src={msg.avatar} alt={msg.user} className="w-10 h-10 rounded-full object-cover" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`font-medium ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>{msg.user}</span>
+                          <span className={`text-xs ${theme === 'light' ? 'text-gray-500' : 'text-gray-500'}`}>{msg.time}</span>
+                        </div>
+                        <div className={`${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>{msg.message}</div>
+                      </div>
                     </div>
-                    <h3 className={`font-bold text-lg mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-                      {friend.name}
-                    </h3>
-                    <div className={`px-3 py-1 rounded-full text-xs font-medium mb-3 inline-block ${
-                      friend.level === 'Producer' ? 'bg-yellow-500/20 text-yellow-400' :
-                      friend.level === 'Executive' ? 'bg-green-500/20 text-green-400' :
-                      friend.level === 'VIP' ? 'bg-purple-500/20 text-purple-400' :
-                      'bg-blue-500/20 text-blue-400'
-                    }`}>
-                      {friend.level}
+                  ))}
+                  {friendTyping && (
+                    <div className="flex gap-3">
+                      <img src={friendsList.find(f => f.id === selectedFriend)?.avatar} className="w-10 h-10 rounded-full object-cover" />
+                      <div className="flex items-center text-sm italic text-gray-500">Typing...</div>
                     </div>
-                    <p className={`text-sm mb-4 ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
-                      {friend.mutual} mutual connections
-                    </p>
-                    <div className="flex gap-2">
-                      <button className="flex-1 px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white text-sm font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300">
-                        Message
-                      </button>
-                      <button className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                        theme === 'light'
-                          ? 'bg-white/50 text-gray-700 hover:bg-white/80'
-                          : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
-                      }`}>
-                        View
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  )}
+                </div>
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    placeholder="Message"
+                    value={friendInput}
+                    onChange={(e) => setFriendInput(e.target.value)}
+                    className={`flex-1 px-4 py-3 rounded-xl border focus:outline-none focus:border-purple-500/50 ${
+                      theme === 'light'
+                        ? 'bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500'
+                        : 'bg-white/10 border-white/20 text-white placeholder-gray-400'
+                    }`}
+                  />
+                  <button
+                    onClick={() => {
+                      const msg = {
+                        user: 'You',
+                        message: friendInput,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50'
+                      };
+                      setFriendChats(prev => ({
+                        ...prev,
+                        [selectedFriend]: [...(prev[selectedFriend] || []), msg]
+                      }));
+                      setFriendInput('');
+                      setFriendTyping(true);
+                      setTimeout(() => {
+                        const friend = friendsList.find(f => f.id === selectedFriend);
+                        if (friend) {
+                          const reply = {
+                            user: friend.name,
+                            message: 'Auto reply!',
+                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                            avatar: friend.avatar
+                          };
+                          setFriendChats(prev => ({
+                            ...prev,
+                            [selectedFriend]: [...(prev[selectedFriend] || []), reply]
+                          }));
+                        }
+                        setFriendTyping(false);
+                      }, 2000);
+                    }}
+                    disabled={!friendInput.trim()}
+                    className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Send className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
             </motion.div>
           )}
 
