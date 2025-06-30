@@ -86,11 +86,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
               <div className="flex items-center justify-between">
                 {/* Logo - Much bigger size, no animations */}
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 flex items-center justify-center">
+                  <div className="w-24 h-24 flex items-center justify-center">
                     <img 
                       src="/Improved Logo-01.png" 
                       alt="Circles Logo" 
-                      className="w-20 h-20 object-contain drop-shadow-lg"
+                      className="w-24 h-24 object-contain drop-shadow-lg"
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;
                         target.style.display = 'none';
@@ -379,11 +379,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
             <div className="flex flex-col items-center space-y-6 w-16 py-8">
               
               {/* Logo - Much bigger size, no animations */}
-              <div className="w-20 h-20 flex items-center justify-center mb-4 relative">
+              <div className="w-24 h-24 flex items-center justify-center mb-4 relative">
                 <img 
                   src="/Improved Logo-01.png" 
                   alt="Circles Logo" 
-                  className="w-20 h-20 object-contain drop-shadow-lg"
+                  className="w-24 h-24 object-contain drop-shadow-lg"
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement;
                     target.style.display = 'none';

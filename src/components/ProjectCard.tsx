@@ -12,6 +12,7 @@ import {
   Bookmark, 
   Heart,
   TrendingUp,
+  ArrowRight,
   Award
 } from 'lucide-react';
 import { Project } from '../types';
@@ -222,8 +223,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-2 pt-2">
+                  <a
+                    href={project.trailer}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    <Play className="w-4 h-4" />
+                  </a>
                   <button className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white text-black rounded-lg font-semibold text-sm hover:bg-gray-200 transition-colors">
-                    <Play className="w-4 h-4 fill-current" />
+                    <ArrowRight className="w-4 h-4" />
                     Invest Now
                   </button>
                   <button className="p-2 bg-gray-600/80 text-white rounded-lg hover:bg-gray-600 transition-colors">

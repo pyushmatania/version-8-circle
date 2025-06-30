@@ -17,6 +17,7 @@ export interface Project {
   perks: string[];
   rating?: number;
   investorCount?: number;
+  trailer?: string;
 }
 
 export interface Testimonial {

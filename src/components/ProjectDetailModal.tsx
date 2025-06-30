@@ -58,9 +58,11 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
 
   if (!project) return null;
 
-  // Mock detailed data for the project
+  // Detailed data for the project
   const projectDetails = {
-    trailer: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Mock trailer URL
+    trailer: project.trailer
+      ? project.trailer.replace('watch?v=', 'embed/')
+      : 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     script: `FADE IN:
 
 EXT. MUMBAI SKYLINE - NIGHT
@@ -532,12 +534,13 @@ TITLE CARD: "NEON NIGHTS"`,
                       <div className={`relative aspect-video rounded-xl overflow-hidden ${
                         theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'
                       }`}>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <button className="flex items-center gap-3 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-full text-white font-semibold transition-colors">
-                            <Play className="w-5 h-5" />
-                            Watch Trailer
-                          </button>
-                        </div>
+                        <iframe
+                          src={projectDetails.trailer}
+                          title="Trailer"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full"
+                        />
                       </div>
                     </div>
 
