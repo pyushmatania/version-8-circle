@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Gift, Users, Crown, Ticket, Award, Camera, Music } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import Typewriter from './Typewriter';
 
 const Rewards: React.FC = () => {
   const { theme } = useTheme();
@@ -102,10 +103,10 @@ const Rewards: React.FC = () => {
           className="text-center mb-20"
         >
           <h2 className={`text-5xl md:text-6xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-8`}>
-            Rewards &{' '}
-            <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-              Perks
-            </span>
+            <Typewriter
+              text="Rewards & Perks"
+              className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent"
+            />
           </h2>
           <p className={`text-xl ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} max-w-3xl mx-auto`}>
             More than just returns. Get exclusive access, unique experiences, and become part of the creative process.

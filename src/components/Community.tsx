@@ -95,6 +95,67 @@ const Community: React.FC = () => {
   const [friendTyping, setFriendTyping] = useState(false);
   const { theme } = useTheme();
 
+  // Send message to selected channel
+  const sendChannelMessage = () => {
+    if (!newMessage.trim()) return;
+    const msg = {
+      user: 'You',
+      message: newMessage,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50'
+    };
+    setMessages(prev => ({
+      ...prev,
+      [selectedChannel]: [...(prev[selectedChannel] || []), msg]
+    }));
+    setNewMessage('');
+    setTimeout(() => {
+      const reply = {
+        user: 'Friend',
+        message: 'Got it!',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50'
+      };
+      setMessages(prev => ({
+        ...prev,
+        [selectedChannel]: [...(prev[selectedChannel] || []), reply]
+      }));
+    }, 3000);
+  };
+
+  // Send message to selected friend
+  const sendFriendMessage = () => {
+    if (!friendInput.trim()) return;
+    const msg = {
+      user: 'You',
+      message: friendInput,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50'
+    };
+    setFriendChats(prev => ({
+      ...prev,
+      [selectedFriend]: [...(prev[selectedFriend] || []), msg]
+    }));
+    setFriendInput('');
+    setFriendTyping(true);
+    setTimeout(() => {
+      const friend = friendsList.find(f => f.id === selectedFriend);
+      if (friend) {
+        const reply = {
+          user: friend.name,
+          message: 'Auto reply!',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          avatar: friend.avatar
+        };
+        setFriendChats(prev => ({
+          ...prev,
+          [selectedFriend]: [...(prev[selectedFriend] || []), reply]
+        }));
+      }
+      setFriendTyping(false);
+    }, 2000);
+  };
+
   // Mock circles data with key people and detailed info
   const myCircles = [
     {
@@ -962,6 +1023,12 @@ const Community: React.FC = () => {
                     placeholder={`Message #${selectedChannel}`}
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendChannelMessage();
+                      }
+                    }}
                     className={`flex-1 px-4 py-3 rounded-xl border focus:outline-none focus:border-purple-500/50 ${
                       theme === 'light'
                         ? 'bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500'
@@ -969,31 +1036,7 @@ const Community: React.FC = () => {
                     }`}
                   />
                   <button
-                    onClick={() => {
-                      const msg = {
-                        user: 'You',
-                        message: newMessage,
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50'
-                      };
-                      setMessages(prev => ({
-                        ...prev,
-                        [selectedChannel]: [...(prev[selectedChannel] || []), msg]
-                      }));
-                      setNewMessage('');
-                      setTimeout(() => {
-                        const reply = {
-                          user: 'Friend',
-                          message: 'Got it!',
-                          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                          avatar: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=50'
-                        };
-                        setMessages(prev => ({
-                          ...prev,
-                          [selectedChannel]: [...(prev[selectedChannel] || []), reply]
-                        }));
-                      }, 3000);
-                    }}
+                    onClick={sendChannelMessage}
                     disabled={!newMessage.trim()}
                     className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -1075,6 +1118,12 @@ const Community: React.FC = () => {
                     placeholder="Message"
                     value={friendInput}
                     onChange={(e) => setFriendInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendFriendMessage();
+                      }
+                    }}
                     className={`flex-1 px-4 py-3 rounded-xl border focus:outline-none focus:border-purple-500/50 ${
                       theme === 'light'
                         ? 'bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500'
@@ -1082,36 +1131,7 @@ const Community: React.FC = () => {
                     }`}
                   />
                   <button
-                    onClick={() => {
-                      const msg = {
-                        user: 'You',
-                        message: friendInput,
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=50'
-                      };
-                      setFriendChats(prev => ({
-                        ...prev,
-                        [selectedFriend]: [...(prev[selectedFriend] || []), msg]
-                      }));
-                      setFriendInput('');
-                      setFriendTyping(true);
-                      setTimeout(() => {
-                        const friend = friendsList.find(f => f.id === selectedFriend);
-                        if (friend) {
-                          const reply = {
-                            user: friend.name,
-                            message: 'Auto reply!',
-                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                            avatar: friend.avatar
-                          };
-                          setFriendChats(prev => ({
-                            ...prev,
-                            [selectedFriend]: [...(prev[selectedFriend] || []), reply]
-                          }));
-                        }
-                        setFriendTyping(false);
-                      }, 2000);
-                    }}
+                    onClick={sendFriendMessage}
                     disabled={!friendInput.trim()}
                     className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
