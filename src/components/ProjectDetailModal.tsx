@@ -41,6 +41,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
   const { theme } = useTheme();
   const [showTrailer, setShowTrailer] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const videoIdMatch = (project?.trailer || '').match(/(?:watch\?v=|embed\/)([^&]+)/);
   const videoId = videoIdMatch ? videoIdMatch[1] : '';
 
@@ -48,6 +49,8 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   useEffect(() => {
     if (isOpen) {
       setActiveTab(initialTab);
+      setShowTrailer(false);
+      setVideoLoaded(false);
       document.body.classList.add('modal-open');
       document.body.style.overflow = 'hidden';
     } else {
@@ -59,7 +62,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
       document.body.classList.remove('modal-open');
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, initialTab]);
+  }, [isOpen, initialTab, project]);
 
   if (!project) return null;
 
@@ -541,34 +544,36 @@ TITLE CARD: "NEON NIGHTS"`,
                         theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'
                       }`}
                     >
-                      {!showTrailer ? (
-                        <>
-                          <img
-                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                            alt="Trailer thumbnail"
-                            className="absolute inset-0 w-full h-full object-cover cursor-pointer"
-                            onClick={() => setShowTrailer(true)}
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <button
-                              onClick={() => setShowTrailer(true)}
-                              aria-label="Play trailer"
-                              className="w-16 h-16 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all duration-300 backdrop-blur-sm"
-                            >
-                              <Play className="w-8 h-8" />
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        <iframe
-                          src={projectDetails.trailer}
-                          title="Trailer"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          loading="lazy"
-                          className="absolute inset-0 w-full h-full"
-                        />
-                      )}
+        {(!showTrailer || !videoLoaded) && (
+          <>
+            <img
+              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+              alt="Trailer thumbnail"
+              className="absolute inset-0 w-full h-full object-cover cursor-pointer"
+              onClick={() => { setShowTrailer(true); setVideoLoaded(false); }}
+            />
+            {!showTrailer && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  onClick={() => { setShowTrailer(true); setVideoLoaded(false); }}
+                  aria-label="Play trailer"
+                  className="w-16 h-16 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all duration-300 backdrop-blur-sm"
+                >
+                  <Play className="w-8 h-8" />
+                </button>
+              </div>
+            )}
+          </>
+        )}
+        {showTrailer && (
+          <iframe
+            src={`${projectDetails.trailer}?autoplay=1`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className={`absolute inset-0 w-full h-full transition-opacity ${videoLoaded ? "opacity-100" : "opacity-0"}`}
+            onLoad={() => setVideoLoaded(true)}
+          />
+        )}
                     </div>
                     </div>
 
