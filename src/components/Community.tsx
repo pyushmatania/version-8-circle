@@ -338,7 +338,7 @@ const Community: React.FC = () => {
       comments: 89,
       shares: 34
     }
-  ];
+  ]);
 
   const currentCircle = myCircles.find(circle => circle.id === selectedCircle) || myCircles[0];
 
