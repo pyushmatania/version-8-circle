@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangle, TrendingDown, Users, ArrowRight, Zap, DollarSign, Award } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import Typewriter from './Typewriter';
 
 const ProblemSolution: React.FC = () => {
   const { theme } = useTheme();
@@ -60,10 +61,10 @@ const ProblemSolution: React.FC = () => {
           className="text-center mb-20"
         >
           <h2 className={`text-5xl md:text-6xl font-bold mb-8 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-            The entertainment industry is{' '}
-            <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-              broken
-            </span>
+            <Typewriter
+              text="The entertainment industry is broken"
+              className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
+            />
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}>
             While audiences crave authentic stories, systemic barriers prevent great content from reaching the world.
@@ -125,13 +126,10 @@ const ProblemSolution: React.FC = () => {
           className="text-center mb-20"
         >
           <h2 className={`text-5xl md:text-6xl font-bold mb-8 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Circles
-            </span>{' '}
-            turns audiences into{' '}
-            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-              stakeholders
-            </span>
+            <Typewriter
+              text="Circles turns audiences into stakeholders"
+              className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+            />
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}>
             We're building a world where passion meets ownership, where fans become co-producers of the culture they love.

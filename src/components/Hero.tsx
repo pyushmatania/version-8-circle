@@ -34,9 +34,9 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="gradient-indicator animate-gradient-pulse"
+          className="gradient-indicator animate-gradient-pulse flex items-center gap-1"
         >
-          ✨ {gradientNames[currentGradient]}
+          <Sparkles className="w-4 h-4 animate-pulse" /> {gradientNames[currentGradient]}
         </motion.div>
       )}
       

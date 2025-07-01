@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, CreditCard, TrendingUp, Users, Shield, Award } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import Typewriter from './Typewriter';
 
 const HowItWorks: React.FC = () => {
   const { theme } = useTheme();
@@ -62,10 +63,10 @@ const HowItWorks: React.FC = () => {
           className="text-center mb-20"
         >
           <h2 className={`text-5xl md:text-6xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-6`}>
-            How It{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Works
-            </span>
+            <Typewriter
+              text="How It Works"
+              className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+            />
           </h2>
           <p className={`text-xl ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} max-w-3xl mx-auto`}>
             Three simple steps to start investing in the entertainment you love

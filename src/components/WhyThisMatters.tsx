@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Quote, Sparkles } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import Typewriter from './Typewriter';
 
 const WhyThisMatters: React.FC = () => {
   const { theme } = useTheme();
@@ -48,10 +49,10 @@ const WhyThisMatters: React.FC = () => {
           className="text-center mb-20"
         >
           <h2 className={`text-5xl md:text-6xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-8`}>
-            Why This{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Matters
-            </span>
+            <Typewriter
+              text="Why This Matters"
+              className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+            />
           </h2>
           <p className={`text-xl ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} max-w-3xl mx-auto`}>
             The entertainment industry is at a turning point. Here's the story of how we got here, and where we're going.
@@ -149,8 +150,9 @@ const WhyThisMatters: React.FC = () => {
                 <motion.div
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="flex"
                 >
-                  ✨
+                  <Sparkles className="w-4 h-4" />
                 </motion.div>
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
