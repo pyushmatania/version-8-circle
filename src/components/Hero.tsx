@@ -136,17 +136,54 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
 
         {/* Extra orbs */}
         <motion.div
-          animate={{ x: [0, 90, -40, 0], y: [0, -40, 60, 0], scale: [1, 1.3, 0.7, 1] }}
-          transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
-          className={`absolute top-1/4 right-1/2 w-56 h-56 rounded-full blur-3xl opacity-30 ${
+          animate={{ x: [0, 90, -40, 0], y: [0, -40, 60, 0], scale: [1, 1.3, 0.7, 1], opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+          className={`absolute top-1/4 right-1/2 w-56 h-56 rounded-full blur-3xl ${
             theme === 'light' ? 'bg-gradient-to-br from-purple-300 to-blue-300' : 'bg-gradient-to-br from-purple-600 to-blue-600'
           }`}
         />
         <motion.div
-          animate={{ x: [0, -60, 80, 0], y: [0, 70, -50, 0], scale: [1, 0.9, 1.1, 1] }}
-          transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut', delay: 12 }}
-          className={`absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full blur-3xl opacity-30 ${
+          animate={{ x: [0, -60, 80, 0], y: [0, 70, -50, 0], scale: [1, 0.9, 1.1, 1], opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+          className={`absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full blur-3xl ${
             theme === 'light' ? 'bg-gradient-to-br from-yellow-300 to-pink-300' : 'bg-gradient-to-br from-yellow-600 to-pink-600'
+          }`}
+        />
+
+        {/* Additional fading orbs */}
+        <motion.div
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          className={`absolute top-1/3 left-1/4 w-40 h-40 rounded-full blur-3xl ${
+            theme === 'light' ? 'bg-gradient-to-br from-green-300 to-emerald-300' : 'bg-gradient-to-br from-green-600 to-emerald-600'
+          }`}
+        />
+        <motion.div
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+          className={`absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full blur-3xl ${
+            theme === 'light' ? 'bg-gradient-to-br from-blue-300 to-cyan-300' : 'bg-gradient-to-br from-blue-600 to-cyan-600'
+          }`}
+        />
+        <motion.div
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className={`absolute top-1/5 right-1/3 w-52 h-52 rounded-full blur-3xl ${
+            theme === 'light' ? 'bg-gradient-to-br from-rose-300 to-fuchsia-300' : 'bg-gradient-to-br from-rose-600 to-fuchsia-600'
+          }`}
+        />
+        <motion.div
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
+          className={`absolute bottom-1/5 left-1/4 w-44 h-44 rounded-full blur-3xl ${
+            theme === 'light' ? 'bg-gradient-to-br from-orange-300 to-yellow-300' : 'bg-gradient-to-br from-orange-600 to-yellow-600'
+          }`}
+        />
+        <motion.div
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          className={`absolute top-1/6 left-1/2 w-36 h-36 rounded-full blur-3xl ${
+            theme === 'light' ? 'bg-gradient-to-br from-indigo-300 to-purple-300' : 'bg-gradient-to-br from-indigo-600 to-purple-600'
           }`}
         />
 

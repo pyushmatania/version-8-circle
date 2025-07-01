@@ -32,17 +32,19 @@ interface ProjectDetailModalProps {
   project: Project | null;
   isOpen: boolean;
   onClose: () => void;
+  initialTab?: 'overview' | 'script' | 'cast' | 'perks' | 'invest';
 }
 
-const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'script' | 'cast' | 'perks' | 'invest'>('overview');
+const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen, onClose, initialTab = 'overview' }) => {
+  const [activeTab, setActiveTab] = useState<'overview' | 'script' | 'cast' | 'perks' | 'invest'>(initialTab);
   const [selectedPerkTier, setSelectedPerkTier] = useState<string>('supporter');
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
   const { theme } = useTheme();
 
-  // Prevent background scrolling when modal is open
+  // Prevent background scrolling and reset tab when modal is open
   useEffect(() => {
     if (isOpen) {
+      setActiveTab(initialTab);
       document.body.classList.add('modal-open');
       document.body.style.overflow = 'hidden';
     } else {
@@ -54,7 +56,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
       document.body.classList.remove('modal-open');
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, initialTab]);
 
   if (!project) return null;
 

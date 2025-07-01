@@ -19,6 +19,7 @@ import {
   X 
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
 import { extendedProjects } from '../data/extendedProjects';
 
@@ -28,6 +29,8 @@ interface ProjectComparisonProps {
 
 const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects }) => {
   const { theme } = useTheme();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [compareProjects, setCompareProjects] = useState<Project[]>(initialProjects || []);
   const [searchTerm, setSearchTerm] = useState('');
   const [showResults, setShowResults] = useState(false);
@@ -93,12 +96,16 @@ const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects }
 
   // Function to pick random projects for comparison
   const pickRandomProjects = () => {
-    // Get 3 random projects of different types
-    const randomFilm = extendedProjects.filter(p => p.type === 'film')[Math.floor(Math.random() * extendedProjects.filter(p => p.type === 'film').length)];
-    const randomMusic = extendedProjects.filter(p => p.type === 'music')[Math.floor(Math.random() * extendedProjects.filter(p => p.type === 'music').length)];
-    const randomWebSeries = extendedProjects.filter(p => p.type === 'webseries')[Math.floor(Math.random() * extendedProjects.filter(p => p.type === 'webseries').length)];
-    
-    setCompareProjects([randomFilm, randomMusic, randomWebSeries]);
+    const pick = (items: Project[]) => items[Math.floor(Math.random() * items.length)];
+    const films = extendedProjects.filter(p => p.type === 'film');
+    const musics = extendedProjects.filter(p => p.type === 'music');
+    const series = extendedProjects.filter(p => p.type === 'webseries');
+
+    const selections = [films, musics, series]
+      .map(arr => (arr.length ? pick(arr) : null))
+      .filter(Boolean) as Project[];
+
+    setCompareProjects(selections);
   };
 
   // Get type icon component
@@ -780,18 +787,24 @@ const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects }
                   {compareProjects.map((project) => (
                     <td key={project.id} className="py-4 px-6">
                       <div className="flex flex-col items-center gap-3">
-                        <button className={`w-full py-2 rounded-lg font-medium transition-colors ${
-                          theme === 'light'
-                            ? 'bg-purple-500 hover:bg-purple-600 text-white'
-                            : 'bg-purple-600 hover:bg-purple-700 text-white'
-                        }`}>
+                        <button
+                          onClick={() => { setSelectedProject(project); setIsModalOpen(true); }}
+                          className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                            theme === 'light'
+                              ? 'bg-purple-500 hover:bg-purple-600 text-white'
+                              : 'bg-purple-600 hover:bg-purple-700 text-white'
+                          }`}
+                        >
                           Invest Now
                         </button>
-                        <button className={`w-full py-2 rounded-lg font-medium transition-colors ${
-                          theme === 'light'
-                            ? 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'
-                            : 'bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700'
-                        }`}>
+                        <button
+                          onClick={() => { setSelectedProject(project); setIsModalOpen(true); }}
+                          className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                            theme === 'light'
+                              ? 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'
+                              : 'bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700'
+                          }`}
+                        >
                           View Details
                         </button>
                       </div>
@@ -831,6 +844,12 @@ const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects }
           </div>
         )}
       </div>
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={() => { setIsModalOpen(false); setSelectedProject(null); }}
+        initialTab="invest"
+      />
     </div>
   );
 };
