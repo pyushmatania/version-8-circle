@@ -4,7 +4,11 @@ import { Quote, Sparkles } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
-const WhyThisMatters: React.FC = () => {
+interface WhyThisMattersProps {
+  onJoin?: () => void;
+}
+
+const WhyThisMatters: React.FC<WhyThisMattersProps> = ({ onJoin }) => {
   const { theme } = useTheme();
 
   const stories = [
@@ -144,7 +148,9 @@ const WhyThisMatters: React.FC = () => {
               : 'bg-gradient-to-br from-white/10 to-white/5 border-white/20'
           }`}>
             <div className={`text-xl font-semibold ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Ready to own the culture you love?</div>
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
+            <button
+              onClick={onJoin}
+              className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
               <span className="relative z-10 flex items-center gap-2">
                 Join the Revolution
                 <motion.div

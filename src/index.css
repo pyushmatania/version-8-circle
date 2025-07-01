@@ -23,8 +23,8 @@
 
   /* Light theme */
   .light {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
+    --bg-primary: #f7f4ee;
+    --bg-secondary: #fef6fa;
     --text-primary: #1f2937;
     --text-secondary: #6b7280;
   }
@@ -209,6 +209,7 @@
 
   .light body {
     transition: background 2.2s ease-in-out;
+    background: linear-gradient(to bottom right, #fffaf0, #f1f9ff);
   }
 
   /* Gradient Theme 0 - Aurora Borealis */
@@ -964,4 +965,39 @@
 
 .animate-blink {
   animation: blink 1s step-end infinite;
+}
+
+/* Subtle starfield background */
+#stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+#stars::before,
+#stars::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+}
+
+#stars::before {
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: starTwinkle 6s linear infinite;
+  opacity: 0.6;
+}
+
+#stars::after {
+  background-image: radial-gradient(white 1.5px, transparent 1.5px);
+  background-size: 6px 6px;
+  animation: starTwinkle 8s linear infinite reverse;
+  opacity: 0.4;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; }
 }

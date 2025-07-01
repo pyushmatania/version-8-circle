@@ -40,6 +40,9 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   const [selectedPerkTier, setSelectedPerkTier] = useState<string>('supporter');
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
   const { theme } = useTheme();
+  const [showTrailer, setShowTrailer] = useState(false);
+  const videoIdMatch = (project?.trailer || '').match(/(?:watch\?v=|embed\/)([^&]+)/);
+  const videoId = videoIdMatch ? videoIdMatch[1] : '';
 
   // Prevent background scrolling and reset tab when modal is open
   useEffect(() => {
@@ -533,16 +536,26 @@ TITLE CARD: "NEON NIGHTS"`,
                       <h2 className={`text-2xl font-bold mb-4 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                         Official Trailer
                       </h2>
-                      <div className={`relative aspect-video rounded-xl overflow-hidden ${
+                    <div className={`relative aspect-video rounded-xl overflow-hidden ${
                         theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'
                       }`}>
-                        <iframe
-                          src={projectDetails.trailer}
-                          title="Trailer"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="absolute inset-0 w-full h-full"
-                        />
+                        {!showTrailer ? (
+                          <img
+                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                            alt="Trailer thumbnail"
+                            className="absolute inset-0 w-full h-full object-cover cursor-pointer"
+                            onClick={() => setShowTrailer(true)}
+                          />
+                        ) : (
+                          <iframe
+                            src={projectDetails.trailer}
+                            title="Trailer"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            loading="lazy"
+                            className="absolute inset-0 w-full h-full"
+                          />
+                        )}
                       </div>
                     </div>
 

@@ -88,7 +88,7 @@ function AppContent() {
             <ProblemSolution />
             <HowItWorks />
             <LiveProjects onViewAll={() => handleViewChange('projects')} />
-            <WhyThisMatters />
+            <WhyThisMatters onJoin={() => handleAuthRequired('register')} />
             <TechTrust />
             <Rewards />
             <Testimonials />
