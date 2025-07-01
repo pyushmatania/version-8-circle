@@ -536,27 +536,40 @@ TITLE CARD: "NEON NIGHTS"`,
                       <h2 className={`text-2xl font-bold mb-4 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                         Official Trailer
                       </h2>
-                    <div className={`relative aspect-video rounded-xl overflow-hidden ${
+                    <div
+                      className={`relative aspect-video rounded-xl overflow-hidden ${
                         theme === 'light' ? 'bg-gray-200' : 'bg-gray-800'
-                      }`}>
-                        {!showTrailer ? (
+                      }`}
+                    >
+                      {!showTrailer ? (
+                        <>
                           <img
                             src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
                             alt="Trailer thumbnail"
                             className="absolute inset-0 w-full h-full object-cover cursor-pointer"
                             onClick={() => setShowTrailer(true)}
                           />
-                        ) : (
-                          <iframe
-                            src={projectDetails.trailer}
-                            title="Trailer"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            loading="lazy"
-                            className="absolute inset-0 w-full h-full"
-                          />
-                        )}
-                      </div>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <button
+                              onClick={() => setShowTrailer(true)}
+                              aria-label="Play trailer"
+                              className="w-16 h-16 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all duration-300 backdrop-blur-sm"
+                            >
+                              <Play className="w-8 h-8" />
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <iframe
+                          src={projectDetails.trailer}
+                          title="Trailer"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full"
+                        />
+                      )}
+                    </div>
                     </div>
 
                     {/* Production Details */}
