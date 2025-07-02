@@ -232,7 +232,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center mt-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center mt-10">
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
