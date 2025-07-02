@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import PixelCard from './PixelCard';
 import { 
   Film, 
   Music, 
@@ -42,14 +43,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const aspectRatio = 'aspect-[2/3]';
 
   return (
-    <motion.div
-      className={`relative flex-shrink-0 ${cardWidth} cursor-pointer group`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: compact ? 1.02 : 1.05 }}
-      transition={{ duration: 0.3 }}
-      onClick={onClick}
+    <PixelCard
+      variant="pink"
+      className={`relative flex-shrink-0 ${cardWidth}`}
     >
+      <motion.div
+        className="absolute inset-0 cursor-pointer group"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        whileHover={{ scale: compact ? 1.02 : 1.05 }}
+        transition={{ duration: 0.3 }}
+        onClick={onClick}
+      >
       <div className={`relative ${aspectRatio} rounded-xl overflow-hidden bg-gray-800 shadow-2xl`}>
         {/* Main Poster Image */}
         <div className="relative w-full h-full">
@@ -260,7 +265,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           'shadow-2xl shadow-green-500/20'
         }`} />
       </div>
-    </motion.div>
+      </motion.div>
+    </PixelCard>
   );
 };
 
