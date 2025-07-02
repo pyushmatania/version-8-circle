@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal, Sun, Moon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useAuth } from './auth/AuthProvider';
+import ShinyText from './ShinyText';
 import SearchBar from './SearchBar';
 import NotificationDropdown from './NotificationDropdown';
 
@@ -131,10 +132,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <item.icon className="w-5 h-5 drop-shadow-lg" />
-                      <span className="font-medium text-base drop-shadow-lg">
-                        {item.label}
-                      </span>
+                    <item.icon className="w-5 h-5 drop-shadow-lg shiny-text" />
+                      <ShinyText
+                        text={item.label}
+                        className="font-medium text-base drop-shadow-lg"
+                      />
                       {item.requiresAuth && !isAuthenticated && (
                         <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
                       )}
@@ -156,10 +158,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <MoreHorizontal className="w-5 h-5 drop-shadow-lg" />
-                      <span className="font-medium text-base drop-shadow-lg">
-                        More
-                      </span>
+                    <MoreHorizontal className="w-5 h-5 drop-shadow-lg shiny-text" />
+                      <ShinyText
+                        text="More"
+                        className="font-medium text-base drop-shadow-lg"
+                      />
                       {showMoreMenu ? 
                         <ChevronUp className="w-4 h-4" /> : 
                         <ChevronDown className="w-4 h-4" />
@@ -248,7 +251,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <LayoutDashboard className="w-5 h-5 drop-shadow-lg" />
+                    <LayoutDashboard className="w-5 h-5 drop-shadow-lg shiny-text" />
                   </motion.button>
 
                   {/* User Menu */}
@@ -289,8 +292,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                                   theme === 'light' ? 'hover:bg-gray-100 text-gray-700' : 'hover:bg-white/10 text-gray-300'
                                 }`}
                               >
-                                <User className="w-4 h-4" />
-                                Profile
+                                <User className="w-4 h-4 shiny-text" />
+                                <ShinyText text="Profile" />
                               </button>
                               <button
                                 onClick={handleLogout}
@@ -298,8 +301,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                                   theme === 'light' ? 'hover:bg-gray-100 text-gray-700' : 'hover:bg-white/10 text-gray-300'
                                 }`}
                               >
-                                <LogOut className="w-4 h-4" />
-                                Sign Out
+                                <LogOut className="w-4 h-4 shiny-text" />
+                                <ShinyText text="Sign Out" />
                               </button>
                             </div>
                           </motion.div>
@@ -314,8 +317,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <LogIn className="w-4 h-4 drop-shadow-lg" />
-                        <span className="font-medium drop-shadow-lg">Sign In</span>
+                        <LogIn className="w-4 h-4 drop-shadow-lg shiny-text" />
+                        <ShinyText text="Sign In" className="font-medium drop-shadow-lg" />
                       </motion.button>
                     </div>
                   )}
@@ -338,7 +341,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <item.icon className="w-5 h-5 drop-shadow-lg" />
+                    <item.icon className="w-5 h-5 drop-shadow-lg shiny-text" />
                       {item.requiresAuth && !isAuthenticated && (
                         <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
                       )}
@@ -356,7 +359,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <LayoutDashboard className="w-5 h-5 drop-shadow-lg" />
+                    <LayoutDashboard className="w-5 h-5 drop-shadow-lg shiny-text" />
                   </motion.button>
                 </div>
               </div>
@@ -419,7 +422,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <item.icon className="w-6 h-6" />
+                    <item.icon className="w-6 h-6 shiny-text" />
                     {item.requiresAuth && !isAuthenticated && (
                       <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
                     )}
@@ -457,7 +460,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <MoreHorizontal className="w-6 h-6" />
+                    <MoreHorizontal className="w-6 h-6 shiny-text" />
                     
                     {/* Active Indicator for any "more" item */}
                     {moreNavItems.some(item => item.id === currentView) && (
@@ -502,8 +505,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                                     : 'text-gray-300 hover:bg-gray-800'
                               }`}
                             >
-                              <item.icon className="w-5 h-5" />
-                              <span>{item.label}</span>
+                              <item.icon className="w-5 h-5 shiny-text" />
+                              <ShinyText text={item.label} />
                               {item.requiresAuth && !isAuthenticated && (
                                 <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse ml-auto" />
                               )}
@@ -532,7 +535,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Bell className="w-6 h-6" />
+                    <Bell className="w-6 h-6 shiny-text" />
                     <motion.div 
                       className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-current"
                       animate={{ scale: [1, 1.2, 1] }}
@@ -606,7 +609,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <LogIn className="w-6 h-6" />
+                    <LogIn className="w-6 h-6 shiny-text" />
                   </motion.button>
                 )}
               </div>
