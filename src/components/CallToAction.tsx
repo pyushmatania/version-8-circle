@@ -12,9 +12,9 @@ const CallToAction: React.FC<CallToActionProps> = ({ setCurrentView }) => {
   const { theme } = useTheme();
 
   return (
-    <section className={`py-24 relative overflow-hidden ${
-      theme === 'light' 
-        ? 'animated-gradient-light' 
+    <section className={`py-16 md:py-24 relative overflow-hidden ${
+      theme === 'light'
+        ? 'animated-gradient-light'
         : 'bg-gradient-to-br from-purple-900 via-black to-blue-900'
     }`}>
 
@@ -41,7 +41,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ setCurrentView }) => {
             Ready to back the next blockbuster?
           </motion.div>
 
-          <h2 className={`text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight ${
+          <h2 className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight ${
             theme === 'light' ? 'text-gray-900' : 'text-white'
           }`}>
             <Typewriter

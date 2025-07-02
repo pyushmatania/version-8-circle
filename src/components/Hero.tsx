@@ -23,9 +23,9 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
   ];
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-16 ${
-      theme === 'light' 
-        ? 'animated-gradient-light' 
+    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-16 ${
+      theme === 'light'
+        ? 'animated-gradient-light'
         : 'animated-gradient-dark'
     }`}>
       
@@ -269,7 +269,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             The Future of Entertainment Investment
           </motion.div>
 
-          <h1 className={`text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight ${
+          <h1 className={`text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight ${
             theme === 'light' ? 'text-gray-900' : 'text-white'
           }`}>
             <Typewriter

@@ -23,8 +23,8 @@
 
   /* Light theme */
   .light {
-    --bg-primary: #f7f4ee;
-    --bg-secondary: #fef6fa;
+    --bg-primary: #fdf7ec;
+    --bg-secondary: #fdf4e8;
     --text-primary: #1f2937;
     --text-secondary: #6b7280;
   }
@@ -34,6 +34,11 @@
     color: var(--text-primary);
     position: relative;
     overflow-x: hidden;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 
   /* Enhanced Dark theme cycling gradient effects - 2.2 second intervals */
