@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import PixelCard from './PixelCard';
 import { Film, Music, Tv, Search, Star, Clock, Users, TrendingUp, ChevronLeft, ChevronRight, Play, Plus, Info, Siren as Fire, Award, Globe, Filter, Grid3X3, List, SlidersHorizontal, X, Calendar, DollarSign, MapPin, Heart, Share2, Bookmark, ArrowRight, Eye } from 'lucide-react';
 import { extendedProjects } from '../data/extendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
@@ -876,14 +877,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, featured, u
   const aspectRatio = featured ? 'aspect-[16/10]' : 'aspect-[2/3]';
 
   return (
-    <motion.div
-      className={`relative flex-shrink-0 ${cardWidth} cursor-pointer group`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: compact ? 1.02 : 1.05 }}
-      transition={{ duration: 0.3 }}
-      onClick={onClick}
-    >
+    <PixelCard variant="pink" className={`relative flex-shrink-0 ${cardWidth}`}> 
+      <motion.div
+        className="absolute inset-0 cursor-pointer group"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        whileHover={{ scale: compact ? 1.02 : 1.05 }}
+        transition={{ duration: 0.3 }}
+        onClick={onClick}
+      >
       <div className={`relative ${aspectRatio} rounded-xl overflow-hidden bg-gray-800 shadow-2xl`}>
         {/* Main Poster Image with Blur Effect on Hover */}
         <div className="relative w-full h-full">
@@ -1079,6 +1081,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, featured, u
         }`} />
       </div>
     </motion.div>
+    </PixelCard>
   );
 };
 
