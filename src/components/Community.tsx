@@ -1179,7 +1179,7 @@ const Community: React.FC = () => {
                     className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
                   >
                     <img 
-                      src={`https://images.pexels.com/photos/${7991579 + index}/pexels-photo-${7991579 + index}.jpeg?auto=compress&cs=tinysrgb&w=300`}
+                      src={`https://images.pexels.com/photos/${7991579 + index}/pexels-photo-${7991579 + index}.jpeg?auto=compress&cs=tinysrgb&w=1080`}
                       alt={`Media ${index + 1}`}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />

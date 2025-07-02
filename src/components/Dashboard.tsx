@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
       returns: 4500,
       returnPercentage: 18,
       status: 'In Production',
-      poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=300',
+      poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=1080',
       releaseDate: '2024-06-15'
     },
     {
@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
       returns: 1800,
       returnPercentage: 12,
       status: 'Released',
-      poster: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=300',
+      poster: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=1080',
       releaseDate: '2024-03-20'
     },
     {
@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
       returns: 12500,
       returnPercentage: 25,
       status: 'Post Production',
-      poster: 'https://images.pexels.com/photos/2449665/pexels-photo-2449665.jpeg?auto=compress&cs=tinysrgb&w=300',
+      poster: 'https://images.pexels.com/photos/2449665/pexels-photo-2449665.jpeg?auto=compress&cs=tinysrgb&w=1080',
       releaseDate: '2024-08-10'
     },
     {
@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
       returns: -2000,
       returnPercentage: -10,
       status: 'In Production',
-      poster: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=300',
+      poster: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=1080',
       releaseDate: '2024-07-05'
     },
     {
@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
       returns: 2250,
       returnPercentage: 15,
       status: 'Streaming',
-      poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=300',
+      poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=1080',
       releaseDate: '2024-01-15'
     }
   ];
