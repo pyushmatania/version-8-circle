@@ -376,7 +376,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
             className="fixed left-6 top-0 bottom-0 z-50 flex items-center"
           >
             {/* Sidebar Container - Clean icon column only */}
-            <div className="flex flex-col items-center space-y-6 w-16 py-8">
+            <div className="flex flex-col items-center space-y-6 w-16 py-8 group">
               
               {/* Logo - Much bigger size, no animations */}
               <div className="w-24 h-24 flex items-center justify-center mb-4 relative">
@@ -399,44 +399,58 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
               {/* Main Navigation Icons */}
               <div className="flex flex-col items-center space-y-3">
                 {mainNavItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    onClick={() => handleItemClick(item.id)}
-                    className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
-                      currentView === item.id
-                        ? `${theme === 'light' 
-                            ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25' 
-                            : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
-                          }`
-                        : `${theme === 'light' 
-                            ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
-                            : 'text-gray-400 hover:text-white hover:bg-white/10'
-                          }`
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <item.icon className="w-6 h-6" />
-                    {item.requiresAuth && !isAuthenticated && (
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
-                    )}
+                  <div key={item.id} className="relative">
+                    <motion.button
+                      onClick={() => handleItemClick(item.id)}
+                      className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
+                        currentView === item.id
+                          ? `${theme === 'light' 
+                              ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25' 
+                              : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
+                            }`
+                          : `${theme === 'light' 
+                              ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
+                              : 'text-gray-400 hover:text-white hover:bg-white/10'
+                            }`
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      <item.icon className="w-6 h-6" />
+                      {item.requiresAuth && !isAuthenticated && (
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
+                      )}
 
-                    {/* Active Indicator */}
-                    {currentView === item.id && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className={`absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-[3000ms] ${
-                          theme === 'light' 
-                            ? 'bg-gradient-to-b from-purple-400 to-purple-500'
-                            : 'bg-gradient-to-b from-cyan-400 to-blue-500'
-                        }`}
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                  </motion.button>
+                      {/* Active Indicator */}
+                      {currentView === item.id && (
+                        <motion.div
+                          layoutId="activeIndicator"
+                          className={`absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-[3000ms] ${
+                            theme === 'light' 
+                              ? 'bg-gradient-to-b from-purple-400 to-purple-500'
+                              : 'bg-gradient-to-b from-cyan-400 to-blue-500'
+                          }`}
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
+                    </motion.button>
+                    
+                    {/* Hover Text */}
+                    <span className={`absolute left-16 top-1/2 transform -translate-y-1/2 whitespace-nowrap px-2 py-1 text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none select-none group-hover:translate-x-0 translate-x-[-10px] ${
+                      currentView === item.id
+                        ? theme === 'light'
+                          ? 'text-purple-600'
+                          : 'text-cyan-400'
+                        : theme === 'light'
+                          ? 'text-gray-700'
+                          : 'text-gray-400'
+                    }`}>
+                      {item.label}
+                    </span>
+                  </div>
                 ))}
 
                 {/* More Menu Button */}
@@ -472,6 +486,19 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                       />
                     )}
                   </motion.button>
+                  
+                  {/* Hover Text */}
+                  <span className={`absolute left-16 top-1/2 transform -translate-y-1/2 whitespace-nowrap px-2 py-1 text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none select-none group-hover:translate-x-0 translate-x-[-10px] ${
+                    moreNavItems.some(item => item.id === currentView)
+                      ? theme === 'light'
+                        ? 'text-purple-600'
+                        : 'text-cyan-400'
+                      : theme === 'light'
+                        ? 'text-gray-700'
+                        : 'text-gray-400'
+                  }`}>
+                    More
+                  </span>
                   
                   {/* More Menu Dropdown */}
                   <AnimatePresence>
@@ -516,98 +543,139 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 </div>
 
                 {/* Notification Button */}
-                <motion.button
-                    onClick={() => setCurrentView('notifications')}
-                    className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
-                      currentView === 'notifications'
-                        ? `${theme === 'light'
-                            ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25'
-                            : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
-                          }`
-                        : `${theme === 'light'
-                            ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
-                            : 'text-gray-400 hover:text-white hover:bg-white/10'
-                          }`
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Bell className="w-6 h-6" />
-                    <motion.div 
-                      className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-current"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    />
-
-                    {/* Active Indicator */}
-                    {currentView === 'notifications' && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className={`absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-[3000ms] ${
-                          theme === 'light' 
-                            ? 'bg-gradient-to-b from-purple-400 to-purple-500'
-                            : 'bg-gradient-to-b from-cyan-400 to-blue-500'
-                        }`}
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                <div className="relative">
+                  <motion.button
+                      onClick={() => setCurrentView('notifications')}
+                      className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
+                        currentView === 'notifications'
+                          ? `${theme === 'light'
+                              ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25'
+                              : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
+                            }`
+                          : `${theme === 'light'
+                              ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
+                              : 'text-gray-400 hover:text-white hover:bg-white/10'
+                            }`
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Bell className="w-6 h-6" />
+                      <motion.div 
+                        className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-current"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
                       />
-                    )}
-                  </motion.button>
+
+                      {/* Active Indicator */}
+                      {currentView === 'notifications' && (
+                        <motion.div
+                          layoutId="activeIndicator"
+                          className={`absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-[3000ms] ${
+                            theme === 'light' 
+                              ? 'bg-gradient-to-b from-purple-400 to-purple-500'
+                              : 'bg-gradient-to-b from-cyan-400 to-blue-500'
+                          }`}
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
+                    </motion.button>
+                    
+                    {/* Hover Text */}
+                    <span className={`absolute left-16 top-1/2 transform -translate-y-1/2 whitespace-nowrap px-2 py-1 text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none select-none group-hover:translate-x-0 translate-x-[-10px] ${
+                      currentView === 'notifications'
+                        ? theme === 'light'
+                          ? 'text-purple-600'
+                          : 'text-cyan-400'
+                        : theme === 'light'
+                          ? 'text-gray-700'
+                          : 'text-gray-400'
+                    }`}>
+                      Notifications
+                    </span>
+                </div>
 
                 {/* Profile Button */}
                 {isAuthenticated && (
-                  <motion.button
-                    onClick={() => handleItemClick('profile')}
-                    className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
-                      currentView === 'profile'
-                        ? `${theme === 'light' 
-                            ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25' 
-                            : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
-                          }`
-                        : `${theme === 'light' 
-                            ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
-                            : 'text-gray-400 hover:text-white hover:bg-white/10'
-                          }`
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <div className="w-6 h-6 rounded-full overflow-hidden">
-                      <img 
-                        src={user?.avatar} 
-                        alt={user?.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  <div className="relative">
+                    <motion.button
+                      onClick={() => handleItemClick('profile')}
+                      className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
+                        currentView === 'profile'
+                          ? `${theme === 'light' 
+                              ? 'text-purple-600 bg-purple-100/50 shadow-lg shadow-purple-400/25' 
+                              : 'text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/25'
+                            }`
+                          : `${theme === 'light' 
+                              ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
+                              : 'text-gray-400 hover:text-white hover:bg-white/10'
+                            }`
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className="w-6 h-6 rounded-full overflow-hidden">
+                        <img 
+                          src={user?.avatar} 
+                          alt={user?.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
 
-                    {/* Active Indicator */}
-                    {currentView === 'profile' && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className={`absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-[3000ms] ${
-                          theme === 'light' 
-                            ? 'bg-gradient-to-b from-purple-400 to-purple-500'
-                            : 'bg-gradient-to-b from-cyan-400 to-blue-500'
-                        }`}
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                  </motion.button>
+                      {/* Active Indicator */}
+                      {currentView === 'profile' && (
+                        <motion.div
+                          layoutId="activeIndicator"
+                          className={`absolute -left-2 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-[3000ms] ${
+                            theme === 'light' 
+                              ? 'bg-gradient-to-b from-purple-400 to-purple-500'
+                              : 'bg-gradient-to-b from-cyan-400 to-blue-500'
+                          }`}
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
+                    </motion.button>
+                    
+                    {/* Hover Text */}
+                    <span className={`absolute left-16 top-1/2 transform -translate-y-1/2 whitespace-nowrap px-2 py-1 text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none select-none group-hover:translate-x-0 translate-x-[-10px] ${
+                      currentView === 'profile'
+                        ? theme === 'light'
+                          ? 'text-purple-600'
+                          : 'text-cyan-400'
+                        : theme === 'light'
+                          ? 'text-gray-700'
+                          : 'text-gray-400'
+                    }`}>
+                      Profile
+                    </span>
+                  </div>
                 )}
 
                 {/* Auth Buttons for Sidebar */}
                 {!isAuthenticated && (
-                  <motion.button
-                    onClick={() => onAuthRequired('login')}
-                    className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
-                      theme === 'light' 
-                        ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
-                        : 'text-gray-400 hover:text-white hover:bg-white/10'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <LogIn className="w-6 h-6" />
-                  </motion.button>
+                  <div className="relative">
+                    <motion.button
+                      onClick={() => onAuthRequired('login')}
+                      className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
+                        theme === 'light' 
+                          ? 'text-gray-700 hover:text-gray-900 hover:bg-white/50' 
+                          : 'text-gray-400 hover:text-white hover:bg-white/10'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <LogIn className="w-6 h-6" />
+                    </motion.button>
+                    
+                    {/* Hover Text */}
+                    <span className={`absolute left-16 top-1/2 transform -translate-y-1/2 whitespace-nowrap px-2 py-1 text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none select-none group-hover:translate-x-0 translate-x-[-10px] ${
+                      theme === 'light'
+                        ? 'text-gray-700'
+                        : 'text-gray-400'
+                    }`}>
+                      Sign In
+                    </span>
+                  </div>
                 )}
               </div>
             </div>
