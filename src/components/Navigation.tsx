@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal, Sun, Moon } from 'lucide-react';
+import { Home, BarChart3, Film, Users, Bell, Search, User, LogIn, LogOut, LayoutDashboard, ShoppingBag, ChevronDown, ChevronUp, BarChart, GitCompareArrows as ArrowsCompare, Newspaper, MoreHorizontal, Sun, Moon, Compass } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useAuth } from './auth/AuthProvider';
 import SearchBar from './SearchBar';
 import NotificationDropdown from './NotificationDropdown';
 
 interface NavigationProps {
-  currentView: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search';
-  setCurrentView: (view: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search') => void;
+  currentView: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search' | 'exp';
+  setCurrentView: (view: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search' | 'exp') => void;
   onAuthRequired: (mode?: 'login' | 'register') => boolean;
 }
 
@@ -24,7 +24,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
     { id: 'home', label: 'Home', icon: Home },
     { id: 'projects', label: 'Browse', icon: Film },
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-    { id: 'community', label: 'Community', icon: Users }
+    { id: 'community', label: 'Community', icon: Users },
+    { id: 'exp', label: 'Exp', icon: Compass }
   ];
 
   const moreNavItems = [
@@ -51,7 +52,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
   const handleItemClick = (itemId: string) => {
     if (itemId === 'theme') {
       toggleTheme();
-    } else if (['home', 'projects', 'dashboard', 'community', 'merch', 'profile', 'admin', 'portfolio', 'compare', 'news', 'notifications', 'search'].includes(itemId)) {
+    } else if (['home', 'projects', 'dashboard', 'community', 'merch', 'profile', 'admin', 'portfolio', 'compare', 'news', 'notifications', 'search', 'exp'].includes(itemId)) {
       const item = [...mainNavItems, ...moreNavItems].find(nav => nav.id === itemId);
       if (item?.requiresAuth && !isAuthenticated) {
         onAuthRequired('login');

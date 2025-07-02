@@ -13,6 +13,7 @@ import ProjectCatalog from './components/ProjectCatalog';
 import Community from './components/Community';
 import Merchandise from './components/Merchandise';
 import Navigation from './components/Navigation';
+import Exp from './components/Exp';
 import ProfilePage from './components/profile/ProfilePage';
 import AuthModal from './components/auth/AuthModal';
 import ToastContainer from './components/auth/ToastNotification';
@@ -27,7 +28,7 @@ import { AuthProvider, useAuth } from './components/auth/AuthProvider';
 import { useToast } from './hooks/useToast';
 
 function AppContent() {
-  const [currentView, setCurrentView] = useState<'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search' | 'exp'>('home');
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('login');
   const { isAuthenticated } = useAuth();
@@ -81,6 +82,8 @@ function AppContent() {
         return <NotificationCenter />;
       case 'search':
         return <EnhancedSearch />;
+      case 'exp':
+        return <Exp />;
       default:
         return (
           <>
