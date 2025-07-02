@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../ThemeProvider';
 import { useAdminAuth } from '../../hooks/useAdminAuth';
+import ShinyText from '../ShinyText';
 import type { AdminPanel } from './AdminDashboard';
 
 interface AdminSidebarProps {
@@ -50,10 +51,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePanel, setActivePanel
           </div>
           <div>
             <h1 className={`font-bold text-xl ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-              Circles Admin
+              <ShinyText text="Circles Admin" />
             </h1>
             <p className={`text-xs ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
-              Management Dashboard
+              <ShinyText text="Management Dashboard" />
             </p>
           </div>
         </div>
@@ -67,8 +68,8 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePanel, setActivePanel
             theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-400 hover:text-white'
           } transition-colors`}
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to main site
+          <ArrowLeft className="w-4 h-4 shiny-text" />
+          <ShinyText text="Back to main site" />
         </button>
       </div>
 
@@ -78,7 +79,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePanel, setActivePanel
           <p className={`text-xs font-medium uppercase tracking-wider mb-4 ${
             theme === 'light' ? 'text-gray-500' : 'text-gray-400'
           }`}>
-            Main Navigation
+            <ShinyText text="Main Navigation" />
           </p>
           <nav className="space-y-1">
             {navItems.map((item) => (
@@ -93,8 +94,8 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePanel, setActivePanel
                       : 'text-gray-300 hover:bg-gray-700'
                 }`}
               >
-                <item.icon className="w-5 h-5" />
-                <span>{item.label}</span>
+                <item.icon className="w-5 h-5 shiny-text" />
+                <ShinyText text={item.label} />
                 {activePanel === item.id && (
                   <motion.div
                     layoutId="activeNavIndicator"
@@ -115,7 +116,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePanel, setActivePanel
         }`}>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full overflow-hidden bg-purple-500/20 flex items-center justify-center">
-              <CircleUser className="w-6 h-6 text-purple-400" />
+              <CircleUser className="w-6 h-6 text-purple-400 shiny-text" />
             </div>
             <div>
               <p className={`font-medium ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
@@ -134,8 +135,8 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activePanel, setActivePanel
                 : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
             }`}
           >
-            <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
+            <LogOut className="w-4 h-4 shiny-text" />
+            <ShinyText text="Sign Out" />
           </button>
         </div>
       </div>
