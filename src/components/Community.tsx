@@ -56,7 +56,6 @@ import {
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Merchandise from './Merchandise';
-import CircleDishIntro from './CircleDishIntro';
 
 const Community: React.FC = () => {
   const [selectedCircle, setSelectedCircle] = useState<string>('pathaan-circle');
@@ -450,8 +449,6 @@ const Community: React.FC = () => {
             Instagram + Discord for entertainment fans and investors
           </p>
         </motion.div>
-
-        <CircleDishIntro onSelect={setSelectedCircle} />
 
         {/* Circle Selector - Instagram Stories Style */}
         <motion.div
