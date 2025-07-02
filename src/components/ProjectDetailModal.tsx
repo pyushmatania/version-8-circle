@@ -278,7 +278,7 @@ TITLE CARD: "NEON NIGHTS"`,
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
             transition={{ duration: 0.3 }}
-            className={`relative w-full max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl border overflow-y-auto ${
+            className={`relative w-full max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl border overflow-hidden ${
               theme === 'light'
                 ? 'light-glass-header'
                 : 'bg-gradient-to-br from-gray-900 to-black border-white/20'
@@ -349,7 +349,7 @@ TITLE CARD: "NEON NIGHTS"`,
             </div>
 
             {/* Content */}
-            <div className="flex">
+            <div className="flex h-[calc(90vh-16rem)]">
               {/* Scrollable Sidebar Navigation */}
               <div className={`w-80 border-r flex flex-col ${
                 theme === 'light' 
@@ -492,7 +492,7 @@ TITLE CARD: "NEON NIGHTS"`,
                     <div className="space-y-3 pt-4">
                       <button
                         onClick={() => setActiveTab('invest')}
-                        className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white font-semibold hover:from-purple-400 hover:to-blue-400 transition-all duration-300 animate-bounce"
+                        className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white font-semibold hover:from-purple-400 hover:to-blue-400 transition-all duration-300"
                       >
                         Invest Now
                       </button>
