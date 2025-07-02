@@ -175,10 +175,10 @@ const ProjectCatalog: React.FC = () => {
     .filter(p => p.timeLeft && parseInt(p.timeLeft) <= 7)
     .slice(0, 10);
 
-  // Featured projects for hero carousel (top 5 highest funded)
+  // Featured projects for hero carousel (top 7 highest funded)
   const featuredProjects = extendedProjects
     .sort((a, b) => b.fundedPercentage - a.fundedPercentage)
-    .slice(0, 5);
+    .slice(0, 7);
 
   // Auto-slide functionality
   React.useEffect(() => {
