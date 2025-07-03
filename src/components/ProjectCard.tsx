@@ -16,7 +16,7 @@ import {
   ArrowRight,
   Award
 } from 'lucide-react';
-import SwipeToInvest from './SwipeToInvest';
+import confetti from 'canvas-confetti';
 import { Project } from '../types';
 
 interface ProjectCardProps {
@@ -38,6 +38,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleInvestClick = () => {
+    confetti({ particleCount: 40, spread: 70, origin: { y: 0.6 } });
+    onClick();
+  };
 
   const cardWidth = featured ? 'w-96' : compact ? 'w-48' : 'w-72';
   // Fixed: Use consistent aspect ratio for all cards
@@ -237,9 +242,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                   >
                     <Play className="w-4 h-4" />
                   </a>
-                  <div className="flex-1">
-                    <SwipeToInvest amount={25000} onConfirm={onClick} />
-                  </div>
+                  <button
+                    onClick={handleInvestClick}
+                    className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white text-black rounded-lg font-semibold text-sm hover:bg-gray-200 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                    Invest Now
+                  </button>
                   <button className="p-2 bg-gray-600/80 text-white rounded-lg hover:bg-gray-600 transition-colors">
                     <Plus className="w-4 h-4" />
                   </button>

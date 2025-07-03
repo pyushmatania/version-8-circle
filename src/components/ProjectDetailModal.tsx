@@ -28,7 +28,7 @@ import { Project } from '../types';
 import { useTheme } from './ThemeProvider';
 import useIsMobile from '../hooks/useIsMobile';
 import { useToast } from '../hooks/useToast';
-import SwipeToInvest from './SwipeToInvest';
+import confetti from 'canvas-confetti';
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -69,6 +69,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
     setInvestStatus('loading');
     setTimeout(() => {
       setInvestStatus('success');
+      confetti({ particleCount: 40, spread: 70, origin: { y: 0.6 } });
       try {
         localStorage.setItem('lastInvestment', JSON.stringify({ project: project?.title, amount: investmentAmount }));
       } catch {
@@ -388,9 +389,13 @@ TITLE CARD: "NEON NIGHTS"`,
                 </div>
 
                 {!isMobile && (
-                  <div className="mt-4 w-full sm:w-auto">
-                    <SwipeToInvest amount={investmentAmount} onConfirm={handleInvest} />
-                  </div>
+                  <button
+                    onClick={handleInvest}
+                    disabled={investStatus !== 'idle'}
+                    className="mt-4 w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold hover:from-purple-500 hover:to-blue-500 disabled:opacity-50 transition-all"
+                  >
+                    Invest Now
+                  </button>
                 )}
               </div>
             </div>
@@ -1098,15 +1103,15 @@ TITLE CARD: "NEON NIGHTS"`,
             animate={{ y: 0 }}
             exit={{ y: 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="fixed bottom-4 left-4 right-4 z-[9998]"
+            onClick={() => {
+              try { navigator.vibrate?.(50); } catch {
+                /* ignore */
+              }
+              setShowMobileInvest(true);
+            }}
+            className="fixed bottom-4 left-4 right-4 z-[9998] px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold"
           >
-            <SwipeToInvest
-              amount={investmentAmount}
-              onConfirm={() => {
-                try { navigator.vibrate?.(50); } catch { /* ignore */ }
-                setShowMobileInvest(true);
-              }}
-            />
+            Invest Now
           </motion.button>
         )}
 
