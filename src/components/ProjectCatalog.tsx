@@ -454,7 +454,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
           {/* Search Bar */}
-          <div className="relative flex-1">
+          <div className="relative flex-1 hidden md:block">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
             <input
               type="text"
@@ -473,7 +473,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
                 viewMode === 'cards' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
-              <Grid3X3 className="w-5 h-5" />
+              <Grid3X3 className="w-6 h-6 md:w-5 md:h-5" />
             </button>
             <button
               onClick={() => setViewMode('grid')}
@@ -481,7 +481,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
                 viewMode === 'grid' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
-              <Grid3X3 className="w-5 h-5" />
+              <Grid3X3 className="w-6 h-6 md:w-5 md:h-5" />
             </button>
             <button
               onClick={() => setViewMode('list')}
@@ -489,7 +489,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
                 viewMode === 'list' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
-              <List className="w-5 h-5" />
+              <List className="w-6 h-6 md:w-5 md:h-5" />
             </button>
           </div>
 
