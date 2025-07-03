@@ -384,11 +384,17 @@ TITLE CARD: "NEON NIGHTS"`,
             {/* Content */}
             <div className="flex">
               {/* Scrollable Sidebar Navigation */}
-              <div className={`${isMobile ? 'w-16 items-center' : 'w-80'} border-r flex flex-col ${
-                theme === 'light'
-                  ? 'bg-white/30 border-gray-200'
-                  : 'bg-black/30 border-white/10'
-              }`}>
+              <div
+                className={`${
+                  isMobile
+                    ? 'w-16 items-center sticky top-0 h-full'
+                    : 'w-80'
+                } border-r flex flex-col ${
+                  theme === 'light'
+                    ? 'bg-white/30 border-gray-200'
+                    : 'bg-black/30 border-white/10'
+                }`}
+              >
                 {/* Sidebar Header */}
                 <div className="p-4 border-b border-current/10">
                   <h3 className={`font-semibold text-lg ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>

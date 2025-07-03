@@ -928,7 +928,7 @@ const Community: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="grid grid-cols-3 lg:grid-cols-4 gap-6"
+              className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
             >
               {/* Channel List */}
               <div className={`col-span-1 lg:col-span-1 p-6 rounded-2xl backdrop-blur-xl border ${
@@ -965,7 +965,7 @@ const Community: React.FC = () => {
               </div>
 
               {/* Chat Area */}
-              <div className={`col-span-2 lg:col-span-3 p-6 rounded-2xl backdrop-blur-xl border ${
+              <div className={`col-span-1 md:col-span-2 lg:col-span-3 p-6 rounded-2xl backdrop-blur-xl border ${
                 theme === 'light'
                   ? 'light-glass-header'
                   : 'bg-white/10 border-white/20'
@@ -1057,7 +1057,7 @@ const Community: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="grid grid-cols-3 lg:grid-cols-4 gap-6"
+              className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
             >
               <div
                 className={`col-span-1 lg:col-span-1 p-6 rounded-2xl backdrop-blur-xl border ${
@@ -1087,7 +1087,7 @@ const Community: React.FC = () => {
               </div>
 
               <div
-                className={`col-span-2 lg:col-span-3 p-6 rounded-2xl backdrop-blur-xl border ${
+                className={`col-span-1 md:col-span-2 lg:col-span-3 p-6 rounded-2xl backdrop-blur-xl border ${
                   theme === 'light' ? 'light-glass-header' : 'bg-white/10 border-white/20'
                 }`}
               >
