@@ -1009,3 +1009,30 @@
   0%, 100% { opacity: 0.8; }
   50% { opacity: 0.3; }
 }
+
+.swipe-button {
+  width: 100%;
+  height: 56px;
+  border-radius: 30px;
+  background: linear-gradient(to right, #7e30e1, #4b7aff);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(126, 48, 225, 0.6);
+}
+.swipe-button::before {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  animation: swipeGlow 2s linear infinite;
+}
+@keyframes swipeGlow {
+  from { left: -25%; }
+  to { left: 100%; }
+}

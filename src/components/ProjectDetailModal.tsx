@@ -28,6 +28,7 @@ import { Project } from '../types';
 import { useTheme } from './ThemeProvider';
 import useIsMobile from '../hooks/useIsMobile';
 import { useToast } from '../hooks/useToast';
+import SwipeToInvest from './SwipeToInvest';
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -387,13 +388,9 @@ TITLE CARD: "NEON NIGHTS"`,
                 </div>
 
                 {!isMobile && (
-                  <button
-                    onClick={handleInvest}
-                    disabled={investStatus !== 'idle'}
-                    className="mt-4 w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold hover:from-purple-500 hover:to-blue-500 disabled:opacity-50 transition-all"
-                  >
-                    Invest Now
-                  </button>
+                  <div className="mt-4 w-full sm:w-auto">
+                    <SwipeToInvest amount={investmentAmount} onConfirm={handleInvest} />
+                  </div>
                 )}
               </div>
             </div>
@@ -1101,16 +1098,16 @@ TITLE CARD: "NEON NIGHTS"`,
             animate={{ y: 0 }}
             exit={{ y: 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            onClick={() => {
-              try { navigator.vibrate?.(50); } catch {
-                /* ignore */
-              }
-              setShowMobileInvest(true);
-            }}
-            className="fixed bottom-4 left-4 right-4 z-[9998] px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold"
+            className="fixed bottom-4 left-4 right-4 z-[9998]"
           >
-            Invest Now
-          </motion.button>
+            <SwipeToInvest
+              amount={investmentAmount}
+              onConfirm={() => {
+                try { navigator.vibrate?.(50); } catch { /* ignore */ }
+                setShowMobileInvest(true);
+              }}
+            />
+          </motion.div>
         )}
 
         {isMobile && showMobileInvest && (
