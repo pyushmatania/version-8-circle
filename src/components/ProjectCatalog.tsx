@@ -196,7 +196,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
     if (isAutoPlaying && !isPaused) {
       autoSlideRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % featuredProjects.length);
-      }, 3000);
+      }, 2500);
     }
 
     return () => {
@@ -296,24 +296,43 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
     <div className="min-h-screen bg-black pb-[100px]">
       {/* Mobile Hero Carousel */}
       {!searchTerm && !showAllProjects && (
-        <div className="md:hidden relative h-72 overflow-hidden" onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)} onTouchEnd={(e) => { const diff = e.changedTouches[0].clientX - touchStartX; if (Math.abs(diff) > 50) diff > 0 ? prevSlide() : nextSlide(); }}>
+        <div
+          className="md:hidden relative h-72 overflow-hidden"
+          onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+          onTouchEnd={(e) => {
+            const diff = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(diff) > 50) diff > 0 ? prevSlide() : nextSlide();
+          }}
+          onClick={() => handleProjectClick(featuredProjects[currentSlide])}
+        >
           <AnimatePresence mode="wait">
             <motion.img
               key={`m-${currentSlide}`}
               src={featuredProjects[currentSlide]?.poster}
               alt={featuredProjects[currentSlide]?.title}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              initial={{ x: 150, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -150, opacity: 0 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
+          <div className="absolute top-0 left-0 w-full p-3 bg-gradient-to-b from-black/70 via-black/40 to-transparent">
+            <h3 className="text-white text-base font-semibold">
+              {featuredProjects[currentSlide]?.title}
+            </h3>
+            <span className="text-xs text-gray-300">
+              {featuredProjects[currentSlide]?.genre}
+            </span>
+          </div>
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
             {featuredProjects.map((_, index) => (
               <button
                 key={`md-${index}`}
-                onClick={() => handleSlideChange(index)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSlideChange(index);
+                }}
                 className={`w-2 h-2 rounded-full transition-colors duration-300 ${index === currentSlide ? 'bg-white' : 'bg-white/40'}`}
               />
             ))}

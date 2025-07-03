@@ -369,18 +369,12 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 </motion.button>
 
                 {/* Notifications */}
-                <motion.button
-                  onClick={() => setCurrentView('notifications')}
-                  className={`p-2 rounded-lg transition-all duration-[3000ms] ${
-                    currentView === 'notifications'
-                      ? 'text-cyan-400'
-                      : `${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-300 hover:text-white'}`
-                  }`}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Bell className="w-5 h-5 drop-shadow-lg" />
-                </motion.button>
+                <div className="relative">
+                  <NotificationDropdown
+                    onViewAll={() => setCurrentView('notifications')}
+                    maxItems={3}
+                  />
+                </div>
 
                 {/* Theme Toggle */}
                 <motion.button
