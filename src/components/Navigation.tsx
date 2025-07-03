@@ -389,11 +389,27 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  {theme === 'light' ? (
-                    <Moon className="w-5 h-5 drop-shadow-lg" />
-                  ) : (
-                    <Sun className="w-5 h-5 drop-shadow-lg" />
-                  )}
+                  <AnimatePresence mode="wait" initial={false}>
+                    {theme === 'light' ? (
+                      <motion.span
+                        key="moon"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <Moon className="w-5 h-5 drop-shadow-lg" />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="sun"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <Sun className="w-5 h-5 drop-shadow-lg" />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </motion.button>
               </div>
               </div>
