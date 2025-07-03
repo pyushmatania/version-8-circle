@@ -102,9 +102,9 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
-      <Navigation 
-        currentView={currentView} 
+    <div className="min-h-screen transition-colors duration-300 overflow-x-hidden">
+      <Navigation
+        currentView={currentView}
         setCurrentView={handleViewChange}
         onAuthRequired={handleAuthRequired}
       />

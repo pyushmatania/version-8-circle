@@ -477,7 +477,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             </div>
 
             {/* Main Stats Grid with Enhanced Gradient Awareness */}
-            <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {[
                 {
                   icon: Target,

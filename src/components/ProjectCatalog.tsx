@@ -292,7 +292,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
     <div className="min-h-screen bg-black">
       {/* Full-Screen Auto-Sliding Hero Carousel */}
       {!searchTerm && !showAllProjects && (
-        <div className="relative h-screen overflow-hidden">
+        <div className="hidden md:block relative h-screen overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}

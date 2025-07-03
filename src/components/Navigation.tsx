@@ -382,7 +382,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -100, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed left-6 top-0 bottom-0 z-50 flex items-center"
+            className="hidden md:flex fixed left-6 top-0 bottom-0 z-50 items-center"
           >
             {/* Sidebar Container - Clean icon column only */}
             <div className="flex flex-col items-center space-y-6 w-16 py-8 group">
