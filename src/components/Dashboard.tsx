@@ -233,7 +233,7 @@ const Dashboard: React.FC = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20">
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex flex-col sm:flex-row items-center gap-4 mb-4 text-center sm:text-left">
                   <div className="p-3 rounded-xl bg-green-500/20">
                     <DollarSign className="w-6 h-6 text-green-400" />
                   </div>
@@ -511,7 +511,7 @@ const Dashboard: React.FC = () => {
                       <span>Active {circle.lastActivity}</span>
                     </div>
                   </div>
-                  <button className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300">
+                  <button className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 mt-4 sm:mt-0">
                     Enter Circle
                   </button>
                 </div>

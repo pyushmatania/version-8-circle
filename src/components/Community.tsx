@@ -55,6 +55,7 @@ import {
   Ticket
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import useIsMobile from '../hooks/useIsMobile';
 import Merchandise from './Merchandise';
 
 const Community: React.FC = () => {
@@ -94,6 +95,7 @@ const Community: React.FC = () => {
   const [friendInput, setFriendInput] = useState('');
   const [friendTyping, setFriendTyping] = useState(false);
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
 
   // Send message to selected channel
   const sendChannelMessage = () => {
@@ -689,8 +691,8 @@ const Community: React.FC = () => {
                     }`}
                   />
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-4 flex-wrap">
                     <button
                       onClick={() => photoInputRef.current?.click()}
                       className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
@@ -771,7 +773,7 @@ const Community: React.FC = () => {
                       setPostVideo(null);
                     }}
                     disabled={!newPost.trim()}
-                    className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-2 sm:mt-0"
                   >
                     Post
                   </button>
@@ -950,7 +952,7 @@ const Community: React.FC = () => {
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-lg">{channel.icon}</span>
-                        <span className="font-medium">#{channel.name}</span>
+                        {!isMobile && <span className="font-medium">#{channel.name}</span>}
                       </div>
                       {channel.unread > 0 && (
                         <span className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
@@ -1077,7 +1079,7 @@ const Community: React.FC = () => {
                       }`}
                     >
                       <img src={friend.avatar} alt={friend.name} className="w-8 h-8 rounded-full object-cover" />
-                      <span className="font-medium">{friend.name}</span>
+                      {!isMobile && <span className="font-medium">{friend.name}</span>}
                       {friend.online && <span className="ml-auto w-3 h-3 bg-green-400 rounded-full" />}
                     </button>
                   ))}

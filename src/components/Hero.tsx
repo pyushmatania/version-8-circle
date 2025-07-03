@@ -23,7 +23,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
   ];
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-16 ${
+    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-16 transform-gpu ${
       theme === 'light'
         ? 'animated-gradient-light'
         : 'animated-gradient-dark'
@@ -41,7 +41,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
       )}
       
       {/* Enhanced Floating Orbs Animation with Gradient Awareness */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden transform-gpu">
         <motion.div
           animate={{
             x: [0, 100, -50, 0],
