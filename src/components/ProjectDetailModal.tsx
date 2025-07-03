@@ -60,6 +60,9 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
 
   const handleInvest = () => {
     if (investStatus !== 'idle') return;
+    try {
+      navigator.vibrate?.(50);
+    } catch (e) {}
     setInvestStatus('loading');
     setTimeout(() => {
       setInvestStatus('success');
@@ -1096,7 +1099,10 @@ TITLE CARD: "NEON NIGHTS"`,
             animate={{ y: 0 }}
             exit={{ y: 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            onClick={() => setShowMobileInvest(true)}
+            onClick={() => {
+              try { navigator.vibrate?.(50); } catch (e) {}
+              setShowMobileInvest(true);
+            }}
             className="fixed bottom-4 left-4 right-4 z-[9998] px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold"
           >
             Invest Now
