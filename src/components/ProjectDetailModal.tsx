@@ -14,7 +14,6 @@ import {
   Award,
   Gift,
   Crown,
-  Ticket,
   Camera,
   Heart,
   Share2,
@@ -38,15 +37,16 @@ interface ProjectDetailModalProps {
   onTrackInvestment?: () => void;
 }
 
-const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen, onClose, initialTab = 'overview', onTrackInvestment }) => {
+const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen, onClose, initialTab = 'overview', onTrackInvestment: _onTrackInvestment }) => {
+  void _onTrackInvestment;
   const [activeTab, setActiveTab] = useState<'overview' | 'script' | 'cast' | 'perks' | 'invest'>(initialTab);
   const [selectedPerkTier, setSelectedPerkTier] = useState<string>('supporter');
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
-  const [showSuccess, setShowSuccess] = useState(false);
   const [investStatus, setInvestStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const [showMobileInvest, setShowMobileInvest] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card'>('upi');
+  const [paymentMethod, setPaymentMethod] = useState<'upi' | 'netbanking' | 'card'>('upi');
   const [upiId, setUpiId] = useState('');
+  const [bankName, setBankName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvv, setCardCvv] = useState('');
@@ -62,17 +62,19 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
     if (investStatus !== 'idle') return;
     try {
       navigator.vibrate?.(50);
-    } catch (e) {}
+    } catch {
+      /* ignore */
+    }
     setInvestStatus('loading');
     setTimeout(() => {
       setInvestStatus('success');
-      setShowSuccess(true);
       try {
         localStorage.setItem('lastInvestment', JSON.stringify({ project: project?.title, amount: investmentAmount }));
-      } catch (e) {}
+      } catch {
+        /* ignore */
+      }
       toast.success('Investment Confirmed', `You invested ₹${investmentAmount.toLocaleString()}`, 2500);
       setTimeout(() => {
-        setShowSuccess(false);
         setInvestStatus('idle');
         setShowMobileInvest(false);
       }, 2500);
@@ -434,7 +436,7 @@ TITLE CARD: "NEON NIGHTS"`,
                       {tabs.map((tab) => (
                         <button
                           key={tab.id}
-                          onClick={() => setActiveTab(tab.id as any)}
+                          onClick={() => setActiveTab(tab.id as typeof activeTab)}
                           className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 text-left ${
                             activeTab === tab.id
                               ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg'
@@ -1100,7 +1102,9 @@ TITLE CARD: "NEON NIGHTS"`,
             exit={{ y: 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             onClick={() => {
-              try { navigator.vibrate?.(50); } catch (e) {}
+              try { navigator.vibrate?.(50); } catch {
+                /* ignore */
+              }
               setShowMobileInvest(true);
             }}
             className="fixed bottom-4 left-4 right-4 z-[9998] px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold"
@@ -1148,11 +1152,12 @@ TITLE CARD: "NEON NIGHTS"`,
                   <h4 className="text-white text-lg font-semibold mb-2">Payment Method</h4>
                   <select
                     value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value as 'upi' | 'card')}
+                    onChange={(e) => setPaymentMethod(e.target.value as 'upi' | 'netbanking' | 'card')}
                     className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-4"
                   >
                     <option value="upi">UPI</option>
-                    <option value="card">Card</option>
+                    <option value="netbanking">Net Banking</option>
+                    <option value="card">Credit/Debit Card</option>
                   </select>
                   {paymentMethod === 'upi' ? (
                     <input
@@ -1160,6 +1165,14 @@ TITLE CARD: "NEON NIGHTS"`,
                       placeholder="UPI ID"
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-4"
+                    />
+                  ) : paymentMethod === 'netbanking' ? (
+                    <input
+                      type="text"
+                      placeholder="Bank Name"
+                      value={bankName}
+                      onChange={(e) => setBankName(e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-4"
                     />
                   ) : (
@@ -1181,18 +1194,39 @@ TITLE CARD: "NEON NIGHTS"`,
                         />
                         <input
                           type="text"
-                          placeholder="CVV"
-                          value={cardCvv}
-                          onChange={(e) => setCardCvv(e.target.value)}
-                          className="w-20 px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white"
-                        />
-                      </div>
+                        placeholder="CVV"
+                        value={cardCvv}
+                        onChange={(e) => setCardCvv(e.target.value)}
+                        className="w-20 px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white"
+                      />
                     </div>
+                  </div>
                   )}
+                  <div className="mt-4 space-y-2 text-sm text-white/80">
+                    <div className="flex justify-between">
+                      <span>Estimated Returns (15%):</span>
+                      <span className="text-green-400 font-semibold">₹{(investmentAmount * 0.15).toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-green-400" />
+                      <span>SEBI Registered</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span>Section 80C eligible</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-yellow-400" />
+                      <span>Lock-in: {projectDetails.investmentDetails.lockInPeriod}</span>
+                    </div>
+                    <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-300">
+                      {projectDetails.riskFactors[0]}
+                    </div>
+                  </div>
                   <button
                     onClick={handleInvest}
                     disabled={investStatus === 'loading'}
-                    className="mt-6 w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-lg"
+                    className="mt-auto w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-lg"
                   >
                     Pay
                   </button>
