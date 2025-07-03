@@ -631,7 +631,7 @@ const Community: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className={`flex items-center gap-2 p-2 rounded-2xl backdrop-blur-xl border mb-8 ${
+          className={`flex items-center gap-2 p-2 rounded-2xl backdrop-blur-xl border mb-8 overflow-x-auto justify-around md:justify-start ${
             theme === 'light'
               ? 'light-glass-header'
               : 'bg-white/10 border-white/20'
@@ -648,7 +648,7 @@ const Community: React.FC = () => {
               }`}
             >
               <tab.icon className="w-5 h-5" />
-              {tab.label}
+              <span className="hidden md:inline">{tab.label}</span>
             </button>
           ))}
         </motion.div>

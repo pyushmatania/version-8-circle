@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Film, Users, User, LogIn } from 'lucide-react';
+import { Home, Film, Users, User, LogIn, BarChart3 } from 'lucide-react';
 import { useAuth } from './auth/AuthProvider';
 
 interface Props {
@@ -14,6 +14,7 @@ const MobileBottomBar: React.FC<Props> = ({ currentView, setCurrentView, onAuthR
   const navItems = [
     { id: 'home' as const, icon: Home, label: 'Home' },
     { id: 'projects' as const, icon: Film, label: 'Browse' },
+    { id: 'dashboard' as const, icon: BarChart3, label: 'Dashboard' },
     { id: 'community' as const, icon: Users, label: 'Community' },
     { id: 'profile' as const, icon: User, label: 'Profile', requiresAuth: true }
   ];

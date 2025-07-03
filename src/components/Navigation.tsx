@@ -95,9 +95,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
             className="fixed top-0 left-0 right-0 z-50"
           >
             <div className="max-w-7xl mx-auto px-8 py-6">
-              <div className="flex items-center justify-between">
+              <div className="relative flex items-center justify-between">
                 {/* Logo - Much bigger size, no animations */}
-                <div className="flex items-center gap-4">
+                <div className="hidden md:flex items-center gap-4">
                   <div className="w-24 h-24 flex items-center justify-center">
                     <img 
                       src="/Improved Logo-01.png" 
@@ -154,7 +154,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                   ))}
                   
                   {/* More Menu Dropdown */}
-                  <div className="relative">
+                  <div className="relative hidden md:block">
                     <motion.button
                       onClick={() => setShowMoreMenu(!showMoreMenu)}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-[3000ms] ${
@@ -221,9 +221,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 </div>
 
                 {/* Right Side Actions */}
-                <div className="flex items-center gap-4">
+                <div className="hidden md:flex items-center gap-4">
                   {/* Search Button */}
-                  <div className="relative">
+                  <div className="relative hidden md:block">
                     <SearchBar
                       onSelectProject={handleProjectSelect}
                       onViewAllResults={() => {
@@ -331,7 +331,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 </div>
 
                 {/* Mobile Menu */}
-                <div className="md:hidden flex items-center gap-4">
+                <div className="md:hidden flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
                   {mainNavItems.map((item, index) => (
                     <motion.button
                       key={item.id}
@@ -463,7 +463,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 ))}
 
                 {/* More Menu Button */}
-                <div className="relative">
+                <div className="relative hidden md:block">
                   <motion.button
                     onClick={() => setShowMoreMenu(!showMoreMenu)}
                     className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${
@@ -552,7 +552,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 </div>
 
                 {/* Notification Button */}
-                <div className="relative">
+                <div className="relative hidden md:block">
                   <motion.button
                       onClick={() => setCurrentView('notifications')}
                       className={`relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-[3000ms] ${

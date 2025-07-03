@@ -295,11 +295,6 @@ TITLE CARD: "NEON NIGHTS"`,
 
           {/* Modal */}
           <motion.div
-            drag={isMobile ? 'y' : false}
-            dragConstraints={{ top: 0, bottom: 0 }}
-            onDragEnd={(_, info) => {
-              if (isMobile && info.point.y > 100) onClose();
-            }}
             initial={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.9, y: 50 }}
             animate={isMobile ? { y: 0 } : { opacity: 1, scale: 1, y: 0 }}
             exit={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.9, y: 50 }}
