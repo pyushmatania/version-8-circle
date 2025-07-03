@@ -317,7 +317,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
-          <div className="absolute top-0 left-0 w-full p-3 bg-gradient-to-b from-black/70 via-black/40 to-transparent">
+          <div className="absolute bottom-12 left-0 w-full p-3 text-center flex flex-col items-center bg-gradient-to-t from-black/70 via-black/40 to-transparent">
             <h3 className="text-white text-base font-semibold">
               {featuredProjects[currentSlide]?.title}
             </h3>
