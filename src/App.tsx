@@ -61,7 +61,7 @@ function AppContent() {
   const renderCurrentView = () => {
     switch (currentView) {
       case 'projects':
-        return <ProjectCatalog />;
+        return <ProjectCatalog onTrackInvestment={() => handleViewChange('dashboard')} />;
       case 'dashboard':
         // Dashboard is now accessible without login
         return <Dashboard />;
@@ -74,7 +74,7 @@ function AppContent() {
       case 'portfolio':
         return isAuthenticated ? <PortfolioAnalytics /> : null;
       case 'compare':
-        return <ProjectComparison />;
+        return <ProjectComparison onTrackInvestment={() => handleViewChange('dashboard')} setCurrentView={handleViewChange} />;
       case 'news':
         return <NewsAndUpdates />;
       case 'notifications':
@@ -87,7 +87,10 @@ function AppContent() {
             <Hero setCurrentView={handleViewChange} />
             <ProblemSolution />
             <HowItWorks />
-            <LiveProjects onViewAll={() => handleViewChange('projects')} />
+            <LiveProjects
+              onViewAll={() => handleViewChange('projects')}
+              onTrackInvestment={() => handleViewChange('dashboard')}
+            />
             <WhyThisMatters onJoin={() => handleAuthRequired('register')} />
             <TechTrust />
             <Rewards />

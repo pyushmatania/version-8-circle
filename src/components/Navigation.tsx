@@ -21,6 +21,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [initialTab, setInitialTab] = useState<'overview' | 'invest'>('overview');
   const { theme, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
 
@@ -75,8 +76,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
     setShowUserMenu(false);
   };
 
-  const handleProjectSelect = (project: Project) => {
+  const handleProjectSelect = (project: Project, tab: 'overview' | 'invest' = 'overview') => {
     setSelectedProject(project);
+    setInitialTab(tab);
     setIsProjectModalOpen(true);
   };
 
@@ -694,7 +696,10 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
         onClose={() => {
           setIsProjectModalOpen(false);
           setSelectedProject(null);
+          setInitialTab('overview');
         }}
+        initialTab={initialTab}
+        onTrackInvestment={() => setCurrentView('dashboard')}
       />
     </>
   );

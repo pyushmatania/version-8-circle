@@ -33,9 +33,10 @@ interface ProjectDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTab?: 'overview' | 'script' | 'cast' | 'perks' | 'invest';
+  onTrackInvestment?: () => void;
 }
 
-const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen, onClose, initialTab = 'overview' }) => {
+const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen, onClose, initialTab = 'overview', onTrackInvestment }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'script' | 'cast' | 'perks' | 'invest'>(initialTab);
   const [selectedPerkTier, setSelectedPerkTier] = useState<string>('supporter');
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
@@ -1074,7 +1075,15 @@ TITLE CARD: "NEON NIGHTS"`,
                 <CheckCircle className="w-12 h-12 text-green-400 mx-auto" />
                 <p className="text-white text-lg font-bold">You're in!</p>
                 <p className="text-gray-300">Your name is now tied to the story.</p>
-                <button className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white">Track Your Investment</button>
+                <button
+                  onClick={() => {
+                    if (onTrackInvestment) onTrackInvestment();
+                    onClose();
+                  }}
+                  className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white"
+                >
+                  Track Your Investment
+                </button>
               </div>
             </motion.div>
           )}

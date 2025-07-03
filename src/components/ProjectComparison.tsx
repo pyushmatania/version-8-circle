@@ -25,9 +25,11 @@ import { extendedProjects } from '../data/extendedProjects';
 
 interface ProjectComparisonProps {
   initialProjects?: Project[];
+  onTrackInvestment?: () => void;
+  setCurrentView?: (view: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search') => void;
 }
 
-const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects }) => {
+const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects, onTrackInvestment, setCurrentView }) => {
   const { theme } = useTheme();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -848,6 +850,10 @@ const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects }
         project={selectedProject}
         isOpen={isModalOpen}
         onClose={() => { setIsModalOpen(false); setSelectedProject(null); }}
+        onTrackInvestment={() => {
+          if (onTrackInvestment) onTrackInvestment();
+          setCurrentView && setCurrentView('dashboard');
+        }}
         initialTab="invest"
       />
     </div>

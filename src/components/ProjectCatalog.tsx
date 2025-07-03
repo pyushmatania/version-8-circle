@@ -6,10 +6,15 @@ import { extendedProjects } from '../data/extendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
 
-const ProjectCatalog: React.FC = () => {
+interface ProjectCatalogProps {
+  onTrackInvestment?: () => void;
+}
+
+const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [initialTab, setInitialTab] = useState<'overview' | 'invest'>('overview');
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'cards'>('cards');
   const [showFilters, setShowFilters] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState<string | null>(null);
@@ -29,14 +34,16 @@ const ProjectCatalog: React.FC = () => {
   const [fundingRange, setFundingRange] = useState<[number, number]>([0, 100]);
   const [sortBy, setSortBy] = useState<string>('trending');
 
-  const handleProjectClick = (project: Project) => {
+  const handleProjectClick = (project: Project, tab: 'overview' | 'invest' = 'overview') => {
     setSelectedProject(project);
+    setInitialTab(tab);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProject(null);
+    setInitialTab('overview');
   };
 
   // Filter options
@@ -370,8 +377,8 @@ const ProjectCatalog: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <button 
-                      onClick={() => handleProjectClick(featuredProjects[currentSlide])}
+                    <button
+                      onClick={() => handleProjectClick(featuredProjects[currentSlide], 'invest')}
                       className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-lg font-semibold text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105"
                     >
                       <Play className="w-6 h-6 fill-current" />
@@ -771,10 +778,12 @@ const ProjectCatalog: React.FC = () => {
       </div>
 
       {/* Project Detail Modal */}
-      <ProjectDetailModal 
+      <ProjectDetailModal
         project={selectedProject}
         isOpen={isModalOpen}
         onClose={closeModal}
+        initialTab={initialTab}
+        onTrackInvestment={onTrackInvestment}
       />
     </div>
   );
@@ -784,7 +793,7 @@ const ProjectCatalog: React.FC = () => {
 interface ProjectRowProps {
   title: string;
   projects: Project[];
-  onProjectClick: (project: Project) => void;
+  onProjectClick: (project: Project, tab?: 'overview' | 'invest') => void;
   onHeaderClick?: () => void;
   featured?: boolean;
   urgent?: boolean;
@@ -1050,7 +1059,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, featured, u
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-2 pt-2">
-                  <button className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white text-black rounded-lg font-semibold text-sm hover:bg-gray-200 transition-colors shadow-lg">
+                  <button
+                    onClick={() => handleProjectClick(project, 'invest')}
+                    className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white text-black rounded-lg font-semibold text-sm hover:bg-gray-200 transition-colors shadow-lg"
+                  >
                     <Play className="w-4 h-4 fill-current" />
                     Invest Now
                   </button>
@@ -1157,7 +1169,10 @@ const ListProjectCard: React.FC<ListProjectCardProps> = ({ project, onClick }) =
             )}
           </div>
           
-          <button className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-500 hover:to-blue-500 transition-all duration-300">
+          <button
+            onClick={() => handleProjectClick(project, 'invest')}
+            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-500 hover:to-blue-500 transition-all duration-300"
+          >
             Invest Now
           </button>
         </div>
