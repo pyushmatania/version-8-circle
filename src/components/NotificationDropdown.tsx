@@ -22,7 +22,6 @@ import {
   Moon
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import useIsMobile from '../hooks/useIsMobile';
 
 // Mock notification data
 const mockNotifications = [
@@ -89,7 +88,6 @@ interface NotificationDropdownProps {
 
 const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll, maxItems = 5 }) => {
   const { theme, toggleTheme } = useTheme();
-  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(mockNotifications);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -203,16 +201,14 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll, 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={isMobile ? { x: '-100%', opacity: 0 } : { opacity: 0, y: 10, scale: 0.95 }}
-            animate={isMobile ? { x: 0, opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={isMobile ? { x: '-100%', opacity: 0 } : { opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-            className={`${
-              isMobile
-                ? 'fixed left-0 top-0 h-1/2 w-full sm:w-[90%] rounded-r-xl'
-                : 'absolute right-0 mt-2 w-80 rounded-xl'
-            } border shadow-xl z-50 overflow-hidden ${
-              theme === 'light' ? 'bg-white border-gray-200' : 'bg-gray-900 border-gray-700'
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className={`absolute right-0 mt-2 w-80 rounded-xl border shadow-xl z-50 overflow-hidden ${
+              theme === 'light'
+                ? 'bg-white border-gray-200'
+                : 'bg-gray-900 border-gray-700'
             }`}
           >
             {/* Header */}
@@ -245,7 +241,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll, 
             </div>
 
             {/* Notification List */}
-            <div className="h-full overflow-y-auto">
+            <div className="max-h-96 overflow-y-auto">
               {notifications.length > 0 ? (
                 notifications.slice(0, maxItems).map((notification) => (
                   <div 
