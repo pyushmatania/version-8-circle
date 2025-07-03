@@ -45,6 +45,11 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   const [showSuccess, setShowSuccess] = useState(false);
   const [investStatus, setInvestStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const [showMobileInvest, setShowMobileInvest] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card'>('upi');
+  const [upiId, setUpiId] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
   const { theme } = useTheme();
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -1134,10 +1139,54 @@ TITLE CARD: "NEON NIGHTS"`,
                     onChange={(e) => setInvestmentAmount(Number(e.target.value))}
                     className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-6"
                   />
+                  <h4 className="text-white text-lg font-semibold mb-2">Payment Method</h4>
+                  <select
+                    value={paymentMethod}
+                    onChange={(e) => setPaymentMethod(e.target.value as 'upi' | 'card')}
+                    className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-4"
+                  >
+                    <option value="upi">UPI</option>
+                    <option value="card">Card</option>
+                  </select>
+                  {paymentMethod === 'upi' ? (
+                    <input
+                      type="text"
+                      placeholder="UPI ID"
+                      value={upiId}
+                      onChange={(e) => setUpiId(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-4"
+                    />
+                  ) : (
+                    <div className="space-y-4">
+                      <input
+                        type="text"
+                        placeholder="Card Number"
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white"
+                      />
+                      <div className="flex gap-4">
+                        <input
+                          type="text"
+                          placeholder="MM/YY"
+                          value={cardExpiry}
+                          onChange={(e) => setCardExpiry(e.target.value)}
+                          className="flex-1 px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white"
+                        />
+                        <input
+                          type="text"
+                          placeholder="CVV"
+                          value={cardCvv}
+                          onChange={(e) => setCardCvv(e.target.value)}
+                          className="w-20 px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white"
+                        />
+                      </div>
+                    </div>
+                  )}
                   <button
                     onClick={handleInvest}
                     disabled={investStatus === 'loading'}
-                    className="w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-lg"
+                    className="mt-6 w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-lg"
                   >
                     Pay
                   </button>
@@ -1168,13 +1217,17 @@ TITLE CARD: "NEON NIGHTS"`,
         <AnimatePresence>
           {investStatus === 'success' && (
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              initial={{ y: 50, opacity: 0, scale: 0.9 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[9999] px-4 py-3 rounded-xl bg-gray-900 text-white flex items-center gap-2"
             >
-              <CheckCircle className="w-6 h-6 text-green-400" />
-              <span>Your investment is confirmed!</span>
+              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                <CheckCircle className="w-6 h-6 text-green-400" />
+              </motion.div>
+              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                Your investment is confirmed!
+              </motion.span>
             </motion.div>
           )}
         </AnimatePresence>

@@ -205,16 +205,16 @@ const Dashboard: React.FC = () => {
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-wrap gap-4 mb-8 max-md:grid max-md:grid-cols-2">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 max-md:w-full ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg'
                   : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
-              }`}
+              } ${tab.id === 'portfolio' ? 'max-md:col-span-2' : ''}`}
             >
               <tab.icon className="w-5 h-5" />
               {tab.label}

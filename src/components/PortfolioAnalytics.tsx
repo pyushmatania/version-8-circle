@@ -83,11 +83,13 @@ const PortfolioAnalytics: React.FC<PortfolioAnalyticsProps> = () => {
   const recommendation = "Consider diversifying with more Web Series investments to balance your portfolio. Recent trends show higher ROI in Regional content.";
 
   return (
-    <div className={`min-h-screen pt-20 pb-[100px] transition-all duration-[3000ms] ${
-      theme === 'light'
-        ? 'bg-gradient-to-br from-gray-50 to-white'
-        : 'bg-gradient-to-br from-black via-gray-900 to-purple-900'
-    }`}>
+    <div
+      className={`min-h-screen pt-20 pb-[100px] transition-all duration-[3000ms] max-md:h-[calc(100vh-80px)] max-md:overflow-y-auto max-md:scroll-smooth ${
+        theme === 'light'
+          ? 'bg-gradient-to-br from-gray-50 to-white'
+          : 'bg-gradient-to-br from-black via-gray-900 to-purple-900'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
         <motion.div
