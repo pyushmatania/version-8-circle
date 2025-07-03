@@ -83,9 +83,10 @@ const mockNotifications = [
 
 interface NotificationDropdownProps {
   onViewAll: () => void;
+  maxItems?: number;
 }
 
-const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll }) => {
+const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll, maxItems = 5 }) => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(mockNotifications);
@@ -102,9 +103,15 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll }
       }
     };
 
+    const handleScroll = () => {
+      setIsOpen(false);
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -236,7 +243,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onViewAll }
             {/* Notification List */}
             <div className="max-h-96 overflow-y-auto">
               {notifications.length > 0 ? (
-                notifications.slice(0, 5).map((notification) => (
+                notifications.slice(0, maxItems).map((notification) => (
                   <div 
                     key={notification.id}
                     onClick={() => markAsRead(notification.id)}
