@@ -28,6 +28,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
   const [isPaused, setIsPaused] = useState(false);
   const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [touchStartX, setTouchStartX] = useState(0);
   
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -293,6 +294,32 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
 
   return (
     <div className="min-h-screen bg-black pb-[100px]">
+      {/* Mobile Hero Carousel */}
+      {!searchTerm && !showAllProjects && (
+        <div className="md:hidden relative h-72 overflow-hidden" onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)} onTouchEnd={(e) => { const diff = e.changedTouches[0].clientX - touchStartX; if (Math.abs(diff) > 50) diff > 0 ? prevSlide() : nextSlide(); }}>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={`m-${currentSlide}`}
+              src={featuredProjects[currentSlide]?.poster}
+              alt={featuredProjects[currentSlide]?.title}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </AnimatePresence>
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+            {featuredProjects.map((_, index) => (
+              <button
+                key={`md-${index}`}
+                onClick={() => handleSlideChange(index)}
+                className={`w-2 h-2 rounded-full transition-colors duration-300 ${index === currentSlide ? 'bg-white' : 'bg-white/40'}`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
       {/* Full-Screen Auto-Sliding Hero Carousel */}
       {!searchTerm && !showAllProjects && (
         <div className="hidden md:block relative h-screen overflow-hidden">
