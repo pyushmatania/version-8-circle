@@ -576,6 +576,7 @@
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
   /* Remove default focus outlines and add custom ones */
