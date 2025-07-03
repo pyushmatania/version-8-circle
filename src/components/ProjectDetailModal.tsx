@@ -1107,7 +1107,7 @@ TITLE CARD: "NEON NIGHTS"`,
                 setShowMobileInvest(true);
               }}
             />
-          </motion.div>
+          </motion.button>
         )}
 
         {isMobile && showMobileInvest && (
