@@ -92,6 +92,9 @@ const Community: React.FC = () => {
       { user: friendsList[0].name, message: 'Hey! Excited for the project?', time: '2:45 PM', avatar: friendsList[0].avatar }
     ]
   });
+  const [previewChannel, setPreviewChannel] = useState<string | null>(null);
+  const [previewFriend, setPreviewFriend] = useState<string | null>(null);
+  const previewTimeout = useRef<NodeJS.Timeout | null>(null);
   const [friendInput, setFriendInput] = useState('');
   const [friendTyping, setFriendTyping] = useState(false);
   const { theme } = useTheme();
@@ -156,6 +159,24 @@ const Community: React.FC = () => {
       }
       setFriendTyping(false);
     }, 2000);
+  };
+
+  const startPreview = (
+    id: string,
+    setter: React.Dispatch<React.SetStateAction<string | null>>,
+  ) => {
+    if (previewTimeout.current) clearTimeout(previewTimeout.current);
+    previewTimeout.current = setTimeout(() => setter(id), 500);
+  };
+
+  const endPreview = (
+    setter: React.Dispatch<React.SetStateAction<string | null>>,
+  ) => {
+    if (previewTimeout.current) {
+      clearTimeout(previewTimeout.current);
+      previewTimeout.current = null;
+    }
+    setter(null);
   };
 
   // Mock circles data with key people and detailed info
@@ -935,7 +956,7 @@ const Community: React.FC = () => {
                 theme === 'light'
                   ? 'light-glass-header'
                   : 'bg-white/10 border-white/20'
-              }`}>
+              } hidden md:block`}>
                 <h3 className={`font-bold text-lg mb-4 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                   Channels
                 </h3>
@@ -970,6 +991,36 @@ const Community: React.FC = () => {
                   ? 'light-glass-header'
                   : 'bg-white/10 border-white/20'
               }`}>
+                {isMobile && (
+                  <div className="flex gap-3 overflow-x-auto pb-4 -mx-2 px-2 scrollbar-hide snap-x snap-mandatory">
+                    {channels.map((channel) => (
+                      <button
+                        key={channel.id}
+                        onClick={() => setSelectedChannel(channel.id)}
+                        onTouchStart={() => startPreview(channel.id, setPreviewChannel)}
+                        onTouchEnd={() => endPreview(setPreviewChannel)}
+                        onMouseDown={() => startPreview(channel.id, setPreviewChannel)}
+                        onMouseUp={() => endPreview(setPreviewChannel)}
+                        onMouseLeave={() => endPreview(setPreviewChannel)}
+                        className={`relative flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 snap-center ${
+                          selectedChannel === channel.id ? 'ring-2 ring-purple-500' : ''
+                        }`}
+                      >
+                        <span className="text-xl">{channel.icon}</span>
+                        {previewChannel === channel.id && (
+                          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs px-2 py-1 rounded bg-black text-white whitespace-nowrap">
+                            #{channel.name}
+                          </div>
+                        )}
+                        {channel.unread > 0 && (
+                          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[10px] text-white font-bold">
+                            {channel.unread}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="flex items-center justify-between mb-6">
                   <h3 className={`font-bold text-xl ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                     #{selectedChannel}
@@ -993,30 +1044,38 @@ const Community: React.FC = () => {
                 </div>
 
                 {/* Chat Messages */}
-                <div className="space-y-4 mb-6 h-96 overflow-y-auto">
-                  {(messages[selectedChannel] || []).map((msg, index) => (
-                    <div key={index} className="flex gap-3">
-                      <img
-                        src={msg.avatar}
-                        alt={msg.user}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`font-medium ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-                            {msg.user}
-                          </span>
-                          <span className={`text-xs ${theme === 'light' ? 'text-gray-500' : 'text-gray-500'}`}>
-                            {msg.time}
-                          </span>
-                        </div>
-                        <div className={`${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>
-                          {msg.message}
+                <AnimatePresence mode="wait" key={selectedChannel}>
+                  <motion.div
+                    key={selectedChannel}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="space-y-4 mb-6 h-96 overflow-y-auto"
+                  >
+                    {(messages[selectedChannel] || []).map((msg, index) => (
+                      <div key={index} className="flex gap-3">
+                        <img
+                          src={msg.avatar}
+                          alt={msg.user}
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className={`font-medium ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
+                              {msg.user}
+                            </span>
+                            <span className={`text-xs ${theme === 'light' ? 'text-gray-500' : 'text-gray-500'}`}>
+                              {msg.time}
+                            </span>
+                          </div>
+                          <div className={`${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}> 
+                            {msg.message}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
 
                 {/* Message Input */}
                 <div className="flex gap-3">
@@ -1062,7 +1121,7 @@ const Community: React.FC = () => {
               <div
                 className={`col-span-1 lg:col-span-1 p-6 rounded-2xl backdrop-blur-xl border ${
                   theme === 'light' ? 'light-glass-header' : 'bg-white/10 border-white/20'
-                }`}
+                } hidden md:block`}
               >
                 <h3 className={`font-bold text-lg mb-4 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Friends</h3>
                 <div className="space-y-2">
@@ -1091,29 +1150,65 @@ const Community: React.FC = () => {
                   theme === 'light' ? 'light-glass-header' : 'bg-white/10 border-white/20'
                 }`}
               >
+                {isMobile && (
+                  <div className="flex gap-3 overflow-x-auto pb-4 -mx-2 px-2 scrollbar-hide snap-x snap-mandatory">
+                    {friendsList.map(friend => (
+                      <button
+                        key={friend.id}
+                        onClick={() => setSelectedFriend(friend.id)}
+                        onTouchStart={() => startPreview(friend.id, setPreviewFriend)}
+                        onTouchEnd={() => endPreview(setPreviewFriend)}
+                        onMouseDown={() => startPreview(friend.id, setPreviewFriend)}
+                        onMouseUp={() => endPreview(setPreviewFriend)}
+                        onMouseLeave={() => endPreview(setPreviewFriend)}
+                        className={`relative flex-shrink-0 w-12 h-12 rounded-full overflow-hidden transition-all duration-300 snap-center ${
+                          selectedFriend === friend.id ? 'ring-2 ring-purple-500' : ''
+                        }`}
+                      >
+                        <img src={friend.avatar} alt={friend.name} className="w-full h-full object-cover" />
+                        {previewFriend === friend.id && (
+                          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs px-2 py-1 rounded bg-black text-white whitespace-nowrap">
+                            {friend.name}
+                          </div>
+                        )}
+                        {friend.online && (
+                          <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="flex items-center justify-between mb-6">
                   <h3 className={`font-bold text-xl ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Chat with {friendsList.find(f => f.id === selectedFriend)?.name}</h3>
                 </div>
-                <div className="space-y-4 mb-6 h-96 overflow-y-auto">
-                  {(friendChats[selectedFriend] || []).map((msg, index) => (
-                    <div key={index} className="flex gap-3">
-                      <img src={msg.avatar} alt={msg.user} className="w-10 h-10 rounded-full object-cover" />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`font-medium ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>{msg.user}</span>
-                          <span className={`text-xs ${theme === 'light' ? 'text-gray-500' : 'text-gray-500'}`}>{msg.time}</span>
+                <AnimatePresence mode="wait" key={selectedFriend}>
+                  <motion.div
+                    key={selectedFriend}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="space-y-4 mb-6 h-96 overflow-y-auto"
+                  >
+                    {(friendChats[selectedFriend] || []).map((msg, index) => (
+                      <div key={index} className="flex gap-3">
+                        <img src={msg.avatar} alt={msg.user} className="w-10 h-10 rounded-full object-cover" />
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className={`font-medium ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>{msg.user}</span>
+                            <span className={`text-xs ${theme === 'light' ? 'text-gray-500' : 'text-gray-500'}`}>{msg.time}</span>
+                          </div>
+                          <div className={`${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>{msg.message}</div>
                         </div>
-                        <div className={`${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>{msg.message}</div>
                       </div>
-                    </div>
                   ))}
-                  {friendTyping && (
-                    <div className="flex gap-3">
-                      <img src={friendsList.find(f => f.id === selectedFriend)?.avatar} className="w-10 h-10 rounded-full object-cover" />
-                      <div className="flex items-center text-sm italic text-gray-500">Typing...</div>
-                    </div>
-                  )}
-                </div>
+                    {friendTyping && (
+                      <div className="flex gap-3">
+                        <img src={friendsList.find(f => f.id === selectedFriend)?.avatar} className="w-10 h-10 rounded-full object-cover" />
+                        <div className="flex items-center text-sm italic text-gray-500">Typing...</div>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
                 <div className="flex gap-3">
                   <input
                     type="text"
