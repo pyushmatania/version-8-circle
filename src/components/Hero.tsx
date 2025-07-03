@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Play, ArrowRight, Film, Music, TrendingUp, Users, DollarSign, Target, Award, Star, Zap, Crown, Gift, Sparkles, CheckCircle, Globe, Calendar, BarChart3, Coins, Clapperboard, BadgeIndianRupee } from 'lucide-react';
-import AnimatedIcon from './AnimatedIcon';
+import { Play, ArrowRight, Film, Music, TrendingUp, Users, DollarSign, Target, Award, Star, Zap, Crown, Gift, Sparkles, CheckCircle, Globe, Calendar, BarChart3, Coins } from 'lucide-react';
 import Typewriter from './Typewriter';
 import AnimatedNumber from './AnimatedNumber';
 import { useTheme } from './ThemeProvider';
@@ -481,7 +480,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {[
                 {
-                  icon: Clapperboard,
+                  icon: Target,
                   value: 20,
                   label: 'Active Projects',
                   color: theme === 'light'
@@ -509,7 +508,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                   growth: '+45%'
                 },
                 {
-                  icon: BadgeIndianRupee,
+                  icon: DollarSign,
                   value: 30,
                   unit: 'Cr+',
                   prefix: '₹',
@@ -590,7 +589,41 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                   />
                   
                   <div className="relative z-10 text-center">
-                    <AnimatedIcon icon={stat.icon} colorClass={stat.color} />
+                    {/* Icon with Enhanced Animation */}
+                    <motion.div
+                      className={`inline-flex p-4 rounded-xl bg-gradient-to-r ${stat.color} bg-opacity-20 mb-4 relative overflow-hidden`}
+                      animate={{ 
+                        rotate: [0, 5, -5, 0],
+                        scale: [1, 1.05, 1]
+                      }}
+                      transition={{ 
+                        duration: 4, 
+                        repeat: Infinity, 
+                        ease: "easeInOut",
+                        delay: index * 0.5
+                      }}
+                      whileHover={{
+                        scale: 1.2,
+                        rotate: 360,
+                        transition: { duration: 0.6 }
+                      }}
+                    >
+                      {/* Icon Glow Effect */}
+                      <motion.div
+                        className={`absolute inset-0 bg-gradient-to-r ${stat.color} opacity-30 blur-lg`}
+                        animate={{
+                          scale: [1, 1.3, 1],
+                          opacity: [0.3, 0.7, 0.3]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      
+                      <stat.icon className={`w-8 h-8 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent relative z-10`} />
+                    </motion.div>
                     
                     {/* Value with Growth Indicator */}
                     <div className="mb-2">
