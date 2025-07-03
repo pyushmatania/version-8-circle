@@ -278,7 +278,7 @@ TITLE CARD: "NEON NIGHTS"`,
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
             transition={{ duration: 0.3 }}
-            className={`relative w-full max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl border overflow-hidden ${
+            className={`relative w-full max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl border overflow-y-auto ${
               theme === 'light'
                 ? 'light-glass-header'
                 : 'bg-gradient-to-br from-gray-900 to-black border-white/20'
@@ -349,7 +349,7 @@ TITLE CARD: "NEON NIGHTS"`,
             </div>
 
             {/* Content */}
-            <div className="flex h-[calc(90vh-16rem)]">
+            <div className="flex">
               {/* Scrollable Sidebar Navigation */}
               <div className={`w-80 border-r flex flex-col ${
                 theme === 'light' 
