@@ -384,7 +384,7 @@ TITLE CARD: "NEON NIGHTS"`,
             {/* Content */}
             <div className="flex">
               {/* Scrollable Sidebar Navigation */}
-              <div className={`${isMobile ? 'w-16' : 'w-80'} border-r flex flex-col ${
+              <div className={`${isMobile ? 'w-16 items-center' : 'w-80'} border-r flex flex-col ${
                 theme === 'light'
                   ? 'bg-white/30 border-gray-200'
                   : 'bg-black/30 border-white/10'
@@ -425,6 +425,7 @@ TITLE CARD: "NEON NIGHTS"`,
                     </div>
 
                     {/* Quick Stats */}
+                    {!isMobile && (
                     <div className={`p-4 rounded-xl border ${
                       theme === 'light'
                         ? 'bg-white/50 border-gray-200'
@@ -468,8 +469,10 @@ TITLE CARD: "NEON NIGHTS"`,
                         )}
                       </div>
                     </div>
+                    )}
 
                     {/* Investment Tiers Preview */}
+                    {!isMobile && (
                     <div className={`p-4 rounded-xl border ${
                       theme === 'light'
                         ? 'bg-white/50 border-gray-200'
@@ -499,6 +502,7 @@ TITLE CARD: "NEON NIGHTS"`,
                         </button>
                       </div>
                     </div>
+                    )}
 
                     {/* Project Tags */}
                     <div>

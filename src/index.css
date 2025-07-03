@@ -613,6 +613,7 @@
   .modal-content {
     overflow-y: auto;
     max-height: 100vh;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Prevent background scroll when modal is open */
