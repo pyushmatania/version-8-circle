@@ -610,11 +610,11 @@
     overflow: hidden;
   }
 
-  .modal-content {
+.modal-content {
     overflow-y: auto;
     max-height: 100vh;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
+    touch-action: pan-y;
   }
 
   /* Prevent background scroll when modal is open */
