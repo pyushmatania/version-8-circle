@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PixelCard from './PixelCard';
-import { 
-  Film, 
-  Music, 
-  Tv, 
+import {
+  Film,
+  Music,
+  Tv,
   Star, 
   Clock, 
   Users, 
@@ -16,6 +16,7 @@ import {
   ArrowRight,
   Award
 } from 'lucide-react';
+import SwipeToInvest from './SwipeToInvest';
 import { Project } from '../types';
 
 interface ProjectCardProps {
@@ -236,10 +237,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                   >
                     <Play className="w-4 h-4" />
                   </a>
-                  <button className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white text-black rounded-lg font-semibold text-sm hover:bg-gray-200 transition-colors">
-                    <ArrowRight className="w-4 h-4" />
-                    Invest Now
-                  </button>
+                  <div className="flex-1">
+                    <SwipeToInvest amount={25000} onConfirm={onClick} />
+                  </div>
                   <button className="p-2 bg-gray-600/80 text-white rounded-lg hover:bg-gray-600 transition-colors">
                     <Plus className="w-4 h-4" />
                   </button>

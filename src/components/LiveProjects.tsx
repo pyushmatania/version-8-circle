@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Film, Music, Clock, Users, TrendingUp, ArrowRight } from 'lucide-react';
+import SwipeToInvest from './SwipeToInvest';
 import AnimatedNumber from './AnimatedNumber';
 import { extendedProjects } from '../data/extendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
@@ -195,19 +196,12 @@ const LiveProjects: React.FC<LiveProjectsProps> = ({ onViewAll, onTrackInvestmen
                   </div>
                 </div>
 
-                <button
-                  onClick={() => handleProjectClick(project, 'invest')}
-                  className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-300 group ${
-                    project.type === 'film'
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white'
-                      : 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white'
-                  } hover:scale-105 hover:shadow-lg`}
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    Invest Now
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </button>
+                <div className="w-full">
+                  <SwipeToInvest
+                    amount={25000}
+                    onConfirm={() => handleProjectClick(project, 'invest')}
+                  />
+                </div>
 
               </div>
             </motion.div>
