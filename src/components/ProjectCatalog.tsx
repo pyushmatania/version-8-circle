@@ -699,12 +699,11 @@ const ProjectCatalog: React.FC = () => {
         ) : (
           <div className="space-y-12">
             {/* Netflix-style Sections with Clickable Headers */}
-            <ProjectRow 
-              title="🔥 Trending Now" 
-              projects={trendingProjects} 
+            <ProjectRow
+              title="🔥 Trending Now"
+              projects={trendingProjects}
               onProjectClick={handleProjectClick}
               onHeaderClick={() => handleSectionClick('trending')}
-              featured
             />
             
             {endingSoon.length > 0 && (
