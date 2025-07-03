@@ -189,9 +189,9 @@ const NewsAndUpdates: React.FC<NewsAndUpdatesProps> = () => {
   });
 
   return (
-    <div className={`min-h-screen pt-20 transition-all duration-[3000ms] ${
-      theme === 'light' 
-        ? 'bg-gradient-to-br from-gray-50 to-white' 
+    <div className={`min-h-screen pt-20 pb-[100px] transition-all duration-[3000ms] ${
+      theme === 'light'
+        ? 'bg-gradient-to-br from-gray-50 to-white'
         : 'bg-gradient-to-br from-black via-gray-900 to-purple-900'
     }`}>
       <div className="max-w-7xl mx-auto px-6 py-8">

@@ -292,7 +292,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black pb-[100px]">
       {/* Full-Screen Auto-Sliding Hero Carousel */}
       {!searchTerm && !showAllProjects && (
         <div className="hidden md:block relative h-screen overflow-hidden">
