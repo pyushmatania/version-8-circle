@@ -990,9 +990,9 @@ const Community: React.FC = () => {
                 theme === 'light'
                   ? 'light-glass-header'
                   : 'bg-white/10 border-white/20'
-              }`}>
+              } ${isMobile ? 'pb-24' : ''}`}>
                 {isMobile && (
-                  <div className="flex gap-3 overflow-x-auto pb-4 -mx-2 px-2 scrollbar-hide snap-x snap-mandatory">
+                  <div className="flex gap-3 overflow-x-auto pb-4 pt-4 -mx-2 px-2 scrollbar-hide snap-x snap-mandatory">
                     {channels.map((channel) => (
                       <button
                         key={channel.id}
@@ -1148,10 +1148,10 @@ const Community: React.FC = () => {
               <div
                 className={`col-span-1 md:col-span-2 lg:col-span-3 p-6 rounded-2xl backdrop-blur-xl border ${
                   theme === 'light' ? 'light-glass-header' : 'bg-white/10 border-white/20'
-                }`}
+                } ${isMobile ? 'pb-24' : ''}`}
               >
                 {isMobile && (
-                  <div className="flex gap-3 overflow-x-auto pb-4 -mx-2 px-2 scrollbar-hide snap-x snap-mandatory">
+                  <div className="flex gap-3 overflow-x-auto pb-4 pt-4 -mx-2 px-2 scrollbar-hide snap-x snap-mandatory">
                     {friendsList.map(friend => (
                       <button
                         key={friend.id}
