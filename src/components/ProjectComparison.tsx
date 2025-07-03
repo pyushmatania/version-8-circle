@@ -22,7 +22,7 @@ import { useTheme } from './ThemeProvider';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
 import { extendedProjects } from '../data/extendedProjects';
-import SwipeToInvest from './SwipeToInvest';
+import confetti from 'canvas-confetti';
 
 interface ProjectComparisonProps {
   initialProjects?: Project[];
@@ -80,6 +80,12 @@ const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects, 
     }
     setSearchTerm('');
     setShowResults(false);
+  };
+
+  const handleInvestClick = (project: Project) => {
+    confetti({ particleCount: 40, spread: 70, origin: { y: 0.6 } });
+    setSelectedProject(project);
+    setIsModalOpen(true);
   };
 
   // Function to remove a project from comparison
@@ -790,10 +796,16 @@ const ProjectComparison: React.FC<ProjectComparisonProps> = ({ initialProjects, 
                   {compareProjects.map((project) => (
                     <td key={project.id} className="py-4 px-6">
                       <div className="flex flex-col items-center gap-3">
-                        <SwipeToInvest
-                          amount={25000}
-                          onConfirm={() => { setSelectedProject(project); setIsModalOpen(true); }}
-                        />
+                        <button
+                          onClick={() => handleInvestClick(project)}
+                          className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                            theme === 'light'
+                              ? 'bg-purple-500 hover:bg-purple-600 text-white'
+                              : 'bg-purple-600 hover:bg-purple-700 text-white'
+                          }`}
+                        >
+                          Invest Now
+                        </button>
                         <button
                           onClick={() => { setSelectedProject(project); setIsModalOpen(true); }}
                           className={`w-full py-2 rounded-lg font-medium transition-colors ${

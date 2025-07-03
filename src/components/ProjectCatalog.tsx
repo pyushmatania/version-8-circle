@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PixelCard from './PixelCard';
 import { Film, Music, Tv, Search, Star, Clock, Users, TrendingUp, ChevronLeft, ChevronRight, Play, Plus, Info, Siren as Fire, Award, Globe, Filter, Grid3X3, List, SlidersHorizontal, X, Calendar, DollarSign, MapPin, Heart, Share2, Bookmark, ArrowRight, Eye } from 'lucide-react';
-import SwipeToInvest from './SwipeToInvest';
+import confetti from 'canvas-confetti';
 import { extendedProjects } from '../data/extendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
@@ -43,6 +43,11 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
     setSelectedProject(project);
     setInitialTab(tab);
     setIsModalOpen(true);
+  };
+
+  const handleInvestClick = (project: Project) => {
+    confetti({ particleCount: 40, spread: 70, origin: { y: 0.6 } });
+    handleProjectClick(project, 'invest');
   };
 
   const closeModal = () => {
@@ -427,12 +432,13 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                    <div className="flex-1 sm:flex-none">
-                      <SwipeToInvest
-                        amount={25000}
-                        onConfirm={() => handleProjectClick(featuredProjects[currentSlide], 'invest')}
-                      />
-                    </div>
+                    <button
+                      onClick={() => handleInvestClick(featuredProjects[currentSlide])}
+                      className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-lg font-semibold text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105"
+                    >
+                      <Play className="w-6 h-6 fill-current" />
+                      Invest Now
+                    </button>
                     
                     <button 
                       onClick={() => handleProjectClick(featuredProjects[currentSlide])}
@@ -1128,12 +1134,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, featured, u
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-2 pt-2">
-                  <div className="flex-1">
-                    <SwipeToInvest
-                      amount={25000}
-                      onConfirm={() => handleProjectClick(project, 'invest')}
-                    />
-                  </div>
+                  <button
+                    onClick={() => handleInvestClick(project)}
+                    className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white text-black rounded-lg font-semibold text-sm hover:bg-gray-200 transition-colors shadow-lg"
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                    Invest Now
+                  </button>
                   <button className="p-2 bg-gray-800/80 text-white rounded-lg hover:bg-gray-700 transition-colors backdrop-blur-sm">
                     <Plus className="w-4 h-4" />
                   </button>
@@ -1237,12 +1244,12 @@ const ListProjectCard: React.FC<ListProjectCardProps> = ({ project, onClick }) =
             )}
           </div>
           
-          <div className="w-full sm:w-auto">
-            <SwipeToInvest
-              amount={25000}
-              onConfirm={() => handleProjectClick(project, 'invest')}
-            />
-          </div>
+          <button
+            onClick={() => handleInvestClick(project)}
+            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-500 hover:to-blue-500 transition-all duration-300"
+          >
+            Invest Now
+          </button>
         </div>
         
         <div className="w-full bg-gray-700 rounded-full h-2">
