@@ -188,7 +188,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-900 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-900 pt-20 pb-[100px]">
       <div className="max-w-7xl mx-auto px-6 py-8">
         
         {/* Header */}
@@ -483,35 +483,38 @@ const Dashboard: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="flex flex-col gap-4 md:gap-6"
           >
             {circles.map((circle, index) => (
-              <div key={index} className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-white/30 transition-all duration-300">
-                <div className="flex items-center gap-4 mb-4">
-                  <img 
-                    src={circle.avatar} 
+              <div
+                key={index}
+                className="relative p-4 md:p-6 rounded-xl md:rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-white/30 transition-all duration-300"
+              >
+                {circle.unreadMessages > 0 && (
+                  <span className="absolute top-4 right-4 px-2 py-1 bg-red-500 rounded-full text-white text-xs font-bold">
+                    {circle.unreadMessages}
+                  </span>
+                )}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 flex-wrap">
+                  <img
+                    src={circle.avatar}
                     alt={circle.name}
                     className="w-16 h-16 rounded-full object-cover border-2 border-purple-500/30"
                   />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-white text-xl font-bold">{circle.name}</h3>
-                      {circle.unreadMessages > 0 && (
-                        <span className="px-2 py-1 bg-red-500 rounded-full text-white text-xs font-bold">
-                          {circle.unreadMessages}
-                        </span>
-                      )}
-                    </div>
+                  <div className="flex-1 break-words">
+                    <h3 className="text-white text-xl font-bold mb-2">{circle.name}</h3>
                     <p className="text-gray-300 text-sm mb-2">{circle.description}</p>
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
                       <span>{circle.members.toLocaleString()} members</span>
                       <span>•</span>
-                      <span>Level: <span className="text-purple-400">{circle.level}</span></span>
+                      <span>
+                        Level: <span className="text-purple-400">{circle.level}</span>
+                      </span>
                       <span>•</span>
                       <span>Active {circle.lastActivity}</span>
                     </div>
                   </div>
-                  <button className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 mt-4 sm:mt-0">
+                  <button className="w-full sm:w-auto px-6 py-2 min-h-[48px] bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium hover:from-purple-400 hover:to-blue-400 transition-all duration-300 mt-2 sm:mt-0">
                     Enter Circle
                   </button>
                 </div>

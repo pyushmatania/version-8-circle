@@ -437,7 +437,7 @@ const Community: React.FC = () => {
 
   return (
     <div
-      className={`relative min-h-screen pt-16 ${
+      className={`relative min-h-screen pt-16 pb-[100px] ${
         theme === 'light'
           ? 'bg-gradient-to-br from-gray-50 via-white to-purple-50'
           : 'bg-gradient-to-br from-black via-gray-900 to-purple-900'

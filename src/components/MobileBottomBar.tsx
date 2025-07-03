@@ -34,7 +34,7 @@ const MobileBottomBar: React.FC<Props> = ({ currentView, setCurrentView, onAuthR
           <button
             key={item.id}
             onClick={() => handleClick(item.id, item.requiresAuth)}
-            className={`flex flex-col items-center text-xs px-2 ${
+            className={`flex flex-col items-center text-xs px-2 py-2 min-h-[48px] ${
               currentView === item.id ? 'text-cyan-400' : 'text-gray-300'
             }`}
           >
@@ -45,7 +45,7 @@ const MobileBottomBar: React.FC<Props> = ({ currentView, setCurrentView, onAuthR
         {!isAuthenticated && (
           <button
             onClick={() => onAuthRequired('login')}
-            className="flex flex-col items-center text-xs px-2 text-gray-300"
+            className="flex flex-col items-center text-xs px-2 py-2 text-gray-300 min-h-[48px]"
           >
             <LogIn className="w-6 h-6" />
             <span className="leading-none mt-1">Sign In</span>

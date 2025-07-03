@@ -413,8 +413,8 @@ const Merchandise: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen pt-20 transition-all duration-[3000ms] ${
-      theme === 'light' 
+    <div className={`min-h-screen pt-20 pb-[100px] transition-all duration-[3000ms] ${
+      theme === 'light'
         ? currentGradient === 0 ? 'bg-gradient-to-br from-green-50 to-emerald-50' :
           currentGradient === 1 ? 'bg-gradient-to-br from-orange-50 to-red-50' :
           currentGradient === 2 ? 'bg-gradient-to-br from-blue-50 to-cyan-50' :

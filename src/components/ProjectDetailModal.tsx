@@ -44,6 +44,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
   const [showSuccess, setShowSuccess] = useState(false);
   const [investStatus, setInvestStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [showMobileInvest, setShowMobileInvest] = useState(false);
   const { theme } = useTheme();
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -65,6 +66,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
       setTimeout(() => {
         setShowSuccess(false);
         setInvestStatus('idle');
+        setShowMobileInvest(false);
       }, 2500);
     }, 2000);
   };
@@ -543,31 +545,39 @@ TITLE CARD: "NEON NIGHTS"`,
                     )}
 
                     {/* Action Buttons */}
-                    <div className="space-y-3 pt-4">
-                      <div className="flex gap-2">
-                        <button className={`flex-1 py-2 px-3 rounded-lg border transition-colors ${
-                          theme === 'light'
-                            ? 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                            : 'border-white/20 text-gray-300 hover:bg-white/10'
-                        }`}>
-                          <Heart className="w-4 h-4 mx-auto" />
-                        </button>
-                        <button className={`flex-1 py-2 px-3 rounded-lg border transition-colors ${
-                          theme === 'light'
-                            ? 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                            : 'border-white/20 text-gray-300 hover:bg-white/10'
-                        }`}>
-                          <Share2 className="w-4 h-4 mx-auto" />
-                        </button>
-                        <button className={`flex-1 py-2 px-3 rounded-lg border transition-colors ${
-                          theme === 'light'
-                            ? 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                            : 'border-white/20 text-gray-300 hover:bg-white/10'
-                        }`}>
-                          <Download className="w-4 h-4 mx-auto" />
-                        </button>
+                    {!isMobile && (
+                      <div className="space-y-3 pt-4">
+                        <div className="flex gap-2">
+                          <button
+                            className={`flex-1 py-2 px-3 rounded-lg border transition-colors ${
+                              theme === 'light'
+                                ? 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                                : 'border-white/20 text-gray-300 hover:bg-white/10'
+                            }`}
+                          >
+                            <Heart className="w-4 h-4 mx-auto" />
+                          </button>
+                          <button
+                            className={`flex-1 py-2 px-3 rounded-lg border transition-colors ${
+                              theme === 'light'
+                                ? 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                                : 'border-white/20 text-gray-300 hover:bg-white/10'
+                            }`}
+                          >
+                            <Share2 className="w-4 h-4 mx-auto" />
+                          </button>
+                          <button
+                            className={`flex-1 py-2 px-3 rounded-lg border transition-colors ${
+                              theme === 'light'
+                                ? 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                                : 'border-white/20 text-gray-300 hover:bg-white/10'
+                            }`}
+                          >
+                            <Download className="w-4 h-4 mx-auto" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1081,11 +1091,66 @@ TITLE CARD: "NEON NIGHTS"`,
             animate={{ y: 0 }}
             exit={{ y: 80 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            onClick={handleInvest}
+            onClick={() => setShowMobileInvest(true)}
             className="fixed bottom-4 left-4 right-4 z-[9998] px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold"
           >
             Invest Now
           </motion.button>
+        )}
+
+        {isMobile && showMobileInvest && (
+          <AnimatePresence>
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm p-4 flex flex-col"
+            >
+              {investStatus === 'success' ? (
+                <div className="flex-1 flex flex-col items-center justify-center gap-4">
+                  <CheckCircle className="w-16 h-16 text-green-400" />
+                  <p className="text-white text-lg">Investment Successful!</p>
+                  <button
+                    onClick={() => setShowMobileInvest(false)}
+                    className="w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-lg"
+                  >
+                    Close
+                  </button>
+                </div>
+              ) : (
+                <div className="flex-1 flex flex-col">
+                  <button
+                    onClick={() => setShowMobileInvest(false)}
+                    className="self-end text-white mb-4"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                  <h3 className="text-white text-lg font-semibold mb-4">Enter Amount</h3>
+                  <input
+                    type="number"
+                    min={500}
+                    value={investmentAmount}
+                    onChange={(e) => setInvestmentAmount(Number(e.target.value))}
+                    className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white mb-6"
+                  />
+                  <button
+                    onClick={handleInvest}
+                    disabled={investStatus === 'loading'}
+                    className="w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-lg"
+                  >
+                    Pay
+                  </button>
+                </div>
+              )}
+
+              {investStatus === 'loading' && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
         )}
         <AnimatePresence>
           {investStatus === 'loading' && (
