@@ -457,7 +457,7 @@ const Community: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
             {myCircles.map((circle, index) => (
               <motion.button
                 key={circle.id}
@@ -465,7 +465,7 @@ const Community: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative flex-shrink-0 w-20 h-20 rounded-full p-1 transition-all duration-300 ${
+                className={`relative flex-shrink-0 w-20 h-20 rounded-full p-1 transition-all duration-300 snap-center ${
                   selectedCircle === circle.id
                     ? 'bg-gradient-to-r from-purple-500 to-blue-500'
                     : circle.unreadMessages > 0
@@ -498,7 +498,7 @@ const Community: React.FC = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: myCircles.length * 0.1 }}
-              className={`flex-shrink-0 w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center transition-all duration-300 ${
+              className={`flex-shrink-0 w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center transition-all duration-300 snap-center ${
                 theme === 'light'
                   ? 'border-gray-300 text-gray-600 hover:border-purple-400 hover:text-purple-600'
                   : 'border-gray-600 text-gray-400 hover:border-purple-400 hover:text-purple-400'

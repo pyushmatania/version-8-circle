@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { Project } from '../types';
 import { useTheme } from './ThemeProvider';
+import useIsMobile from '../hooks/useIsMobile';
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -43,6 +44,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   const [showSuccess, setShowSuccess] = useState(false);
   const [investStatus, setInvestStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   const [showTrailer, setShowTrailer] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoIdMatch = (project?.trailer || '').match(/(?:watch\?v=|embed\/)([^&]+)/);
@@ -293,11 +295,18 @@ TITLE CARD: "NEON NIGHTS"`,
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 50 }}
+            drag={isMobile ? 'y' : false}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            onDragEnd={(_, info) => {
+              if (isMobile && info.point.y > 100) onClose();
+            }}
+            initial={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.9, y: 50 }}
+            animate={isMobile ? { y: 0 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.9, y: 50 }}
             transition={{ duration: 0.3 }}
-            className={`relative w-full max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl border overflow-y-auto ${
+            className={`relative w-full ${
+              isMobile ? 'fixed bottom-0 inset-x-0 h-[90vh] rounded-t-2xl' : 'max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl'
+            } border overflow-y-auto ${
               theme === 'light'
                 ? 'light-glass-header'
                 : 'bg-gradient-to-br from-gray-900 to-black border-white/20'

@@ -837,14 +837,14 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ title, projects, onProjectClick
       {/* Scroll Buttons */}
       <button
         onClick={() => scroll('left')}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/80 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black"
+        className="hidden sm:flex absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/80 rounded-full items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
       
       <button
         onClick={() => scroll('right')}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/80 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black"
+        className="hidden sm:flex absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/80 rounded-full items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black"
       >
         <ChevronRight className="w-6 h-6" />
       </button>
@@ -852,11 +852,11 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ title, projects, onProjectClick
       {/* Projects Scroll Container */}
       <div 
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide pb-4"
+        className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {projects.map((project, index) => (
-          <ProjectCard 
+          <ProjectCard
             key={project.id} 
             project={project} 
             onClick={() => onProjectClick(project)}

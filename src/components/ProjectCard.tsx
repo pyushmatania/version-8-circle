@@ -45,7 +45,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <PixelCard
       variant="pink"
-      className={`relative flex-shrink-0 ${cardWidth}`}
+      className={`relative flex-shrink-0 ${cardWidth} snap-start`}
     >
       <motion.div
         className="absolute inset-0 cursor-pointer group"
