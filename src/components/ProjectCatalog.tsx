@@ -5,6 +5,7 @@ import { Film, Music, Tv, Search, Star, Clock, Users, TrendingUp, ChevronLeft, C
 import { extendedProjects } from '../data/extendedProjects';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
+import useIsMobile from '../hooks/useIsMobile';
 
 interface ProjectCatalogProps {
   onTrackInvestment?: () => void;
@@ -18,6 +19,8 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'cards'>('cards');
   const [showFilters, setShowFilters] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState<string | null>(null);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const isMobile = useIsMobile();
   
   // Auto-sliding hero carousel state
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -453,8 +456,28 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
       {/* Search and Filter Section */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
+          {isMobile && (
+            <div className="flex justify-between md:hidden">
+              <button
+                onClick={() => setShowMobileSearch(!showMobileSearch)}
+                className="p-2 rounded-lg bg-gray-900 text-white"
+              >
+                <Search className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="relative p-2 rounded-lg bg-gray-900 text-white"
+              >
+                <Filter className="w-6 h-6" />
+                {(selectedCategory !== 'all' || selectedType !== 'all' || selectedLanguage !== 'all' || selectedGenre !== 'all') && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
+                )}
+              </button>
+            </div>
+          )}
+
           {/* Search Bar */}
-          <div className="relative flex-1 hidden md:block">
+          <div className={`relative flex-1 ${isMobile ? (showMobileSearch ? 'block' : 'hidden') : 'hidden md:block'}`}>
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
             <input
               type="text"
@@ -466,7 +489,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
           </div>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center gap-2 bg-gray-900 rounded-xl p-2">
+          <div className={`flex items-center gap-2 bg-gray-900 rounded-xl p-2 ${isMobile ? 'hidden' : ''}`}>
             <button
               onClick={() => setViewMode('cards')}
               className={`p-2 rounded-lg transition-all duration-300 ${
@@ -496,7 +519,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
           {/* Filter Toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-6 py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all duration-300"
+            className={`flex items-center gap-2 px-6 py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all duration-300 ${isMobile ? 'hidden' : ''}`}
           >
             <Filter className="w-5 h-5" />
             Filters

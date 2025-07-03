@@ -384,9 +384,9 @@ TITLE CARD: "NEON NIGHTS"`,
             {/* Content */}
             <div className="flex">
               {/* Scrollable Sidebar Navigation */}
-              <div className={`w-80 border-r flex flex-col ${
-                theme === 'light' 
-                  ? 'bg-white/30 border-gray-200' 
+              <div className={`${isMobile ? 'w-16' : 'w-80'} border-r flex flex-col ${
+                theme === 'light'
+                  ? 'bg-white/30 border-gray-200'
                   : 'bg-black/30 border-white/10'
               }`}>
                 {/* Sidebar Header */}
@@ -401,11 +401,13 @@ TITLE CARD: "NEON NIGHTS"`,
                   <div className="p-4 space-y-6">
                     {/* Navigation Tabs */}
                     <div className="space-y-2">
-                      <h4 className={`text-sm font-medium uppercase tracking-wide ${
-                        theme === 'light' ? 'text-gray-600' : 'text-gray-400'
-                      }`}>
-                        Navigation
-                      </h4>
+                      {!isMobile && (
+                        <h4 className={`text-sm font-medium uppercase tracking-wide ${
+                          theme === 'light' ? 'text-gray-600' : 'text-gray-400'
+                        }`}>
+                          Navigation
+                        </h4>
+                      )}
                       {tabs.map((tab) => (
                         <button
                           key={tab.id}
@@ -417,7 +419,7 @@ TITLE CARD: "NEON NIGHTS"`,
                           }`}
                         >
                           <tab.icon className="w-5 h-5 flex-shrink-0" />
-                          <span>{tab.label}</span>
+                          {!isMobile && <span>{tab.label}</span>}
                         </button>
                       ))}
                     </div>
