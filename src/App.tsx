@@ -85,8 +85,8 @@ function AppContent() {
         return (
           <>
             <Hero setCurrentView={handleViewChange} />
-            <ProblemSolution />
-            <HowItWorks />
+            <ProblemSolution setCurrentView={handleViewChange} />
+            <HowItWorks setCurrentView={handleViewChange} />
             <LiveProjects
               onViewAll={() => handleViewChange('projects')}
               onTrackInvestment={() => handleViewChange('dashboard')}

@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, Gift, Users, Crown, Ticket, Award, Camera, Music } from 'lucide-react';
+import { Medal, Box, Gem, Badge, Camera, Music, Ticket, Users, Crown, CheckCircle } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
+import ProfileCard from './Components/ProfileCard/ProfileCard';
 
 const Rewards: React.FC = () => {
   const { theme } = useTheme();
@@ -12,7 +13,7 @@ const Rewards: React.FC = () => {
       title: "Supporter",
       minAmount: "₹10K",
       color: "from-gray-500 to-gray-600",
-      icon: <Star className="w-6 h-6" />,
+      icon: <Medal className="w-6 h-6" />,
       perks: [
         "Early access to content",
         "Digital poster collection",
@@ -24,7 +25,7 @@ const Rewards: React.FC = () => {
       title: "Backer",
       minAmount: "₹25K",
       color: "from-blue-500 to-cyan-500",
-      icon: <Gift className="w-6 h-6" />,
+      icon: <Box className="w-6 h-6" />,
       perks: [
         "All Supporter perks",
         "Behind-the-scenes content",
@@ -37,7 +38,7 @@ const Rewards: React.FC = () => {
       title: "Producer",
       minAmount: "₹50K",
       color: "from-purple-500 to-pink-500",
-      icon: <Crown className="w-6 h-6" />,
+      icon: <Gem className="w-6 h-6" />,
       perks: [
         "All Backer perks",
         "Name in end credits",
@@ -49,7 +50,7 @@ const Rewards: React.FC = () => {
       title: "Executive",
       minAmount: "₹1L+",
       color: "from-yellow-500 to-orange-500",
-      icon: <Award className="w-6 h-6" />,
+      icon: <Badge className="w-6 h-6" />,
       perks: [
         "All Producer perks",
         "Set visit opportunity",
@@ -85,6 +86,23 @@ const Rewards: React.FC = () => {
       image: "https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=400"
     }
   ];
+
+  const tierIcons = [
+    <Medal className="w-8 h-8 text-yellow-500" />, // Supporter
+    <Users className="w-8 h-8 text-blue-400" />, // Backer
+    <Gem className="w-8 h-8 text-purple-500" />, // Producer
+    <Crown className="w-9 h-9 text-orange-400" />, // Executive
+  ];
+
+  // Helper for custom object position
+  const getObjectPosition = (index: number) => {
+    if (index === 0) return 'center 10%';
+    if (index === 3) return 'center 90%';
+    return 'center';
+  };
+
+  // Ticket-style font (Google Fonts or fallback)
+  const ticketFont = 'font-["Oswald","Arial Narrow",sans-serif]';
 
   return (
     <section className={`py-24 ${
@@ -124,7 +142,6 @@ const Rewards: React.FC = () => {
               viewport={{ once: true }}
               className={`relative group ${tier.popular ? 'scale-105 lg:scale-110' : ''}`}
             >
-              {/* Popular Badge */}
               {tier.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
                   <div className="px-4 py-1 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full text-black text-sm font-bold">
@@ -132,36 +149,55 @@ const Rewards: React.FC = () => {
                   </div>
                 </div>
               )}
-
-              <div className={`relative p-6 rounded-2xl backdrop-blur-xl border transition-all duration-500 hover:scale-105 h-full ${
-                theme === 'light'
-                  ? 'bg-white/40 border-white/60 shadow-lg hover:shadow-xl'
-                  : `bg-gradient-to-br from-white/10 to-white/5 ${tier.popular ? 'border-yellow-500/40' : 'border-white/20'} hover:border-white/40`
-              }`}>
-                
-                <div className="relative z-10">
-                  {/* Tier Header */}
-                  <div className="text-center mb-6">
-                    <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${tier.color} bg-opacity-20 mb-4`}>
-                      <div className={`bg-gradient-to-r ${tier.color} bg-clip-text text-transparent`}>
-                        {tier.icon}
-                      </div>
-                    </div>
-                    <h3 className={`text-xl font-bold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>{tier.title}</h3>
-                    <div className={`text-2xl font-bold bg-gradient-to-r ${tier.color} bg-clip-text text-transparent`}>
-                      {tier.minAmount}
-                    </div>
+              {index === 3 && (
+                <div className="absolute top-3 right-3 z-20">
+                  <div className="px-3 py-1 bg-gradient-to-r from-orange-400 to-yellow-300 rounded-full text-white text-xs font-bold shadow-md">
+                    VIP
                   </div>
-
-                  {/* Perks List */}
-                  <div className="space-y-3">
-                    {tier.perks.map((perk, perkIndex) => (
-                      <div key={perkIndex} className="flex items-start gap-3">
-                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${tier.color} mt-2 flex-shrink-0`} />
-                        <span className={`text-sm leading-relaxed ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>{perk}</span>
-                      </div>
+                </div>
+              )}
+              <div className="relative h-full">
+                {/* Place icon below badge for Backer, otherwise at top */}
+                {index === 1 && tier.popular ? (
+                  <div className="flex justify-center items-center mt-8 mb-2">
+                    {tierIcons[index]}
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center mb-2">
+                    {tierIcons[index]}
+                  </div>
+                )}
+                <ProfileCard
+                  avatarUrl={
+                    index === 0 ? 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&w=400' : // Supporter: young fan
+                    index === 1 ? 'https://images.pexels.com/photos/1707828/pexels-photo-1707828.jpeg?auto=compress&w=400' : // Backer: group/social
+                    index === 2 ? 'https://images.pexels.com/photos/2100063/pexels-photo-2100063.jpeg?auto=compress&w=400' : // Producer: beautiful girl in city bg
+                    'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&w=400' // Executive: professional business leader
+                  }
+                  name={tier.title}
+                  title={''}
+                  showUserInfo={false}
+                  enableTilt={true}
+                  className="h-full bg-gray-100 dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700"
+                  avatarStyle={{ objectPosition: getObjectPosition(index) }}
+                />
+                {/* Glassmorphic overlay for tier info */}
+                <div className="absolute left-0 right-0 bottom-0 p-4 rounded-b-2xl backdrop-blur-md bg-white/60 dark:bg-gray-900/60 border-t border-white/30 dark:border-gray-700/40 flex flex-col gap-2" style={{zIndex: 10}}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`inline-block w-2 h-8 rounded-l-xl ${index === 0 ? 'bg-yellow-400' : index === 1 ? 'bg-blue-400' : index === 2 ? 'bg-purple-400' : 'bg-orange-400'}`}></span>
+                    <span className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">{tier.title}</span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`px-3 py-1 rounded-full text-sm font-bold ${index === 0 ? 'bg-yellow-100 text-yellow-700' : index === 1 ? 'bg-blue-100 text-blue-700' : index === 2 ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-700'}`}>Min. Investment: {tier.minAmount}</span>
+                  </div>
+                  <ul className="flex flex-col gap-1 text-left text-gray-700 dark:text-gray-200 text-base mb-0">
+                    {tier.perks.map((perk, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <CheckCircle className={`w-4 h-4 mt-1 flex-shrink-0 ${index === 0 ? 'text-yellow-400' : index === 1 ? 'text-blue-400' : index === 2 ? 'text-purple-400' : 'text-orange-400'}`} />
+                        <span>{perk}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               </div>
             </motion.div>
@@ -197,34 +233,12 @@ const Rewards: React.FC = () => {
                 className={`group relative overflow-hidden rounded-2xl backdrop-blur-xl border transition-all duration-500 ${
                   theme === 'light'
                     ? 'bg-white/40 border-white/60 hover:shadow-lg'
-                    : 'bg-gradient-to-br from-white/10 to-white/5 border-white/20 hover:border-white/40'
+                    : 'bg-gradient-to-br from-purple-900/40 to-pink-900/40 border-white/10 hover:shadow-xl'
                 }`}
               >
-                {/* Background Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={experience.image} 
-                    alt={experience.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  
-                  {/* Icon */}
-                  <div className="absolute top-4 left-4">
-                    <div className={`p-3 rounded-xl backdrop-blur-md border ${
-                      theme === 'light'
-                        ? 'bg-white/60 border-white/80'
-                        : 'bg-white/10 border-white/20'
-                    }`}>
-                      <div className="text-white">
-                        {experience.icon}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
+                <img src={experience.image} alt={experience.title} className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition duration-500" />
+                <div className="relative z-10 p-8 flex flex-col items-center text-center">
+                  <div className="mb-4">{experience.icon}</div>
                   <h4 className={`text-xl font-bold mb-3 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>{experience.title}</h4>
                   <p className={`leading-relaxed ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}>{experience.description}</p>
                 </div>
@@ -232,55 +246,6 @@ const Rewards: React.FC = () => {
             ))}
           </div>
         </motion.div>
-
-        {/* Value Proposition */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <div className={`p-8 rounded-2xl backdrop-blur-xl border ${
-            theme === 'light'
-              ? 'bg-white/40 border-white/60'
-              : 'bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/20'
-          }`}>
-            <div className="flex justify-center mb-6">
-              <div className="p-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
-                <Gift className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <h3 className={`text-3xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-4`}>
-              More Than Just{' '}
-              <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
-                Financial Returns
-              </span>
-            </h3>
-            <p className={`text-lg max-w-3xl mx-auto leading-relaxed mb-8 ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}>
-              While our investors see an average of 15% returns, the real value is in becoming part of the creative process. 
-              From influencing storylines to attending exclusive events, you're not just investing in content—you're shaping culture.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-400 mb-1">15%</div>
-                <div className={`text-sm ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Avg. Returns</div>
-              </div>
-              <div className={`hidden sm:block w-px h-8 ${theme === 'light' ? 'bg-gray-300' : 'bg-white/20'}`} />
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-400 mb-1">50+</div>
-                <div className={`text-sm ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Unique Perks</div>
-              </div>
-              <div className={`hidden sm:block w-px h-8 ${theme === 'light' ? 'bg-gray-300' : 'bg-white/20'}`} />
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400 mb-1">∞</div>
-                <div className={`text-sm ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Memories</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
       </div>
     </section>
   );

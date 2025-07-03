@@ -1267,24 +1267,58 @@ const Community: React.FC = () => {
                 ))}
               </div>
 
-              {/* Media Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {[...Array(12)].map((_, index) => (
+              {/* Masonry Style Media Grid */}
+              <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                {[
+                  // People - Unique images
+                  { url: 'https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop&crop=face', height: 'h-64', category: 'People' },
+                  { url: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop&crop=face', height: 'h-80', category: 'People' },
+                  { url: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop&crop=face', height: 'h-72', category: 'People' },
+                  
+                  // Pets
+                  { url: 'https://images.pexels.com/photos/1904105/pexels-photo-1904105.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-96', category: 'Pets' },
+                  { url: 'https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-56', category: 'Pets' },
+                  { url: 'https://images.pexels.com/photos/1643457/pexels-photo-1643457.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-88', category: 'Pets' },
+                  
+                  // Nature
+                  { url: 'https://images.pexels.com/photos/2387866/pexels-photo-2387866.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-64', category: 'Nature' },
+                  { url: 'https://images.pexels.com/photos/2387869/pexels-photo-2387869.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-80', category: 'Nature' },
+                  { url: 'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-72', category: 'Nature' },
+                  
+                  // More People - Different unique images
+                  { url: 'https://images.pexels.com/photos/927022/pexels-photo-927022.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop&crop=face', height: 'h-96', category: 'People' },
+                  { url: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop&crop=face', height: 'h-56', category: 'People' },
+                  { url: 'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop&crop=face', height: 'h-88', category: 'People' },
+                  
+                  // More Pets
+                  { url: 'https://images.pexels.com/photos/1904105/pexels-photo-1904105.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-64', category: 'Pets' },
+                  { url: 'https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-80', category: 'Pets' },
+                  { url: 'https://images.pexels.com/photos/1643457/pexels-photo-1643457.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-72', category: 'Pets' },
+                  
+                  // More Nature
+                  { url: 'https://images.pexels.com/photos/2387866/pexels-photo-2387866.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-96', category: 'Nature' },
+                  { url: 'https://images.pexels.com/photos/2387869/pexels-photo-2387869.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-56', category: 'Nature' },
+                  { url: 'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=800', height: 'h-88', category: 'Nature' }
+                ].map((image, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: index * 0.05 }}
-                    className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className={`relative ${image.height} rounded-xl overflow-hidden group cursor-pointer bg-gray-800 mb-4 break-inside-avoid`}
                   >
                     <img 
-                      src={`https://images.pexels.com/photos/${7991579 + index}/pexels-photo-${7991579 + index}.jpeg?auto=compress&cs=tinysrgb&w=1080`}
-                      alt={`Media ${index + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      src={image.url}
+                      alt={`${image.category} ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      style={{
+                        filter: 'grayscale(30%) contrast(110%) brightness(90%)'
+                      }}
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Play className="w-8 h-8 text-white" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div className="text-white text-sm font-medium">{image.category} {index + 1}</div>
+                      <div className="text-gray-300 text-xs">Aesthetic Collection</div>
                     </div>
                   </motion.div>
                 ))}
