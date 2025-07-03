@@ -149,7 +149,10 @@ const WhyThisMatters: React.FC<WhyThisMattersProps> = ({ onJoin }) => {
           }`}>
             <div className={`text-xl font-semibold ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Ready to own the culture you love?</div>
             <button
-              onClick={onJoin}
+              onClick={() => {
+                try { navigator.vibrate?.(50); } catch (e) {}
+                onJoin();
+              }}
               className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
               <span className="relative z-10 flex items-center gap-2">
                 Join the Revolution

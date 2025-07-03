@@ -103,6 +103,7 @@ const Community: React.FC = () => {
   // Send message to selected channel
   const sendChannelMessage = () => {
     if (!newMessage.trim()) return;
+    try { navigator.vibrate?.(30); } catch (e) {}
     const msg = {
       user: 'You',
       message: newMessage,
@@ -131,6 +132,7 @@ const Community: React.FC = () => {
   // Send message to selected friend
   const sendFriendMessage = () => {
     if (!friendInput.trim()) return;
+    try { navigator.vibrate?.(30); } catch (e) {}
     const msg = {
       user: 'You',
       message: friendInput,
@@ -1078,7 +1080,7 @@ const Community: React.FC = () => {
                 </AnimatePresence>
 
                 {/* Message Input */}
-                <div className="flex gap-3">
+                <div className="flex gap-3 sticky bottom-0 pb-4 bg-inherit">
                   <input
                     type="text"
                     placeholder={`Message #${selectedChannel}`}
@@ -1209,7 +1211,7 @@ const Community: React.FC = () => {
                     )}
                   </motion.div>
                 </AnimatePresence>
-                <div className="flex gap-3">
+                <div className="flex gap-3 sticky bottom-0 pb-4 bg-inherit">
                   <input
                     type="text"
                     placeholder="Message"
