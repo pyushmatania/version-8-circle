@@ -304,7 +304,7 @@ TITLE CARD: "NEON NIGHTS"`,
             transition={{ duration: 0.3 }}
             className={`relative w-full ${
               isMobile ? 'fixed bottom-0 inset-x-0 h-[90vh] rounded-t-2xl' : 'max-w-7xl max-h-[90vh] mx-auto mt-[5vh] rounded-2xl'
-            } border overflow-y-auto ${
+            } border overflow-y-auto touch-pan-y ${
               theme === 'light'
                 ? 'light-glass-header'
                 : 'bg-gradient-to-br from-gray-900 to-black border-white/20'
@@ -387,7 +387,7 @@ TITLE CARD: "NEON NIGHTS"`,
             </div>
 
             {/* Content */}
-            <div className="flex">
+              <div className="flex">
               {/* Scrollable Sidebar Navigation */}
               <div
                 className={`${
@@ -401,11 +401,13 @@ TITLE CARD: "NEON NIGHTS"`,
                 }`}
               >
                 {/* Sidebar Header */}
+                {!isMobile && (
                 <div className="p-4 border-b border-current/10">
                   <h3 className={`font-semibold text-lg ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                     Project Details
                   </h3>
                 </div>
+                )}
 
                 {/* Scrollable Content Container */}
                 <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-300">
@@ -427,7 +429,7 @@ TITLE CARD: "NEON NIGHTS"`,
                             activeTab === tab.id
                               ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg'
                               : `${theme === 'light' ? 'text-gray-700 hover:bg-white/50 hover:text-gray-900' : 'text-gray-300 hover:bg-white/10 hover:text-white'}`
-                          }`}
+                          } ${isMobile ? 'justify-center min-h-12' : ''}`}
                         >
                           <tab.icon className="w-5 h-5 flex-shrink-0" />
                           {!isMobile && <span>{tab.label}</span>}
@@ -516,6 +518,7 @@ TITLE CARD: "NEON NIGHTS"`,
                     )}
 
                     {/* Project Tags */}
+                    {!isMobile && (
                     <div>
                       <h4 className={`font-semibold mb-3 text-sm uppercase tracking-wide ${
                         theme === 'light' ? 'text-gray-600' : 'text-gray-400'
@@ -524,7 +527,7 @@ TITLE CARD: "NEON NIGHTS"`,
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.slice(0, 6).map((tag, index) => (
-                          <span 
+                          <span
                             key={index}
                             className={`px-3 py-1 rounded-full text-xs font-medium border ${
                               theme === 'light'
@@ -537,6 +540,7 @@ TITLE CARD: "NEON NIGHTS"`,
                         ))}
                       </div>
                     </div>
+                    )}
 
                     {/* Action Buttons */}
                     <div className="space-y-3 pt-4">
