@@ -317,13 +317,13 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
-          <div className="absolute top-0 left-0 w-full p-3 bg-gradient-to-b from-black/70 via-black/40 to-transparent">
-            <h3 className="text-white text-base font-semibold">
+          <div
+            className="absolute left-1/2 -translate-x-1/2 px-3 py-2 bg-black/60 backdrop-blur-sm rounded text-center w-11/12"
+            style={{ bottom: '35px' }}
+          >
+            <h3 className="text-white text-sm font-semibold line-clamp-2">
               {featuredProjects[currentSlide]?.title}
             </h3>
-            <span className="text-xs text-gray-300">
-              {featuredProjects[currentSlide]?.genre}
-            </span>
           </div>
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
             {featuredProjects.map((_, index) => (
