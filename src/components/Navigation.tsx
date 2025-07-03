@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 import NotificationDropdown from './NotificationDropdown';
 import ProjectDetailModal from './ProjectDetailModal';
 import { Project } from '../types';
+import MobileBottomBar from './MobileBottomBar';
 
 interface NavigationProps {
   currentView: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search';
@@ -700,6 +701,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
         }}
         initialTab={initialTab}
         onTrackInvestment={() => setCurrentView('dashboard')}
+      />
+      <MobileBottomBar
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        onAuthRequired={onAuthRequired}
       />
     </>
   );
