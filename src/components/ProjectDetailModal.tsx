@@ -39,11 +39,17 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, isOpen
   const [activeTab, setActiveTab] = useState<'overview' | 'script' | 'cast' | 'perks' | 'invest'>(initialTab);
   const [selectedPerkTier, setSelectedPerkTier] = useState<string>('supporter');
   const [investmentAmount, setInvestmentAmount] = useState<number>(25000);
+  const [showSuccess, setShowSuccess] = useState(false);
   const { theme } = useTheme();
   const [showTrailer, setShowTrailer] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoIdMatch = (project?.trailer || '').match(/(?:watch\?v=|embed\/)([^&]+)/);
   const videoId = videoIdMatch ? videoIdMatch[1] : '';
+
+  const handleInvest = () => {
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000);
+  };
 
   // Prevent background scrolling and reset tab when modal is open
   useEffect(() => {
@@ -1012,7 +1018,10 @@ TITLE CARD: "NEON NIGHTS"`,
                           </ul>
                         </div>
 
-                        <button className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-white font-semibold text-lg hover:from-purple-500 hover:to-blue-500 transition-all duration-300 hover:scale-105">
+                        <button
+                          onClick={handleInvest}
+                          className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-white font-semibold text-lg hover:from-purple-500 hover:to-blue-500 transition-all duration-300 hover:scale-105"
+                        >
                           Invest ₹{investmentAmount.toLocaleString()}
                         </button>
                       </div>
@@ -1023,8 +1032,36 @@ TITLE CARD: "NEON NIGHTS"`,
             </div>
           </motion.div>
         </div>
-      )}
-    </AnimatePresence>
+        )}
+        <AnimatePresence>
+          {showSuccess && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
+            >
+              <div className="p-6 rounded-2xl bg-black/80 backdrop-blur-xl text-center space-y-2">
+                <CheckCircle className="w-12 h-12 text-green-400 mx-auto" />
+                <p className="text-white text-lg font-bold">Investment Successful!</p>
+                <p className="text-gray-300">You now own rights to this project.</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {showSuccess && (
+            <motion.div
+              initial={{ opacity: 0, y: 50, x: '50%' }}
+              animate={{ opacity: 1, y: 0, x: '50%' }}
+              exit={{ opacity: 0, y: 50, x: '50%' }}
+              className="fixed bottom-4 right-1/2 transform translate-x-1/2 px-4 py-3 rounded-xl bg-gray-900 border border-white/20 text-white shadow-lg"
+            >
+              {`You invested ₹${investmentAmount.toLocaleString()} in ${project.title}`}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </AnimatePresence>
   );
 };
 
