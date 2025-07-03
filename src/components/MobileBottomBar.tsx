@@ -27,7 +27,7 @@ const MobileBottomBar: React.FC<Props> = ({ currentView, setCurrentView, onAuthR
   };
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-50 bg-black/80 backdrop-blur-md md:hidden">
+    <nav className="fixed bottom-0 inset-x-0 z-50 md:hidden backdrop-blur-lg bg-white/30 dark:bg-gray-900/40 border-t border-white/20 dark:border-white/10">
       <div className="flex justify-around py-2">
         {navItems.map((item) => (
           <button
