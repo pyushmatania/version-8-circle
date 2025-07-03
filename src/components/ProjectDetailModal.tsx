@@ -319,16 +319,18 @@ TITLE CARD: "NEON NIGHTS"`,
                 alt={project.title}
                 className="w-full h-full object-cover"
               />
-              <div className={`absolute inset-0 ${
-                theme === 'light'
-                  ? 'bg-gradient-to-t from-white via-white/50 to-transparent'
-                  : 'bg-gradient-to-t from-black via-black/50 to-transparent'
-              }`} />
+              <div
+                className={`absolute inset-0 pointer-events-none ${
+                  theme === 'light'
+                    ? 'bg-gradient-to-t from-white via-white/50 to-transparent'
+                    : 'bg-gradient-to-t from-black via-black/50 to-transparent'
+                }`}
+              />
               
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className={`absolute top-4 right-4 p-2 rounded-full transition-colors ${
+                className={`absolute top-4 right-4 p-2 rounded-full transition-colors z-10 ${
                   theme === 'light'
                     ? 'bg-white/50 text-gray-700 hover:bg-white/70'
                     : 'bg-black/50 text-white hover:bg-black/70'

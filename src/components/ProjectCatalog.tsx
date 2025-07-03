@@ -316,14 +316,14 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 w-14 h-14 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+            className="hidden sm:flex absolute left-6 top-1/2 transform -translate-y-1/2 z-20 w-14 h-14 bg-black/60 hover:bg-black/80 rounded-full items-center justify-center text-white transition-all duration-300 hover:scale-110 backdrop-blur-sm"
           >
             <ChevronLeft className="w-8 h-8" />
           </button>
-          
+
           <button
             onClick={nextSlide}
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 w-14 h-14 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+            className="hidden sm:flex absolute right-6 top-1/2 transform -translate-y-1/2 z-20 w-14 h-14 bg-black/60 hover:bg-black/80 rounded-full items-center justify-center text-white transition-all duration-300 hover:scale-110 backdrop-blur-sm"
           >
             <ChevronRight className="w-8 h-8" />
           </button>
@@ -355,15 +355,15 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
                     </div>
                   </div>
 
-                  <h1 className="text-6xl md:text-7xl font-bold text-white mb-4">
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white mb-4">
                     {featuredProjects[currentSlide]?.title}
                   </h1>
                   
-                  <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+                  <p className="text-base sm:text-xl text-gray-300 mb-6 leading-relaxed">
                     {featuredProjects[currentSlide]?.description}
                   </p>
 
-                  <div className="flex items-center gap-4 mb-8">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
                     <div className="flex items-center gap-2">
                       <Star className="w-5 h-5 text-yellow-400 fill-current" />
                       <span className="text-white font-semibold">{featuredProjects[currentSlide]?.rating || '4.8'}</span>
@@ -376,7 +376,7 @@ const ProjectCatalog: React.FC<ProjectCatalogProps> = ({ onTrackInvestment }) =>
                     <span className="text-green-400 font-semibold">{featuredProjects[currentSlide]?.fundedPercentage}% Funded</span>
                   </div>
 
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                     <button
                       onClick={() => handleProjectClick(featuredProjects[currentSlide], 'invest')}
                       className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-lg font-semibold text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105"
