@@ -5,6 +5,8 @@ import { useTheme } from './ThemeProvider';
 import { useAuth } from './auth/AuthProvider';
 import SearchBar from './SearchBar';
 import NotificationDropdown from './NotificationDropdown';
+import ProjectDetailModal from './ProjectDetailModal';
+import { Project } from '../types';
 
 interface NavigationProps {
   currentView: 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search';
@@ -17,6 +19,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
 
@@ -69,6 +73,11 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
   const handleLogout = () => {
     logout();
     setShowUserMenu(false);
+  };
+
+  const handleProjectSelect = (project: Project) => {
+    setSelectedProject(project);
+    setIsProjectModalOpen(true);
   };
 
   return (
@@ -212,11 +221,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
                 <div className="flex items-center gap-4">
                   {/* Search Button */}
                   <div className="relative">
-                    <SearchBar 
-                      onSelectProject={(project) => {
-                        // Handle project selection
-                        console.log('Selected project:', project);
-                      }}
+                    <SearchBar
+                      onSelectProject={handleProjectSelect}
                       onViewAllResults={() => {
                         setCurrentView('search');
                       }}
@@ -682,6 +688,14 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView, on
           </motion.div>
         )}
       </AnimatePresence>
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={isProjectModalOpen}
+        onClose={() => {
+          setIsProjectModalOpen(false);
+          setSelectedProject(null);
+        }}
+      />
     </>
   );
 };
