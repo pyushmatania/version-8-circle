@@ -12,7 +12,11 @@ import {
   Music,
   Tv,
   Download,
-  RefreshCw
+  RefreshCw,
+  Medal,
+  Box,
+  Gem,
+  Badge
 } from 'lucide-react';
 import { useTheme } from '../../ThemeProvider';
 import { useAdmin, Perk } from '../AdminContext';
@@ -91,13 +95,13 @@ const PerksPanel: React.FC = () => {
   const getTierIcon = (tier: string) => {
     switch (tier) {
       case 'supporter':
-        return <Star className="w-4 h-4 text-gray-400" />;
+        return <Medal className={`w-4 h-4 ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'}`} />;
       case 'backer':
-        return <Gift className="w-4 h-4 text-blue-400" />;
+        return <Box className={`w-4 h-4 ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'}`} />;
       case 'producer':
-        return <Crown className="w-4 h-4 text-purple-400" />;
+        return <Gem className={`w-4 h-4 ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'}`} />;
       case 'executive':
-        return <Award className="w-4 h-4 text-yellow-400" />;
+        return <Badge className={`w-4 h-4 ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'}`} />;
       default:
         return null;
     }

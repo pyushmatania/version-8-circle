@@ -5,9 +5,10 @@ interface AnimatedNumberProps {
   value: number;
   className?: string;
   format?: (val: number) => string;
+  inView?: boolean;
 }
 
-const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ value, className, format }) => {
+const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ value, className, format, inView = true }) => {
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, { stiffness: 100, damping: 20 });
   const display = useTransform(spring, latest => {
@@ -16,8 +17,10 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ value, className, forma
   });
 
   useEffect(() => {
-    motionValue.set(value);
-  }, [value, motionValue]);
+    if (inView) {
+      motionValue.set(value);
+    }
+  }, [value, inView, motionValue]);
 
   return <motion.span className={className}>{display}</motion.span>;
 };

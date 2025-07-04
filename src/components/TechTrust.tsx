@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Award, Users, CheckCircle, Star, Globe } from 'lucide-react';
+import { Shield, Award, Users, CheckCircle, Star, Globe, Handshake, Building2, Lock, TrendingUp, MapPin } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
@@ -9,25 +9,25 @@ const TechTrust: React.FC = () => {
 
   const trustFactors = [
     {
-      icon: Shield,
+      icon: Building2,
       title: "SEBI Registered",
       description: "Fully compliant with Indian securities regulations",
       color: "from-green-500 to-emerald-500"
     },
     {
-      icon: Award,
+      icon: Lock,
       title: "Blockchain Secured",
       description: "Transparent and immutable investment records",
       color: "from-blue-500 to-cyan-500"
     },
     {
-      icon: Users,
+      icon: TrendingUp,
       title: "40K+ Investors",
       description: "Growing community of entertainment enthusiasts",
       color: "from-purple-500 to-pink-500"
     },
     {
-      icon: Globe,
+      icon: MapPin,
       title: "Global Reach",
       description: "Investors from 15+ countries worldwide",
       color: "from-yellow-500 to-orange-500"
@@ -58,7 +58,10 @@ const TechTrust: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className={`text-5xl md:text-6xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-8`}>
+          <h2 className={`text-5xl md:text-6xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-8 flex items-center justify-center gap-3`}>
+            <span className={theme === 'light' ? 'text-gray-700' : 'text-gray-200'}>
+              <Handshake className="w-10 h-10 inline-block align-middle" />
+            </span>
             <Typewriter
               text="Trusted by Thousands"
               className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
@@ -91,7 +94,7 @@ const TechTrust: React.FC = () => {
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <factor.icon className={`w-8 h-8 bg-gradient-to-r ${factor.color} bg-clip-text text-transparent`} />
+                  <factor.icon className={`w-8 h-8 text-white`} />
                 </motion.div>
                 
                 <h3 className={`text-xl font-bold mb-3 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, CreditCard, TrendingUp, Users, Shield, Award } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import Typewriter from './Typewriter';
+import DecryptedText from './TextAnimations/DecryptedText/DecryptedText';
 
-const HowItWorks: React.FC = () => {
+type ViewType = 'home' | 'dashboard' | 'projects' | 'community' | 'merch' | 'profile' | 'admin' | 'portfolio' | 'compare' | 'news' | 'notifications' | 'search';
+
+interface HowItWorksProps {
+  setCurrentView?: (view: ViewType) => void;
+}
+
+const HowItWorks: React.FC<HowItWorksProps> = ({ setCurrentView }) => {
   const { theme } = useTheme();
+  const [coinDrop, setCoinDrop] = useState(false);
 
   const steps = [
     {
@@ -46,6 +53,15 @@ const HowItWorks: React.FC = () => {
     }
   ];
 
+  // Coin SVG (simple, gold)
+  const Coin = () => (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="22" fill="#FFD700" stroke="#F59E42" strokeWidth="4" />
+      <circle cx="24" cy="24" r="14" fill="#FFF7CC" stroke="#F59E42" strokeWidth="3" />
+      <text x="24" y="31" textAnchor="middle" fontSize="20" fontWeight="bold" fill="#F59E42">₹</text>
+    </svg>
+  );
+
   return (
     <section className={`py-24 ${
       theme === 'light' 
@@ -63,9 +79,11 @@ const HowItWorks: React.FC = () => {
           className="text-center mb-20"
         >
           <h2 className={`text-5xl md:text-6xl font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'} mb-6`}>
-            <Typewriter
+            <DecryptedText
               text="How It Works"
               className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+              animateOn="view"
+              speed={280}
             />
           </h2>
           <p className={`text-xl ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} max-w-3xl mx-auto`}>
@@ -101,8 +119,22 @@ const HowItWorks: React.FC = () => {
                     </div>
                   </div>
 
-                  <h3 className={`${theme === 'light' ? 'text-gray-900' : 'text-white'} text-2xl font-bold mb-4`}>{step.title}</h3>
-                  <p className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} leading-relaxed`}>{step.description}</p>
+                  <h3 className={`${theme === 'light' ? 'text-gray-900' : 'text-white'} text-2xl font-bold mb-4`}>
+                    <DecryptedText
+                      text={step.title}
+                      className={theme === 'light' ? 'text-gray-900' : 'text-white'}
+                      animateOn="view"
+                      speed={140}
+                    />
+                  </h3>
+                  <p className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} leading-relaxed`}>
+                    <DecryptedText
+                      text={step.description}
+                      className={theme === 'light' ? 'text-gray-600' : 'text-gray-300'}
+                      animateOn="view"
+                      speed={180}
+                    />
+                  </p>
                 </div>
               </div>
 
@@ -153,8 +185,12 @@ const HowItWorks: React.FC = () => {
                   <div className="p-3 rounded-lg bg-gradient-to-r from-purple-500/20 to-blue-500/20 mb-4 group-hover:scale-110 transition-transform duration-300">
                     <benefit.icon className="w-8 h-8 text-purple-400" />
                   </div>
-                  <h4 className={`${theme === 'light' ? 'text-gray-900' : 'text-white'} text-xl font-semibold mb-3`}>{benefit.title}</h4>
-                  <p className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} text-sm leading-relaxed`}>{benefit.description}</p>
+                  <h4 className={`${theme === 'light' ? 'text-gray-900' : 'text-white'} text-xl font-semibold mb-3`}>
+                    {benefit.title}
+                  </h4>
+                  <p className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-300'} text-sm leading-relaxed`}>
+                    {benefit.description}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -181,11 +217,34 @@ const HowItWorks: React.FC = () => {
               Join thousands of investors who are already backing the next generation of entertainment
             </p>
             <motion.button
+              onClick={() => {
+                setCoinDrop(true);
+                setTimeout(() => {
+                  setCoinDrop(false);
+                  setCurrentView?.('projects');
+                }, 1100);
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg hover:from-purple-500 hover:to-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white font-semibold text-lg hover:from-purple-500 hover:to-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 relative overflow-hidden"
             >
-              Start Investing Today
+              {/* Coin drop animation */}
+              <motion.div
+                initial={false}
+                animate={coinDrop
+                  ? {
+                      y: [ -120, 0, -20, 0, 6, 0 ],
+                      scale: [1.2, 1, 1.15, 1, 1.05, 1],
+                      rotate: [0, 0, 12, -8, 0, 0],
+                      opacity: [1, 1, 1, 1, 1, 0]
+                    }
+                  : { y: -120, opacity: 0, scale: 1, rotate: 0 }}
+                transition={{ duration: 1.1, times: [0, 0.5, 0.7, 0.85, 0.95, 1], ease: [0.4, 0.8, 0.2, 1] }}
+                style={{ position: 'absolute', left: '50%', top: '-3.5rem', zIndex: 20, transform: 'translateX(-50%)', pointerEvents: 'none' }}
+              >
+                <Coin />
+              </motion.div>
+              <span>Start Investing Today</span>
             </motion.button>
           </div>
         </motion.div>

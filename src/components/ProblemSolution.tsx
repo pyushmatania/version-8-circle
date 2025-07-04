@@ -1,11 +1,50 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangle, TrendingDown, Users, ArrowRight, Zap, DollarSign, Award } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
+import ShinyText from './TextAnimations/ShinyText/ShinyText';
+import GlitchText from './TextAnimations/GlitchText/GlitchText';
 
-const ProblemSolution: React.FC = () => {
+interface ProblemSolutionProps {
+  setCurrentView?: (view: 'home' | 'dashboard' | 'projects' | 'community') => void;
+}
+
+const ProblemSolution: React.FC<ProblemSolutionProps> = ({ setCurrentView }) => {
   const { theme } = useTheme();
+  const solutionRef = useRef<HTMLDivElement>(null);
+  const [arrowAnimating, setArrowAnimating] = useState(false);
+  const [arrowX, setArrowX] = useState(0);
+  const arrowRef = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState<'idle' | 'typing' | 'broken'>('idle');
+  const triggeredRef = React.useRef(false);
+  const [fallingDone, setFallingDone] = useState(false);
+  const [showTypewriter, setShowTypewriter] = useState(false);
+  const [typewriterDone, setTypewriterDone] = useState(false);
+
+  const handleArrowClick = () => {
+    if (arrowAnimating) return;
+    setArrowAnimating(true);
+    if (arrowRef.current) {
+      const rect = arrowRef.current.getBoundingClientRect();
+      const distance = window.innerWidth - rect.left - 80; // 80px buffer
+      setArrowX(distance);
+    } else {
+      setArrowX(window.innerWidth - 200);
+    }
+  };
+
+  const handleArrowAnimationComplete = () => {
+    if (arrowAnimating) {
+      setArrowAnimating(false);
+      setArrowX(0);
+      if (setCurrentView) {
+        setCurrentView('projects');
+      } else if (solutionRef.current) {
+        solutionRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   const problems = [
     {
@@ -43,6 +82,48 @@ const ProblemSolution: React.FC = () => {
     }
   ];
 
+  // Subtle 'broken' effect with cracks and a different shade
+  const BrokenWord: React.FC<{ word: string; className?: string }> = ({ word, className }) => {
+    return (
+      <span className={(className || '') + ' relative inline-block'} style={{ lineHeight: 1 }}>
+        {word.split('').map((char, i) => {
+          // Moderate, varied transforms for a readable broken effect
+          const transforms = [
+            'rotate(-8deg) translateY(2px) scale(1.04)', // B
+            'rotate(6deg) translateY(-3px) skewY(-6deg) scale(0.98)', // R
+            'rotate(-4deg) translateY(3px) skewX(5deg) scale(1.01)', // O
+            'rotate(10deg) translateY(-4px) scale(0.97)', // K
+            'rotate(-12deg) translateY(5px) skewY(4deg) scale(1.03)', // E
+            'rotate(4deg) translateY(1px) scale(0.99)', // N
+          ];
+          return (
+            <span
+              key={i}
+              style={{
+                display: 'inline-block',
+                position: 'relative',
+                marginRight: '0.04em',
+                zIndex: 1,
+                transform: transforms[i % transforms.length],
+                background: `linear-gradient(90deg, #b91c1c 0%, #f87171 100%),
+                  url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="10" height="10" fill="white" filter="url(%23noise)" fill-opacity="0.10"/></svg>') repeat`,
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 2px 8px rgba(0,0,0,0.22)',
+                WebkitTextStroke: '1.5px #7f1d1d',
+                padding: '0 0.04em',
+              }}
+            >
+              {char}
+            </span>
+          );
+        })}
+      </span>
+    );
+  };
+
   return (
     <section className={`py-24 ${
       theme === 'light' 
@@ -60,11 +141,11 @@ const ProblemSolution: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className={`text-5xl md:text-6xl font-bold mb-8 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-            <Typewriter
-              text="The entertainment industry is broken"
-              className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
-            />
+          <h2 className="text-5xl md:text-6xl font-bold mb-8">
+            <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+              The entertainment industry is{' '}
+            </span>
+            <BrokenWord word="broken" />
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}>
             While audiences crave authentic stories, systemic barriers prevent great content from reaching the world.
@@ -109,16 +190,24 @@ const ProblemSolution: React.FC = () => {
           viewport={{ once: true }}
           className="flex justify-center mb-20"
         >
-          <div className="relative">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
+          <div className="relative cursor-pointer" onClick={handleArrowClick} style={{ pointerEvents: arrowAnimating ? 'none' : 'auto' }}>
+            <motion.div
+              ref={arrowRef}
+              animate={arrowAnimating ? { x: arrowX } : { x: 0 }}
+              transition={arrowAnimating ? { duration: 0.7, ease: 'linear' } : {}}
+              onAnimationComplete={handleArrowAnimationComplete}
+              className="w-32 h-32 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center z-10"
+              style={{ position: 'relative' }}
+            >
               <ArrowRight className="w-12 h-12 text-white" />
-            </div>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 blur-xl opacity-50 animate-pulse" />
+            </motion.div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 blur-xl opacity-50 animate-pulse z-0" />
           </div>
         </motion.div>
 
         {/* Solution Section */}
         <motion.div
+          ref={solutionRef}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -180,7 +269,11 @@ const ProblemSolution: React.FC = () => {
               : 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/30 text-purple-300'
           }`}>
             <Zap className="w-5 h-5" />
-            Ready to be part of the solution?
+            <ShinyText 
+              text="Ready to be part of the solution?" 
+              className="text-xl font-extrabold tracking-wide"
+              speed={2.5}
+            />
           </div>
         </motion.div>
 
