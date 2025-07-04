@@ -343,14 +343,14 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center mt-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 text-center mt-6 sm:mt-10">
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          {/* Enhanced Floating Badge with Gradient Awareness */}
+          {/* Enhanced Floating Badge with Gradient Awareness - Mobile Optimized */}
           <motion.div
             animate={{ 
               y: [0, -10, 0],
@@ -361,7 +361,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
               repeat: Infinity, 
               ease: "easeInOut" 
             }}
-            className={`inline-flex items-center gap-2 px-6 py-3 rounded-full border font-medium mb-8 backdrop-blur-md transition-all duration-[3000ms] ${
+            className={`inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border font-medium mb-6 sm:mb-8 backdrop-blur-md transition-all duration-[3000ms] text-sm sm:text-base ${
               theme === 'light'
                 ? currentGradient === 0 ? 'bg-green-50/60 border-green-300/50 text-green-700 shadow-lg shadow-green-200/50' :
                   currentGradient === 1 ? 'bg-orange-50/60 border-orange-300/50 text-orange-700 shadow-lg shadow-orange-200/50' :
@@ -375,12 +375,13 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
               animate={{ rotate: 360 }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             >
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.div>
-            The Future of Entertainment Investment
+            <span className="hidden sm:inline">The Future of Entertainment Investment</span>
+            <span className="sm:hidden">Future of Entertainment</span>
           </motion.div>
 
-          <h1 className={`text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight ${
+          <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-bold mb-6 sm:mb-8 leading-tight px-2 ${
             theme === 'light' ? 'text-gray-900' : 'text-white'
           }`}>
             <Typewriter
@@ -394,7 +395,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
           </h1>
           
           <motion.p 
-            className={`text-xl md:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed ${
+            className={`text-lg sm:text-xl md:text-2xl max-w-4xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 ${
               theme === 'light' ? 'text-gray-700' : 'text-gray-300'
             }`}
             initial={{ opacity: 0 }}
@@ -405,8 +406,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             Earn returns, unlock exclusive perks, and shape the future of entertainment.
           </motion.p>
 
-          {/* Enhanced CTA Buttons with Gradient Awareness */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          {/* Enhanced CTA Buttons with Gradient Awareness - Mobile Optimized */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 px-4">
             <motion.button
               onClick={() => {
                 setCoinDrop(true);
@@ -417,7 +418,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
               }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className={`group relative px-8 py-4 rounded-full text-white font-semibold text-xl overflow-hidden transition-all duration-300 hover:shadow-2xl ${
+              className={`group relative px-6 sm:px-8 py-3 sm:py-4 rounded-full text-white font-semibold text-lg sm:text-xl overflow-hidden transition-all duration-300 hover:shadow-2xl w-full sm:w-auto ${
                 theme === 'light'
                   ? currentGradient === 0 ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:shadow-green-500/25' :
                     currentGradient === 1 ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:shadow-orange-500/25' :
@@ -436,13 +437,13 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
               >
                 <Coin />
               </motion.div>
-              <span className="relative z-10 flex items-center gap-3">
+              <span className="relative z-10 flex items-center gap-2 sm:gap-3 justify-center">
                 Start Investing
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <ArrowRight className="w-6 h-6" />
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.div>
               </span>
               {/* Enhanced Animated Background */}
@@ -484,7 +485,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
               onClick={() => setCurrentView?.('projects')}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className={`group flex items-center gap-3 px-8 py-4 border rounded-full font-semibold text-xl backdrop-blur-md transition-all duration-[3000ms] ${
+              className={`group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 border rounded-full font-semibold text-lg sm:text-xl backdrop-blur-md transition-all duration-[3000ms] w-full sm:w-auto justify-center ${
                 theme === 'light'
                   ? currentGradient === 0 ? 'border-green-300 text-green-700 bg-green-50/60 hover:bg-green-50/80 shadow-lg hover:shadow-xl' :
                     currentGradient === 1 ? 'border-orange-300 text-orange-700 bg-orange-50/60 hover:bg-orange-50/80 shadow-lg hover:shadow-xl' :
@@ -494,42 +495,42 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                   : 'border-white/20 text-white bg-white/5 hover:bg-white/10'
               }`}
             >
-                <TrendingUp className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
               Explore Projects
             </motion.button>
           </div>
         </motion.div>
 
-        {/* Platform Impact Section - Redesigned */}
+        {/* Platform Impact Section - Redesigned - Mobile Optimized */}
         <style>{cubeOverride}</style>
-        <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-6 text-center mt-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-6 text-center mt-8 sm:mt-10">
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8"
+            className="mb-6 sm:mb-8"
           >
             <motion.div
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border font-medium mb-4 transition-all duration-[3000ms] bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/30 text-purple-300"
+              className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border font-medium mb-4 transition-all duration-[3000ms] bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/30 text-purple-300 text-sm sm:text-base"
             >
-              <BarChart3 className="w-5 h-5" />
+              <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
               Platform Impact
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-white px-4">
               Transforming Entertainment{' '}
               <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent transition-all duration-[3000ms]">
                 Investment
               </span>
             </h2>
-            <p className="text-lg text-gray-300">
+            <p className="text-base sm:text-lg text-gray-300 px-4">
               Real numbers from our growing community of creators and investors
             </p>
           </motion.div>
 
-          {/* Main Stats - Responsive Grid or Stacked */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {/* Main Stats - Responsive Grid or Stacked - Mobile Optimized */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             {mainStats.map((stat, idx) => (
               <motion.div
                 key={stat.key}
@@ -537,7 +538,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.2 }}
                 viewport={{ once: true }}
-                className={`group relative p-8 py-10 rounded-2xl backdrop-blur-xl border transition-all duration-500 ${idx === 0 || idx === 3 ? '' : 'hover:scale-105'} ${
+                className={`group relative p-6 sm:p-8 py-8 sm:py-10 rounded-2xl backdrop-blur-xl border transition-all duration-500 ${idx === 0 || idx === 3 ? '' : 'hover:scale-105'} ${
                   theme === 'light'
                     ? currentGradient === 0 ? 'bg-green-50/40 border-green-300/60 shadow-lg hover:shadow-xl' :
                       currentGradient === 1 ? 'bg-orange-50/40 border-orange-300/60 shadow-lg hover:shadow-xl' :
@@ -552,7 +553,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                 }`}
               >
                 <div className={`relative z-10 text-center flex flex-col justify-center h-full`}>
-                  <div className={`mb-4 ${idx === 0 || idx === 3 ? '' : 'group-hover:scale-110'} transition-transform duration-300 ${
+                  <div className={`mb-3 sm:mb-4 ${idx === 0 || idx === 3 ? '' : 'group-hover:scale-110'} transition-transform duration-300 ${
                     currentGradient === 0 ? 'text-green-400' :
                     currentGradient === 1 ? 'text-orange-400' :
                     currentGradient === 2 ? 'text-blue-400' :
@@ -560,7 +561,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                     'text-purple-400'
                   }`}>
                     {stat.lottie ? (
-                      <div className="w-24 h-24 mx-auto">
+                      <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto">
                         <Lottie
                           autoplay={true}
                           loop={true}
@@ -571,7 +572,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                             stat.lottie === 'profit' ? profitAnimation :
                             clapperAnimation
                           }
-                          style={{ width: '96px', height: '96px' }}
+                          style={{ width: '100%', height: '100%' }}
                           rendererSettings={{
                             preserveAspectRatio: 'xMidYMid slice',
                             progressiveLoad: true,
@@ -582,11 +583,11 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                         />
                       </div>
                     ) : (
-                      <stat.icon className="w-8 h-8 mx-auto" />
+                      <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 mx-auto" />
                     )}
                   </div>
-                  <div className="text-xl font-bold mb-3 text-white">{stat.label}</div>
-                  <div className="text-3xl font-extrabold mb-2 text-white">
+                  <div className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-white">{stat.label}</div>
+                  <div className="text-2xl sm:text-3xl font-extrabold mb-2 text-white">
                     <AnimatedNumber value={stat.value} format={(v) => `${stat.prefix || ''}${v.toLocaleString()}${stat.unit || ''}`}/>
                   </div>
                   <div className="text-xs text-gray-300 mb-2">{stat.description}</div>
@@ -599,8 +600,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
             ))}
           </div>
 
-          {/* Supporting Stats - Responsive Grid */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Supporting Stats - Responsive Grid - Mobile Optimized */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {supportingStats.map((metric, idx) => (
               <motion.div
                 key={metric.title}
@@ -608,24 +609,24 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: (mainStats.length + idx) * 0.2 }}
                 viewport={{ once: true }}
-                className={`group relative p-8 py-10 rounded-2xl backdrop-blur-xl border transition-all duration-500 hover:scale-105 ${
+                className={`group relative p-6 sm:p-8 py-8 sm:py-10 rounded-2xl backdrop-blur-xl border transition-all duration-500 hover:scale-105 ${
                   theme === 'light'
                     ? 'bg-white/40 border-white/60 shadow-lg hover:shadow-xl'
                     : `${metric.color} border-white/20 hover:border-white/40`
                 }`}
               >
                 <div className={`relative z-10 text-center`}>
-                  <div className={`mb-6 group-hover:scale-110 transition-transform duration-300 ${
+                  <div className={`mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 ${
                     metric.color.includes('green') ? 'text-green-400' :
                     metric.color.includes('blue') ? 'text-blue-400' :
                     metric.color.includes('purple') ? 'text-purple-400' :
                     metric.color.includes('orange') ? 'text-orange-400' :
                     'text-gray-400'
                   }`}>
-                    <metric.icon className="w-8 h-8 mx-auto" />
+                    <metric.icon className="w-6 h-6 sm:w-8 sm:h-8 mx-auto" />
                   </div>
-                  <div className="text-xl font-bold mb-3 text-white">{metric.title}</div>
-                  <div className="text-2xl font-extrabold mb-2 text-white">{metric.value}</div>
+                  <div className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-white">{metric.title}</div>
+                  <div className="text-xl sm:text-2xl font-extrabold mb-2 text-white">{metric.value}</div>
                   <div className="text-xs text-white/60">{metric.description}</div>
                 </div>
               </motion.div>
@@ -634,17 +635,17 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
         </div>
       </div>
 
-      {/* Enhanced Scroll Indicator with Gradient Awareness */}
+      {/* Enhanced Scroll Indicator with Gradient Awareness - Mobile Optimized */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className={`w-6 h-10 border-2 rounded-full flex justify-center transition-all duration-[3000ms] ${
+          className={`w-5 h-8 sm:w-6 sm:h-10 border-2 rounded-full flex justify-center transition-all duration-[3000ms] ${
             theme === 'light' 
               ? currentGradient === 0 ? 'border-green-400' :
                 currentGradient === 1 ? 'border-orange-400' :
@@ -657,7 +658,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentView }) => {
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className={`w-1 h-3 rounded-full mt-2 transition-all duration-[3000ms] ${
+            className={`w-1 h-2 sm:h-3 rounded-full mt-2 transition-all duration-[3000ms] ${
               theme === 'light' 
                 ? currentGradient === 0 ? 'bg-green-500' :
                   currentGradient === 1 ? 'bg-orange-500' :
