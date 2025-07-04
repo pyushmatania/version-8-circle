@@ -20,6 +20,7 @@ const LiveProjects: React.FC<LiveProjectsProps> = ({ onViewAll, onTrackInvestmen
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialTab, setInitialTab] = useState<'overview' | 'invest'>('overview');
   const { theme } = useTheme();
+  const [statsInView, setStatsInView] = useState<{ [key: number]: boolean }>({});
 
   const sorted = [...extendedProjects].sort((a, b) => b.raisedAmount - a.raisedAmount);
   const trendingProjects = sorted.slice(0, Math.min(Math.max(3, sorted.length), 6));
@@ -231,28 +232,29 @@ const LiveProjects: React.FC<LiveProjectsProps> = ({ onViewAll, onTrackInvestmen
               ? 'bg-white/40 border-white/60'
               : 'bg-gradient-to-r from-white/5 to-white/10 border-white/20'
           }`}
+          onViewportEnter={() => setStatsInView({ 0: true, 1: true, 2: true, 3: true })}
         >
           <div className="text-center">
             <div className={`text-4xl font-extrabold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-              <AnimatedNumber value={47} format={(v)=>`₹${v}L+`} />
+              <AnimatedNumber value={47} format={(v)=>`₹${v}L+`} inView={!!statsInView[0]} />
             </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Total Raised</div>
           </div>
           <div className="text-center">
             <div className={`text-4xl font-extrabold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}> 
-              <AnimatedNumber value={12} />
+              <AnimatedNumber value={12} inView={!!statsInView[1]} />
             </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Active Projects</div>
           </div>
           <div className="text-center">
             <div className={`text-4xl font-extrabold mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}> 
-              <AnimatedNumber value={1200} format={(v)=>`${v.toLocaleString()}+`} />
+              <AnimatedNumber value={1200} format={(v)=>`${v.toLocaleString()}+`} inView={!!statsInView[2]} />
             </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Investors</div>
           </div>
           <div className="text-center">
             <div className="text-4xl font-extrabold text-green-400 mb-2">
-              <AnimatedNumber value={15} format={(v)=>`${v}%`} />
+              <AnimatedNumber value={15} format={(v)=>`${v}%`} inView={!!statsInView[3]} />
             </div>
             <div className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>Avg. Returns</div>
           </div>

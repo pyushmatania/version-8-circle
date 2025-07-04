@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Quote, Sparkles } from 'lucide-react';
+import { Quote, Sparkles, AlertTriangle, ArrowDownLeft, Users, LucideIcon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
@@ -11,23 +11,33 @@ interface WhyThisMattersProps {
 const WhyThisMatters: React.FC<WhyThisMattersProps> = ({ onJoin }) => {
   const { theme } = useTheme();
 
-  const stories = [
+  const stories: Array<{
+    icon: LucideIcon;
+    text: string;
+    description: string;
+    gradient: string;
+    highlight?: boolean;
+  }> = [
     {
+      icon: AlertTriangle,
       text: "Studios said no to bold stories.",
       description: "Risk-averse executives pass on innovative narratives that could change culture.",
       gradient: "from-red-500 to-orange-500"
     },
     {
+      icon: ArrowDownLeft,
       text: "Streaming underpays indie artists.",
       description: "Platforms take massive cuts while creators struggle to make ends meet.",
       gradient: "from-orange-500 to-yellow-500"
     },
     {
+      icon: Users,
       text: "But fans made it go viral.",
       description: "Audiences have the power to turn unknown content into global phenomena.",
       gradient: "from-yellow-500 to-green-500"
     },
     {
+      icon: Sparkles,
       text: "We built Circles so belief could turn into ownership.",
       description: "Transform your passion for great content into real stake in its success.",
       gradient: "from-green-500 to-blue-500",
@@ -85,7 +95,7 @@ const WhyThisMatters: React.FC<WhyThisMattersProps> = ({ onJoin }) => {
                 {/* Quote Icon */}
                 <div className="relative z-10">
                   <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${story.gradient} bg-opacity-20 mb-8`}>
-                    <Quote className={`w-8 h-8 bg-gradient-to-r ${story.gradient} bg-clip-text text-transparent`} />
+                    {React.createElement(story.icon, { className: `w-8 h-8 ${theme === 'light' ? 'text-gray-900' : 'text-white'}` })}
                   </div>
 
                   {/* Main Quote */}
